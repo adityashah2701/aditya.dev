@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Iceland&display=swap');
+@import "tailwindcss";
+
+
+@theme {
+  --font-roboto: "Roboto", sans-serif; 
+  --font-primary: "Iceland", cursive;
+}
