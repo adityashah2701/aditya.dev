@@ -186,7 +186,7 @@ const About = () => {
   };
 
   return (
-    <section id="about" className="min-h-screen relative py-20 overflow-hidden">
+    <section id="about" className="min-h-screen relative py-5 overflow-hidden">
       {/* Enhanced Background Elements */}
       <div className="absolute inset-0">
         {[...Array(80)].map((_, i) => (

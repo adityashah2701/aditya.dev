@@ -9,7 +9,7 @@ import Footer from './components/Footer';
 
 const App = () => {
   return (
-     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 font-primary">
+     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-900 font-primary">
       <Navbar />
       <Hero />
       <About />

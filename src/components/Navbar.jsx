@@ -234,7 +234,7 @@ const Navbar = () => {
             initial="hidden"
             animate="visible"
             exit="hidden"
-            className="fixed top-0 left-0 h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 shadow-2xl z-50 flex flex-col items-center justify-center overflow-hidden w-full sm:w-96 md:w-[500px] lg:w-[600px]"
+            className="fixed top-0 left-0 h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-900 shadow-2xl z-50 flex flex-col items-center justify-center overflow-hidden w-full sm:w-96 md:w-[500px] lg:w-[600px]"
           >
             {/* Animated Background Stars */}
             <div className="absolute inset-0 pointer-events-none">
