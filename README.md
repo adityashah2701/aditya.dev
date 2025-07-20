@@ -85,10 +85,10 @@ The website is fully responsive with breakpoints:
 
 I'm always open to discussing new opportunities, collaborations, or just having a chat about technology!
 
-- 📧 **Email**: [aditya.shah@example.com](mailto:aditya.shah@example.com)
+- 📧 **Email**: [adityashah2701@gmail.com](mailto:adityashah2701@gmail.com)
 - 💼 **LinkedIn**: [linkedin.com/in/adityashah](https://linkedin.com/in/adityashah)
-- 🐱 **GitHub**: [github.com/adityashah](https://github.com/adityashah)
-- 🌐 **Portfolio**: [adityashah.dev](https://adityashah.dev)
+- 🐱 **GitHub**: [github.com/adityashah2701](https://github.com/adityashah2701)
+- 🌐 **Portfolio**: [adityashah.dev](https://aditya-dev.onrender.com/)
 
 ## 📄 License
 
