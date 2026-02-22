@@ -38,7 +38,7 @@ export default function Sidebar({
                 <SidebarMenuButton
                   asChild
                   isActive={link.active}
-                  className="group flex items-center justify-between px-3 py-5 rounded transition-all data-[active=true]:bg-primary/10 data-[active=true]:border data-[active=true]:border-primary/20 hover:bg-surface-dark border border-transparent hover:border-border-dark!"
+                  className="group flex items-center justify-between px-3 py-5 rounded-none transition-all data-[active=true]:bg-primary/10 data-[active=true]:border data-[active=true]:border-primary/20 hover:bg-surface-dark border border-transparent hover:border-border-dark!"
                 >
                   <Link href={link.href} onClick={() => setOpenMobile(false)}>
                     <div className="flex items-center gap-3">
@@ -62,7 +62,7 @@ export default function Sidebar({
                       </span>
                     </div>
                     {link.active && (
-                      <span className="size-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(19,73,236,0.8)]"></span>
+                      <span className="size-1.5 rounded-none bg-primary shadow-[0_0_8px_rgba(19,73,236,0.8)]"></span>
                     )}
                   </Link>
                 </SidebarMenuButton>

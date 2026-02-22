@@ -4,7 +4,7 @@
 
 export const TERMINAL_LOGS: Record<string, string[]> = {
   home: [
-    "> sys_integrity_check_about",
+    "> sys_integrity_check_home",
     "> core_module... ACTIVE",
     "> rendering_bio... DONE",
   ],
@@ -31,7 +31,7 @@ export const TERMINAL_LOGS: Record<string, string[]> = {
 };
 
 export const PAGE_PATHS: Record<string, string> = {
-  home: "ABOUT",
+  home: "HOME",
   skills: "TECH STACK",
   projects: "REPOSITORIES",
   experience: "EXPERIENCE LOGS",

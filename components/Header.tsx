@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useSidebar } from "@/components/ui/sidebar";
+import { Badge } from "@/components/ui/badge";
 
 /* eslint-disable react/jsx-no-comment-textnodes */
 export default function Header({ pagePath = "HOME" }: { pagePath?: string }) {
@@ -38,23 +39,32 @@ export default function Header({ pagePath = "HOME" }: { pagePath?: string }) {
       {/* Right: status badges (desktop) + hamburger (mobile) */}
       <div className="flex items-center gap-2 shrink-0">
         <div className="hidden md:flex gap-2">
-          <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-surface-dark border border-border-dark text-[10px] font-mono text-primary whitespace-nowrap">
-            <span className="size-1.5 rounded-full bg-primary animate-pulse"></span>
+          <Badge
+            variant="outline"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-none bg-surface-dark border border-border-dark text-[10px] font-mono text-primary whitespace-nowrap"
+          >
+            <span className="size-1.5 rounded-none bg-primary animate-pulse"></span>
             STATUS: ONLINE
-          </div>
-          <div className="hidden lg:flex items-center px-2.5 py-1.5 rounded bg-surface-dark border border-border-dark text-[10px] font-mono text-slate-400 whitespace-nowrap">
+          </Badge>
+          <Badge
+            variant="outline"
+            className="hidden lg:flex items-center px-2.5 py-1.5 rounded-none bg-surface-dark border border-border-dark text-[10px] font-mono text-slate-400 whitespace-nowrap outline-none"
+          >
             BUILD: v2.4.0
-          </div>
+          </Badge>
         </div>
 
         {/* Mobile: compact status dot */}
-        <div className="flex md:hidden items-center gap-1.5 px-2 py-1 rounded bg-surface-dark border border-border-dark text-[10px] font-mono text-primary whitespace-nowrap">
-          <span className="size-1.5 rounded-full bg-primary animate-pulse"></span>
+        <Badge
+          variant="outline"
+          className="flex md:hidden items-center gap-1.5 px-2 py-1 rounded-none bg-surface-dark border border-border-dark text-[10px] font-mono text-primary whitespace-nowrap"
+        >
+          <span className="size-1.5 rounded-none bg-primary animate-pulse"></span>
           <span className="hidden sm:inline">ONLINE</span>
-        </div>
+        </Badge>
 
         <button
-          className="md:hidden flex items-center justify-center size-8 rounded hover:bg-surface-dark text-slate-300 hover:text-white transition-colors border border-transparent hover:border-border-dark"
+          className="md:hidden flex items-center justify-center size-8 rounded-none hover:bg-surface-dark text-slate-300 hover:text-white transition-colors border border-transparent hover:border-border-dark"
           onClick={toggleSidebar}
           aria-label="Toggle sidebar"
         >
