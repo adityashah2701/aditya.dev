@@ -48,7 +48,7 @@ export default function Header({ pagePath = "HOME" }: { pagePath?: string }) {
           </Badge>
           <Badge
             variant="outline"
-            className="hidden lg:flex items-center px-2.5 py-1.5 rounded-none bg-surface-dark border border-border-dark text-[10px] font-mono text-slate-400 whitespace-nowrap outline-none"
+            className="hidden lg:flex items-center px-2.5 py-1.5 rounded-none bg-surface-dark border border-border-dark text-[10px] text-slate-400 whitespace-nowrap outline-none"
           >
             BUILD: v2.4.0
           </Badge>

@@ -1,7 +1,5 @@
 "use client";
 
-import Header from "@/components/Header";
-import Sidebar from "@/components/Sidebar";
 import React from "react";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
@@ -13,6 +11,11 @@ import {
   SIDEBAR_TITLES,
   TERMINAL_HEADERS,
 } from "@/constants/layout";
+
+import { AnimatePresence, motion } from "motion/react";
+import Sidebar from "./sidebar";
+import Header from "./header";
+import { FrozenRoute } from "./frozen-route";
 
 export default function MainClientLayout({
   children,
@@ -78,16 +81,24 @@ export default function MainClientLayout({
         terminalHeader={terminalHeader}
         terminalLogs={terminalLogs}
       />
-      <SidebarInset className="relative flex flex-col flex-1 bg-transparent min-w-0">
+      <SidebarInset className="relative flex flex-col flex-1 bg-transparent min-w-0 overflow-x-hidden">
         <Header pagePath={pagePath} />
         <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.07] bg-grid-pattern grid-bg"></div>
         <main className="flex-1 min-w-0 z-10 px-4 py-6 sm:px-6 md:px-10 md:py-8 lg:px-14 xl:px-16 max-w-7xl mx-auto w-full">
-          <div
-            key={pathname}
-            className="animate-in fade-in slide-in-from-bottom-2 duration-700 ease-in-out fill-mode-both"
-          >
-            {children}
-          </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={pathname}
+              initial={{ opacity: 0, y: 15, filter: "blur(2px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -15, filter: "blur(2px)" }}
+              transition={{
+                duration: 0.2,
+                ease: "easeInOut",
+              }}
+            >
+              <FrozenRoute>{children}</FrozenRoute>
+            </motion.div>
+          </AnimatePresence>
         </main>
       </SidebarInset>
     </SidebarProvider>
