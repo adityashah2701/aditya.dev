@@ -32,20 +32,20 @@ export const TERMINAL_LOGS: Record<string, string[]> = {
 
 export const PAGE_PATHS: Record<string, string> = {
   home: "HOME",
-  skills: "TECH STACK",
+  skills: "TECH_STACK",
   projects: "REPOSITORIES",
-  experience: "EXPERIENCE LOGS",
-  contact: "CONTACT PROTOCOL",
+  experience: "EXPERIENCE_LOGS",
+  contact: "CONTACT",
   projectDetail: "PORTFOLIO",
 };
 
 export const SIDEBAR_TITLES: Record<string, string> = {
-  default: "SYSTEM MODULES",
-  projectDetail: "NAVIGATE MODULE",
+  default: "SYSTEM_MODULES",
+  projectDetail: "NAVIGATE_MODULE",
 };
 
 export const TERMINAL_HEADERS: Record<string, string> = {
-  default: "TERMINAL OUTPUT",
-  contact: "SYSTEM STATUS",
-  projectDetail: "SYSTEM LOGS",
+  default: "TERMINAL_OUTPUT",
+  contact: "SYSTEM_STATUS",
+  projectDetail: "SYSTEM_LOGS",
 };

@@ -8,13 +8,21 @@
  * @module
  */
 
+import type * as admin from "../admin.js";
+import type * as seed from "../seed.js";
+import type * as techstack from "../techstack.js";
+
 import type {
   ApiFromModules,
   FilterApi,
   FunctionReference,
 } from "convex/server";
 
-declare const fullApi: ApiFromModules<{}>;
+declare const fullApi: ApiFromModules<{
+  admin: typeof admin;
+  seed: typeof seed;
+  techstack: typeof techstack;
+}>;
 
 /**
  * A utility for referencing Convex functions in your app's public API.
