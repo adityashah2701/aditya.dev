@@ -13,8 +13,8 @@ import {
 } from "@/constants/layout";
 
 import { AnimatePresence, motion } from "motion/react";
-import Sidebar from "./sidebar";
-import Header from "./header";
+import Sidebar from "./sections/shared/sidebar";
+import Header from "./sections/shared/header";
 import { FrozenRoute } from "./frozen-route";
 
 export default function MainClientLayout({
