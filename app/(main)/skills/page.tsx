@@ -1,9 +1,22 @@
 import { Metadata } from "next";
 import { Breadcrumb } from "@/components/sections/shared";
 import { SkillsHeader, SkillCategoryList } from "@/components/sections/skills";
+import { SITE_URL, OG_IMAGE_URL } from "@/constants/seo";
 
 export const metadata: Metadata = {
   title: "Tech Stack",
+  description:
+    "Aditya Shah's technology stack — React, Next.js, TypeScript, Node.js, Python, cloud infrastructure, databases, and the full ecosystem of tools used to build modern software.",
+  alternates: {
+    canonical: `${SITE_URL}/skills`,
+  },
+  openGraph: {
+    title: "Tech Stack | aditya.dev",
+    description:
+      "The tools, languages, and frameworks Aditya Shah uses to build software — React, Next.js, TypeScript, Python, and more.",
+    url: `${SITE_URL}/skills`,
+    images: [{ url: OG_IMAGE_URL, width: 1200, height: 630 }],
+  },
 };
 
 export default function Skills() {

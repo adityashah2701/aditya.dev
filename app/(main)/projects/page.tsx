@@ -1,9 +1,22 @@
 import { Metadata } from "next";
 import { Breadcrumb } from "@/components/sections/shared";
 import { ProjectsHeader, ProjectList } from "@/components/sections/projects";
+import { SITE_URL, OG_IMAGE_URL } from "@/constants/seo";
 
 export const metadata: Metadata = {
   title: "Repositories",
+  description:
+    "Browse Aditya Shah's software projects — full stack applications, AI tools, developer utilities, and open source contributions built with modern web technologies.",
+  alternates: {
+    canonical: `${SITE_URL}/projects`,
+  },
+  openGraph: {
+    title: "Repositories | aditya.dev",
+    description:
+      "Full stack apps, AI tools, and open source projects by Aditya Shah.",
+    url: `${SITE_URL}/projects`,
+    images: [{ url: OG_IMAGE_URL, width: 1200, height: 630 }],
+  },
 };
 
 export default function Projects() {
