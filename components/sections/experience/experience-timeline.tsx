@@ -3,6 +3,7 @@ import { EXPERIENCE_ENTRIES } from "@/constants/experience";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Code } from "lucide-react";
 
 export default function ExperienceTimeline() {
   return (
@@ -67,9 +68,7 @@ export default function ExperienceTimeline() {
                       {entry.role}
                     </h3>
                     <div className="flex items-center gap-1.5 text-slate-400 font-mono text-xs mt-1">
-                      <span className="material-symbols-outlined text-xs">
-                        code
-                      </span>
+                      <Code className="w-3 h-3" />
                       <span>{entry.context}</span>
                     </div>
                   </div>

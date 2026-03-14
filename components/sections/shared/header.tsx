@@ -3,23 +3,21 @@
 import Link from "next/link";
 import { useSidebar } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
+import { Menu } from "lucide-react";
 
 /* eslint-disable react/jsx-no-comment-textnodes */
 export default function Header({ pagePath = "HOME" }: { pagePath?: string }) {
   const { toggleSidebar } = useSidebar();
 
   return (
-    <header className="sticky top-0 z-50 flex items-center justify-between border-b border-border-dark bg-background-dark/95 backdrop-blur-md px-3 sm:px-5 md:px-6 py-3 gap-2 min-w-0">
+    <header className="sticky top-0 z-50 flex items-center justify-between border-b border-border-dark bg-background-dark/95 backdrop-blur-md px-2 sm:px-4 md:px-5 py-3 gap-2 min-w-0">
       {/* Left: logo + page path */}
       <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
         <Link
           href="/"
-          className="flex items-center gap-2 sm:gap-3 group cursor-pointer shrink-0"
+          className="flex items-center justify-start gap-4 sm:gap-5 group cursor-pointer"
         >
-          <div className="size-5 sm:size-6 text-primary group-hover:scale-110 transition-transform shrink-0">
-            <span className="material-symbols-outlined text-xl sm:text-2xl">
-              hub
-            </span>
+          <div className="size-5 sm:size-4 text-primary group-hover:scale-110 transition-transform shrink-0">
           </div>
           {/* Brand — always visible */}
           <span className="text-xs sm:text-sm font-bold tracking-widest lowercase text-slate-200 group-hover:text-white transition-colors whitespace-nowrap shrink-0">
@@ -68,7 +66,7 @@ export default function Header({ pagePath = "HOME" }: { pagePath?: string }) {
           onClick={toggleSidebar}
           aria-label="Toggle sidebar"
         >
-          <span className="material-symbols-outlined text-xl">menu</span>
+          <Menu className="w-5 h-5" />
         </button>
       </div>
     </header>

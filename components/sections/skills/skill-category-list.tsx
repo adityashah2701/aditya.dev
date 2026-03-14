@@ -5,6 +5,72 @@ import React, { useMemo } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { SkillSection } from "@/constants/skills";
+import {
+  Code2,
+  Database,
+  HardDrive,
+  Network,
+  Server,
+  Terminal,
+  Palette,
+  Layers,
+  Languages,
+  Settings,
+  Cpu,
+  Monitor,
+  LayoutGrid,
+  Globe,
+  Webhook,
+  Brackets,
+  Blocks,
+  Cloud,
+  Atom,
+  Hammer,
+  HardHat,
+  Gamepad,
+  Smartphone,
+  Shield,
+  Zap,
+  Bug,
+  Braces,
+  type LucideIcon,
+} from "lucide-react";
+
+const ICON_MAP: Record<string, LucideIcon> = {
+  javascript: Braces,
+  database: Database,
+  storage: HardDrive,
+  dns: Network,
+  server: Server,
+  terminal: Terminal,
+  palette: Palette,
+  layers: Layers,
+  language: Languages,
+  settings: Settings,
+  memory: Cpu,
+  desktop_windows: Monitor,
+  view_quilt: LayoutGrid,
+  code: Code2,
+  web: Globe,
+  api: Webhook,
+  data_object: Brackets,
+  widgets: Blocks,
+  cloud: Cloud,
+  science: Atom,
+  build: Hammer,
+  bug_report: Bug,
+  construction: HardHat,
+  sports_esports: Gamepad,
+  smartphone: Smartphone,
+  security: Shield,
+  bolt: Zap,
+  // Fallbacks mapping
+};
+
+const getIcon = (iconName: string) => {
+  const Icon = ICON_MAP[iconName?.toLowerCase()] || Code2;
+  return <Icon className="w-6 h-6 text-primary" strokeWidth={1.5} />;
+};
 
 export default function SkillCategoryList() {
   const techStackData = useQuery(api.techstack.getTechStack);
@@ -72,9 +138,7 @@ export default function SkillCategoryList() {
               >
                 <CardContent className="p-6">
                   <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-100 transition-opacity">
-                    <span className="material-symbols-outlined text-primary text-4xl">
-                      {category.icon}
-                    </span>
+                    {getIcon(category.icon)}
                   </div>
                   <h3 className="text-xs font-bold text-slate-500 tracking-widest mb-4">
                     {category.title}

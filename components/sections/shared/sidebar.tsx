@@ -1,86 +1,92 @@
 "use client";
 
 import Link from "next/link";
+import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import type { SidebarProps } from "@/types/sidebar";
 import {
   Sidebar as ShadcnSidebar,
   SidebarContent,
   SidebarHeader,
-  SidebarGroup,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
   SidebarFooter,
   useSidebar,
 } from "@/components/ui/sidebar";
+import TimeLocationWidget from "./time-location-widget";
 
-export default function Sidebar({
-  title,
-  links,
-  terminalHeader = "SYSTEM_TERMINAL",
-  terminalLogs = [],
-}: SidebarProps) {
-  const { setOpenMobile } = useSidebar();
+export default function Sidebar({ title, links }: SidebarProps) {
+  const { setOpenMobile, toggleSidebar, open, isMobile } = useSidebar();
 
   return (
-    <ShadcnSidebar className="border-r border-border-dark bg-background-dark! **:data-[sidebar=sidebar]:bg-background-dark">
-      <SidebarHeader className="p-6 pb-2">
-        <h2 className="text-xs font-bold text-slate-500 tracking-widest">
+    <ShadcnSidebar
+      collapsible="offcanvas"
+      className="border-r border-border-dark bg-background-dark! **:data-[sidebar=sidebar]:bg-background-dark"
+    >
+      {/* ── Header ── */}
+      <SidebarHeader
+        className="h-11 border-b border-border-dark/50 flex flex-row items-center shrink-0 px-3 justify-between"
+      >
+        <span className="text-[11px] font-bold text-slate-200 tracking-widest uppercase truncate">
           {title}
-        </h2>
+        </span>
+
+        {/* Toggle button — mobile only */}
+        {isMobile && (
+          <button
+            onClick={toggleSidebar}
+            aria-label={open ? "Collapse sidebar" : "Expand sidebar"}
+            className="flex items-center justify-center w-7 h-7 shrink-0 rounded text-slate-500 hover:text-primary hover:bg-surface-dark border border-transparent hover:border-border-dark transition-all duration-150"
+          >
+            {open ? (
+              <PanelLeftClose className="w-[15px] h-[15px] shrink-0" />
+            ) : (
+              <PanelLeftOpen className="w-[15px] h-[15px] shrink-0" />
+            )}
+          </button>
+        )}
       </SidebarHeader>
 
-      <SidebarContent>
-        <SidebarGroup className="px-3 py-2">
-          <SidebarMenu className="gap-1">
-            {links.map((link, idx) => (
-              <SidebarMenuItem key={idx}>
-                <SidebarMenuButton
-                  asChild
-                  isActive={link.active}
-                  className="group flex items-center justify-between px-3 py-5 rounded-none transition-all data-[active=true]:bg-primary/10 data-[active=true]:border data-[active=true]:border-primary/20 hover:bg-surface-dark border border-transparent hover:border-border-dark!"
-                >
-                  <Link href={link.href} onClick={() => setOpenMobile(false)}>
-                    <div className="flex items-center gap-3">
-                      <span
-                        className={`material-symbols-outlined text-sm ${
-                          link.active
-                            ? "text-primary"
-                            : "text-slate-500 group-hover:text-primary"
-                        }`}
-                      >
-                        {link.icon}
-                      </span>
-                      <span
-                        className={`text-sm font-medium whitespace-nowrap truncate ${
-                          link.active
-                            ? "text-white"
-                            : "text-slate-300 group-hover:text-white"
-                        }`}
-                      >
-                        0{idx + 1}. {link.label}
-                      </span>
-                    </div>
-                    {link.active && (
-                      <span className="size-1.5 rounded-none bg-primary shadow-[0_0_8px_rgba(19,73,236,0.8)]"></span>
-                    )}
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarGroup>
+      {/* ── Nav ── */}
+      <SidebarContent className="pt-1.5 pb-0">
+        <nav className="flex flex-col gap-1.5 px-1.5">
+          {links.map((link, idx) => (
+            <Link
+              key={idx}
+              href={link.href}
+              onClick={() => setOpenMobile(false)}
+              className={[
+                "flex items-center gap-2.5 px-2.5 py-1.5 justify-start transition-all duration-150 border rounded-sm",
+                link.active
+                  ? "bg-primary/10 border-primary/30"
+                  : "border-transparent hover:bg-surface-dark hover:border-border-dark",
+              ].join(" ")}
+            >
+              <span
+                className={`flex items-center justify-center shrink-0 ${
+                  link.active ? "text-primary" : "text-slate-500"
+                }`}
+              >
+                {link.icon}
+              </span>
+              <span
+                className={`text-[11px] font-medium tracking-wide truncate ${
+                  link.active ? "text-white" : "text-slate-400"
+                }`}
+              >
+                0{idx + 1}. {link.label}
+              </span>
+              {link.active && (
+                <span className="ml-auto size-1.5 shrink-0 rounded-none bg-primary shadow-[0_0_6px_rgba(19,73,236,0.9)]" />
+              )}
+            </Link>
+          ))}
+        </nav>
       </SidebarContent>
 
-      <SidebarFooter className="p-6 border-t border-border-dark">
-        <h2 className="text-xs font-bold text-slate-500 mb-4 tracking-widest">
-          {terminalHeader}
-        </h2>
-        <div className="font-mono text-[10px] leading-relaxed text-slate-500 space-y-1">
-          {terminalLogs.map((log, idx) => (
-            <p key={idx}>{log}</p>
-          ))}
-        </div>
+      {/* ── Footer ── */}
+      <SidebarFooter className="p-3 border-t border-border-dark">
+        <p className="text-[9px] font-bold text-slate-600 mb-1.5 tracking-widest uppercase">
+          SYSTEM_STATUS
+        </p>
+        <TimeLocationWidget />
       </SidebarFooter>
     </ShadcnSidebar>
   );

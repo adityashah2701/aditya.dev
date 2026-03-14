@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 60,
   },
 
+  experimental: {
+    optimizePackageImports: ["lucide-react", "@base-ui/react", "motion"],
+  },
+
   async headers() {
     return [
       {

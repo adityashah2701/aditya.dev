@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Send } from "lucide-react";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -120,9 +121,7 @@ export default function ContactForm() {
             className="mt-2 w-full bg-primary hover:bg-primary/90 text-white font-mono text-sm font-bold py-6 px-6 transition-all border border-transparent hover:shadow-[0_0_15px_rgba(19,73,236,0.4)] flex items-center justify-center gap-2 group rounded-none"
           >
             <span>EXECUTE_TRANSMISSION</span>
-            <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">
-              send
-            </span>
+            <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Button>
         </form>
       </div>

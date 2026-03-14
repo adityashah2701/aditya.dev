@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { Breadcrumb } from "@/components/sections/shared";
 import { HomeHero, PersonalIdentity } from "@/components/sections/home";
 import { SITE_URL, SITE_TITLE, OG_IMAGE_URL } from "@/constants/seo";
+import { Github, Network, Mail } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -31,6 +32,43 @@ export default function Home() {
       <Breadcrumb items={breadcrumbItems} />
       <HomeHero />
       <PersonalIdentity />
+
+      {/* ── Social Links ── */}
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-3 mb-6 md:mb-10">
+        <a
+          href="https://github.com/adityashah2701"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors group"
+        >
+          <Github className="w-3.5 h-3.5" />
+          <span className="font-mono text-[11px] tracking-wide group-hover:text-primary">
+            GITHUB
+          </span>
+        </a>
+        <span className="text-border-dark font-mono text-xs">|</span>
+        <a
+          href="https://linkedin.com/in/aditya-shah-078b7a2a5"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors group"
+        >
+          <Network className="w-3.5 h-3.5" />
+          <span className="font-mono text-[11px] tracking-wide group-hover:text-primary">
+            LINKEDIN
+          </span>
+        </a>
+        <span className="text-border-dark font-mono text-xs">|</span>
+        <a
+          href="mailto:adityashah2701.work@gmail.com"
+          className="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors group"
+        >
+          <Mail className="w-3.5 h-3.5" />
+          <span className="font-mono text-[11px] tracking-wide group-hover:text-primary">
+            EMAIL
+          </span>
+        </a>
+      </div>
     </>
   );
 }

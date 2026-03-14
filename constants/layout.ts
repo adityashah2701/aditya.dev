@@ -40,7 +40,7 @@ export const PAGE_PATHS: Record<string, string> = {
 };
 
 export const SIDEBAR_TITLES: Record<string, string> = {
-  default: "SYSTEM_MODULES",
+  default: "ADITYA",
   projectDetail: "NAVIGATE_MODULE",
 };
 

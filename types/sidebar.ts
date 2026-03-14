@@ -1,10 +1,11 @@
-import type { ReactNode } from "react";
+
+import { ReactNode } from "react";
 
 // Shared type for a sidebar navigation link
 export type SidebarLink = {
   href: string;
   label: string;
-  icon: string;
+  icon: ReactNode;
   active?: boolean;
 };
 
@@ -12,6 +13,4 @@ export type SidebarLink = {
 export type SidebarProps = {
   title: string;
   links: SidebarLink[];
-  terminalHeader?: string;
-  terminalLogs?: ReactNode[];
 };

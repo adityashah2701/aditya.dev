@@ -16,6 +16,37 @@
 
   /* Custom breakpoints */
   --breakpoint-xs: 480px;
+
+  /*
+   * ─── Global Spacing Scale ──────────────────────────────────────────────────
+   * Tailwind v4 multiplies this base unit by the numeric suffix.
+   * Default: 0.25rem → gap-4 = 1rem, p-6 = 1.5rem, mb-20 = 5rem
+   * Reduced: 0.2rem  → gap-4 = 0.8rem, p-6 = 1.2rem, mb-20 = 4rem (~20% tighter)
+   * Change this value to adjust all spacing globally.
+   * ────────────────────────────────────────────────────────────────────────────
+   */
+  --spacing: 0.2rem;
+
+  /*
+   * ─── Global Typography Scale ───────────────────────────────────────────────
+   * Each text-* class is shifted down one level from Tailwind's defaults.
+   * text-8xl → renders at what was text-7xl, text-6xl → text-5xl, etc.
+   * Change these values here to resize the entire application typography.
+   * ────────────────────────────────────────────────────────────────────────────
+   */
+  --text-xs: 0.6875rem;   /* 11px  — default: 12px  */
+  --text-sm: 0.75rem;     /* 12px  — default: 14px  */
+  --text-base: 0.875rem;  /* 14px  — default: 16px  */
+  --text-lg: 1rem;        /* 16px  — default: 18px  */
+  --text-xl: 1.125rem;    /* 18px  — default: 20px  */
+  --text-2xl: 1.25rem;    /* 20px  — default: 24px  */
+  --text-3xl: 1.5rem;     /* 24px  — default: 30px  */
+  --text-4xl: 1.875rem;   /* 30px  — default: 36px  */
+  --text-5xl: 2.25rem;    /* 36px  — default: 48px  */
+  --text-6xl: 3rem;       /* 48px  — default: 60px  */
+  --text-7xl: 3.75rem;    /* 60px  — default: 72px  */
+  --text-8xl: 4.5rem;     /* 72px  — default: 96px  */
+  --text-9xl: 6rem;       /* 96px  — default: 128px */
 }
 
 @layer utilities {

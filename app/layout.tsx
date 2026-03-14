@@ -86,9 +86,8 @@ export const metadata: Metadata = {
       "en-US": SITE_URL,
     },
   },
-
   icons: {
-    icon: "/favicon.ico",
+    icon: "/icon.png",
     apple: "/apple-icon.png",
   },
 };
@@ -119,11 +118,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
 
-        {/* Material Symbols Outlined icon font */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-          rel="stylesheet"
-        />
+
 
         {/* JSON-LD Structured Data — Person schema */}
         <script
