@@ -1,6 +1,5 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
-import { verifyAdminAuth } from "./auth";
 
 export const getTechStack = query({
   handler: async (ctx) => {
@@ -20,13 +19,9 @@ export const addCategory = mutation({
     icon: v.string(),
     skills: v.array(v.object({ name: v.string() })),
     order: v.number(),
-    token: v.string(),
   },
   handler: async (ctx, args) => {
-    await verifyAdminAuth(args.token);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { token, ...data } = args;
-    await ctx.db.insert("techstack", data);
+    await ctx.db.insert("techstack", args);
   },
 });
 
@@ -39,12 +34,9 @@ export const updateCategory = mutation({
     icon: v.string(),
     skills: v.array(v.object({ name: v.string() })),
     order: v.number(),
-    token: v.string(),
   },
   handler: async (ctx, args) => {
-    await verifyAdminAuth(args.token);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { id, token, ...data } = args;
+    const { id, ...data } = args;
     await ctx.db.patch(id, data);
   },
 });
@@ -52,10 +44,8 @@ export const updateCategory = mutation({
 export const deleteCategory = mutation({
   args: {
     id: v.id("techstack"),
-    token: v.string(),
   },
   handler: async (ctx, args) => {
-    await verifyAdminAuth(args.token);
     await ctx.db.delete(args.id);
   },
 });

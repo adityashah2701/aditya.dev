@@ -1,7 +1,5 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
-import { verifyAdminAuth } from "./auth";
-
 import { paginationOptsValidator } from "convex/server";
 
 export const getCertificates = query({
@@ -27,9 +25,8 @@ export const getLatestCertificates = query({
 });
 
 export const generateUploadUrl = mutation({
-  args: { token: v.string() },
-  handler: async (ctx, args) => {
-    await verifyAdminAuth(args.token);
+  args: {},
+  handler: async (ctx) => {
     return await ctx.storage.generateUploadUrl();
   },
 });
@@ -44,17 +41,10 @@ export const createCertificate = mutation({
     tags: v.array(v.string()),
     description: v.optional(v.string()),
     verificationUrl: v.optional(v.string()),
-    token: v.string(),
   },
   handler: async (ctx, args) => {
-    await verifyAdminAuth(args.token);
-
-    // Destructure to avoid saving the token in the DB
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { token, ...certificateData } = args;
-
     return await ctx.db.insert("certificates", {
-      ...certificateData,
+      ...args,
       createdAt: Date.now(),
     });
   },
@@ -63,11 +53,8 @@ export const createCertificate = mutation({
 export const deleteCertificate = mutation({
   args: { 
     id: v.id("certificates"),
-    token: v.string()
   },
   handler: async (ctx, args) => {
-    await verifyAdminAuth(args.token);
-
     const certificate = await ctx.db.get(args.id);
     if (!certificate) {
       throw new Error("Certificate not found");

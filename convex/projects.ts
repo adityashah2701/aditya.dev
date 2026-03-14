@@ -1,7 +1,6 @@
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 import { Id } from "./_generated/dataModel";
-import { verifyAdminAuth } from "./auth";
 
 /**
  * Public query — fetch all projects ordered by the `order` field.
@@ -28,13 +27,9 @@ export const addProject = mutation({
     order: v.number(),
     featured: v.boolean(),
     techStack: v.array(v.string()),
-    token: v.string(),
   },
   handler: async (ctx, args) => {
-    await verifyAdminAuth(args.token);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { token, ...data } = args;
-    await ctx.db.insert("projects", data);
+    await ctx.db.insert("projects", args);
   },
 });
 
@@ -51,12 +46,9 @@ export const updateProject = mutation({
     order: v.number(),
     featured: v.boolean(),
     techStack: v.array(v.string()),
-    token: v.string(),
   },
   handler: async (ctx, args) => {
-    await verifyAdminAuth(args.token);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { id, token, ...data } = args;
+    const { id, ...data } = args;
     await ctx.db.patch(id, data);
   },
 });
@@ -64,10 +56,8 @@ export const updateProject = mutation({
 export const deleteProject = mutation({
   args: {
     id: v.id("projects"),
-    token: v.string(),
   },
   handler: async (ctx, args) => {
-    await verifyAdminAuth(args.token);
     const project = await ctx.db.get(args.id);
     if (!project) return;
     

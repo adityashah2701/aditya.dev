@@ -4,26 +4,8 @@ import { api } from "@/convex/_generated/api";
 
 export async function POST(req: Request) {
   try {
-    const authHeader = req.headers.get("Authorization");
-    const adminSecret = process.env.ADMIN_SECRET;
-
-    if (!adminSecret) {
-      return NextResponse.json(
-        { error: "Server misconfiguration. ADMIN_SECRET is missing." },
-        { status: 500 },
-      );
-    }
-
-    if (authHeader !== `Bearer ${adminSecret}`) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     const body = await req.json();
-
-    const techStackId = await fetchMutation(api.admin.addTechStackCategory, {
-      secret: adminSecret,
-      ...body,
-    });
+    const techStackId = await fetchMutation(api.techstack.addCategory, body);
 
     return NextResponse.json(
       { success: true, id: techStackId },
