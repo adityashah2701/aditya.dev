@@ -1,146 +1,327 @@
-Refactor the Archive gallery and certificate modal to improve the overall **horizontal balance, vertical rhythm, and visual hierarchy** of the certificate viewing experience. The current implementation works functionally but produces poor UX due to uneven layout distribution, excessive empty space around the certificate, and weak separation between the document viewer and metadata panel.
+Optimize the admin interface so it integrates cleanly alongside the existing portfolio without affecting the public user experience, bundle size, or design language.
 
-The goal is to transform the archive into a **clean proof-of-work viewer** where the certificate is the visual centerpiece and the metadata panel acts as contextual support.
-
----
-
-## Improve Modal Layout Balance
-
-Rework the modal structure so the certificate viewer visually dominates the layout instead of feeling squeezed between margins and metadata.
-
-The viewer panel should become the primary visual element and occupy the majority of horizontal space. The metadata panel should be treated as a secondary column that provides contextual information rather than competing with the document.
-
-Ensure the layout adapts smoothly across different screen widths without compressing the certificate.
+The admin UI should behave as a **separate management layer** while still sharing the visual identity of the portfolio.
 
 ---
 
-## Fix Certificate Viewer Framing
+### Separate Visual Identity for Admin
 
-Currently the certificate appears to float inside the modal with weak visual boundaries.
+The admin interface should feel like a **control panel**, not a public-facing page.
 
-Introduce a dedicated **viewer frame** around the document that visually separates it from the modal background. The frame should make the certificate feel like a physical document being viewed rather than a raw canvas element rendered by react-pdf.
+Keep the core design tokens (colors, typography, spacing) consistent with the portfolio, but adjust the layout to feel more functional.
 
-The viewer frame should:
+Admin UI should prioritize:
 
-• center the document vertically and horizontally
-• prevent the certificate from touching modal edges
-• maintain proper document aspect ratio
-• prevent extreme vertical stretching
+clarity
+data visibility
+management workflows
 
-The certificate should always feel **stable and grounded inside the viewer area**.
-
----
-
-## Improve Viewer Interaction Layer
-
-The zoom controls currently feel detached from the viewer experience.
-
-Group all document interaction controls into a small floating toolbar attached to the viewer instead of leaving them loosely positioned.
-
-Controls should feel like part of the viewer environment rather than part of the metadata panel.
-
-Ensure zooming never breaks the modal layout or pushes the document outside the viewer frame.
+Avoid heavy animations and marketing-style visuals used in the public portfolio.
 
 ---
 
-## Strengthen Metadata Panel Hierarchy
+### Navigation Isolation
 
-The metadata panel currently feels visually dense and lacks proper grouping.
+Admin navigation should be completely independent from the public navigation.
 
-Restructure the panel into clear content sections that are easier to scan.
+The admin sidebar should contain only management tools such as:
 
-Sections should include:
+overview
+projects
+tech stack
+archive
+messages
 
-Credential title
-Issuer information
-Issue date
-Description
-Skills or tags
-Action buttons
+The public navigation should never appear inside the admin interface.
 
-Each section should feel visually separated from the next so that the panel reads like a structured information column instead of a continuous block of text.
-
----
-
-## Improve Title and Content Flow
-
-The credential title currently dominates the metadata panel in a way that creates visual imbalance.
-
-Refactor the text hierarchy so the title remains prominent but does not overwhelm the panel layout.
-
-Issuer information and date should appear clearly grouped under the title to create a logical reading flow.
-
-Descriptions should feel comfortably readable and not squeezed into narrow vertical space.
+This prevents user confusion and maintains separation between visitor and admin experiences.
 
 ---
 
-## Improve Tag Presentation
+### Layout Structure
 
-Skills and tags should not feel like loose UI fragments.
+Use a consistent admin layout structure:
 
-Refactor the tags into a consistent chip system that wraps naturally inside the panel.
+top header for system information and actions
+left sidebar for navigation
+main content area for data views
 
-Tags should visually relate to each other and feel like a small skill cluster rather than individual buttons.
+All admin pages should inherit this layout so the dashboard feels cohesive.
 
----
+Avoid full-width content stretching across the screen.
 
-## Improve Gallery Card Design
-
-The masonry gallery cards currently work but still feel slightly unbalanced vertically.
-
-Improve the card structure so the certificate preview feels framed and visually connected to the card metadata.
-
-The preview area should maintain the correct document aspect ratio while preventing extremely tall cards that break the masonry layout.
-
-Card metadata should feel attached to the preview rather than appearing as a separate block below it.
+Content panels should be centered and structured like a dashboard.
 
 ---
 
-## Improve Archive Page Balance
+### UI Density
 
-The archive page currently has a lot of empty horizontal space when only a few certificates exist.
+Admin panels should use **higher information density** than the public portfolio.
 
-Adjust the masonry container so the gallery visually centers itself instead of hugging the left side of the content area.
+Cards should contain actionable information rather than decorative content.
 
-This makes the page feel more intentional when the archive is still small.
+Example improvements:
 
----
+list views instead of large cards
+table-based layouts for data-heavy sections
+compact forms for editing content
 
-## Improve Visual Depth
-
-Introduce subtle depth layers across the archive UI.
-
-The viewer container, metadata panel, and gallery cards should each have slightly different visual surfaces so the interface does not feel flat.
-
-Depth should be subtle and consistent with the rest of the portfolio design language.
+This allows faster management workflows.
 
 ---
 
-## Improve Motion and Interaction
+### Form Optimization
 
-Add small interaction feedback to make the archive feel alive.
+Admin forms should be designed for speed.
 
-Gallery cards should respond to hover with subtle elevation.
+Group related inputs into sections.
 
-The modal viewer should animate smoothly when opening and closing.
+Example:
 
-Transitions between gallery and modal should feel intentional and fluid.
+basic metadata
+file upload
+tags and categorization
 
----
+Use inline validation so errors appear immediately.
 
-## Maintain Compatibility with Current Stack
-
-All improvements must work with the current technology stack:
-
-react-masonry-css for the archive grid
-react-pdf with pdfjs-dist for document rendering
-
-The goal is not to replace these libraries but to **improve layout composition and interaction design around them**.
+Avoid long vertically stacked forms that require excessive scrolling.
 
 ---
 
-## Final UX Goal
+### Feedback and System Status
 
-The archive should feel like a **professional proof-of-work dashboard** where certificates are presented as visual artifacts rather than downloadable files.
+Admin actions should always provide clear feedback.
 
-Visitors should immediately recognize the certificates as the focal point of the page while metadata provides helpful context without overwhelming the interface.
+When uploading certificates, saving forms, or deleting entries, display clear success or failure messages.
+
+Use small system notifications rather than full-screen alerts.
+
+---
+
+### Data Visibility
+
+Admin panels should prioritize visibility of important information.
+
+For example:
+
+certificate thumbnails in archive manager
+project titles and tags in project manager
+sender information in messages inbox
+
+Admins should be able to understand the state of the system at a glance.
+
+---
+
+### Admin-Only UI Components
+
+Introduce reusable admin components such as:
+
+data tables
+form panels
+file upload zones
+confirmation dialogs
+
+These components should not be used in the public portfolio to avoid design conflicts.
+
+---
+
+### Performance Isolation
+
+Admin UI should not impact the performance of the public portfolio.
+
+Ensure that admin components are only loaded when accessing admin routes.
+
+The public portfolio should never import admin dashboard components.
+
+This keeps the visitor-facing site lightweight.
+
+---
+
+### Mobile Considerations
+
+Admin UI does not need the same mobile polish as the public portfolio.
+
+Focus primarily on desktop usability.
+
+However, ensure the layout does not break on smaller screens.
+
+---
+
+### Design Consistency
+
+Maintain the portfolio's overall visual theme but simplify it for admin usage.
+
+Reduce background effects, animated elements, and decorative styling.
+
+Admin UI should feel structured and purposeful rather than aesthetic.
+
+---
+
+### Final Goal
+
+The admin interface should function as a **clean internal dashboard** that allows efficient management of portfolio content while remaining visually compatible with the existing portfolio.
+
+Visitors should never encounter admin UI elements, and the admin system should never degrade the performance or clarity of the public site.Optimize the admin interface so it integrates cleanly alongside the existing portfolio without affecting the public user experience, bundle size, or design language.
+
+The admin UI should behave as a **separate management layer** while still sharing the visual identity of the portfolio.
+
+---
+
+### Separate Visual Identity for Admin
+
+The admin interface should feel like a **control panel**, not a public-facing page.
+
+Keep the core design tokens (colors, typography, spacing) consistent with the portfolio, but adjust the layout to feel more functional.
+
+Admin UI should prioritize:
+
+clarity
+data visibility
+management workflows
+
+Avoid heavy animations and marketing-style visuals used in the public portfolio.
+
+---
+
+### Navigation Isolation
+
+Admin navigation should be completely independent from the public navigation.
+
+The admin sidebar should contain only management tools such as:
+
+overview
+projects
+tech stack
+archive
+messages
+
+The public navigation should never appear inside the admin interface.
+
+This prevents user confusion and maintains separation between visitor and admin experiences.
+
+---
+
+### Layout Structure
+
+Use a consistent admin layout structure:
+
+top header for system information and actions
+left sidebar for navigation
+main content area for data views
+
+All admin pages should inherit this layout so the dashboard feels cohesive.
+
+Avoid full-width content stretching across the screen.
+
+Content panels should be centered and structured like a dashboard.
+
+---
+
+### UI Density
+
+Admin panels should use **higher information density** than the public portfolio.
+
+Cards should contain actionable information rather than decorative content.
+
+Example improvements:
+
+list views instead of large cards
+table-based layouts for data-heavy sections
+compact forms for editing content
+
+This allows faster management workflows.
+
+---
+
+### Form Optimization
+
+Admin forms should be designed for speed.
+
+Group related inputs into sections.
+
+Example:
+
+basic metadata
+file upload
+tags and categorization
+
+Use inline validation so errors appear immediately.
+
+Avoid long vertically stacked forms that require excessive scrolling.
+
+---
+
+### Feedback and System Status
+
+Admin actions should always provide clear feedback.
+
+When uploading certificates, saving forms, or deleting entries, display clear success or failure messages.
+
+Use small system notifications rather than full-screen alerts.
+
+---
+
+### Data Visibility
+
+Admin panels should prioritize visibility of important information.
+
+For example:
+
+certificate thumbnails in archive manager
+project titles and tags in project manager
+sender information in messages inbox
+
+Admins should be able to understand the state of the system at a glance.
+
+---
+
+### Admin-Only UI Components
+
+Introduce reusable admin components such as:
+
+data tables
+form panels
+file upload zones
+confirmation dialogs
+
+These components should not be used in the public portfolio to avoid design conflicts.
+
+---
+
+### Performance Isolation
+
+Admin UI should not impact the performance of the public portfolio.
+
+Ensure that admin components are only loaded when accessing admin routes.
+
+The public portfolio should never import admin dashboard components.
+
+This keeps the visitor-facing site lightweight.
+
+---
+
+### Mobile Considerations
+
+Admin UI does not need the same mobile polish as the public portfolio.
+
+Focus primarily on desktop usability.
+
+However, ensure the layout does not break on smaller screens.
+
+---
+
+### Design Consistency
+
+Maintain the portfolio's overall visual theme but simplify it for admin usage.
+
+Reduce background effects, animated elements, and decorative styling.
+
+Admin UI should feel structured and purposeful rather than aesthetic.
+
+---
+
+### Final Goal
+
+The admin interface should function as a **clean internal dashboard** that allows efficient management of portfolio content while remaining visually compatible with the existing portfolio.
+
+Visitors should never encounter admin UI elements, and the admin system should never degrade the performance or clarity of the public site.

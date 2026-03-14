@@ -21,10 +21,8 @@ export default function Sidebar({ title, links }: SidebarProps) {
       className="border-r border-border-dark bg-background-dark! **:data-[sidebar=sidebar]:bg-background-dark"
     >
       {/* ── Header ── */}
-      <SidebarHeader
-        className="h-11 border-b border-border-dark/50 flex flex-row items-center shrink-0 px-3 justify-between"
-      >
-        <span className="text-[11px] font-bold text-slate-200 tracking-widest uppercase truncate">
+      <SidebarHeader className="h-11 border-b border-border-dark/50 flex py-7 flex-row items-center shrink-0 px-3 justify-between">
+        <span className="text-[20px] font-bold text-slate-200 tracking-normal truncate">
           {title}
         </span>
 
