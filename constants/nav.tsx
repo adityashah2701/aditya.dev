@@ -1,11 +1,11 @@
 import type { SidebarLink } from "@/types/sidebar";
-import { Home, Terminal, FolderOpen, History, Mail, ArrowLeft, AlertTriangle, Box, Database, Code } from "lucide-react";
+import { Home, Terminal, FolderOpen, Award, Mail, ArrowLeft, AlertTriangle, Box, Database, Code } from "lucide-react";
 import React from "react";
 export const MAIN_NAV_LINKS: SidebarLink[] = [
   { href: "/", label: "HOME", icon: <Home className="w-[16px] h-[16px]" /> },
   { href: "/skills", label: "TECH_STACK", icon: <Terminal className="w-[16px] h-[16px]" /> },
   { href: "/projects", label: "REPOSITORIES", icon: <FolderOpen className="w-[16px] h-[16px]" /> },
-  { href: "/experience", label: "EXPERIENCE_LOGS", icon: <History className="w-[16px] h-[16px]" /> },
+  { href: "/archive", label: "ARCHIVE", icon: <Award className="w-[16px] h-[16px]" /> },
   { href: "/contact", label: "INITIATE_CONTACT", icon: <Mail className="w-[16px] h-[16px]" /> },
 ];
 

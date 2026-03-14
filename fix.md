@@ -1,270 +1,146 @@
-# Portfolio Website SEO Optimization
+Refactor the Archive gallery and certificate modal to improve the overall **horizontal balance, vertical rhythm, and visual hierarchy** of the certificate viewing experience. The current implementation works functionally but produces poor UX due to uneven layout distribution, excessive empty space around the certificate, and weak separation between the document viewer and metadata panel.
 
-## ROLE
-
-You are a **Senior Frontend Engineer and Technical SEO Expert**.
-
-Your task is to improve my **portfolio website SEO** by adding proper **metadata, meta tags, structured data, and technical SEO optimizations**.
-
-Follow modern SEO standards used in production websites.
-
-### IMPORTANT
-
-* Do NOT change UI
-* Do NOT modify styling
-* Do NOT break existing functionality
-* Only add SEO related improvements
+The goal is to transform the archive into a **clean proof-of-work viewer** where the certificate is the visual centerpiece and the metadata panel acts as contextual support.
 
 ---
 
-# OBJECTIVE
+## Improve Modal Layout Balance
 
-Optimize the portfolio website for:
+Rework the modal structure so the certificate viewer visually dominates the layout instead of feeling squeezed between margins and metadata.
 
-* Search engine indexing
-* Google ranking
-* Social media preview
-* Faster crawlability
-* Better metadata structure
-* Semantic HTML
-* Performance optimization
+The viewer panel should become the primary visual element and occupy the majority of horizontal space. The metadata panel should be treated as a secondary column that provides contextual information rather than competing with the document.
+
+Ensure the layout adapts smoothly across different screen widths without compressing the certificate.
 
 ---
 
-# 1 Add Essential Meta Tags
+## Fix Certificate Viewer Framing
 
-Ensure the following exist inside the `<head>` section.
+Currently the certificate appears to float inside the modal with weak visual boundaries.
 
-```
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+Introduce a dedicated **viewer frame** around the document that visually separates it from the modal background. The frame should make the certificate feel like a physical document being viewed rather than a raw canvas element rendered by react-pdf.
 
-<title>Aditya Shah | Software Developer Portfolio</title>
+The viewer frame should:
 
-<meta name="description" content="Aditya Shah portfolio showcasing software development projects, AI tools, full stack applications, and modern web technologies.">
+• center the document vertically and horizontally
+• prevent the certificate from touching modal edges
+• maintain proper document aspect ratio
+• prevent extreme vertical stretching
 
-<meta name="keywords" content="Aditya Shah, software developer, full stack developer, web developer portfolio, AI developer, JavaScript developer, React developer, backend developer, software engineer portfolio">
-
-<meta name="author" content="Aditya Shah">
-
-<meta name="robots" content="index, follow">
-```
+The certificate should always feel **stable and grounded inside the viewer area**.
 
 ---
 
-# 2 Add Open Graph Metadata
+## Improve Viewer Interaction Layer
 
-These tags improve link previews on **LinkedIn, Facebook, WhatsApp, Discord etc.**
+The zoom controls currently feel detached from the viewer experience.
 
-```
-<meta property="og:title" content="Aditya Shah | Software Developer Portfolio">
-<meta property="og:description" content="Portfolio of Aditya Shah showcasing full stack development, AI projects, and modern web applications.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://yourdomain.com">
-<meta property="og:image" content="https://yourdomain.com/preview.png">
-```
+Group all document interaction controls into a small floating toolbar attached to the viewer instead of leaving them loosely positioned.
+
+Controls should feel like part of the viewer environment rather than part of the metadata panel.
+
+Ensure zooming never breaks the modal layout or pushes the document outside the viewer frame.
 
 ---
 
-# 3 Add Twitter Metadata
+## Strengthen Metadata Panel Hierarchy
 
-Improve previews on **Twitter / X**.
+The metadata panel currently feels visually dense and lacks proper grouping.
 
-```
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Aditya Shah | Software Developer">
-<meta name="twitter:description" content="Software developer portfolio featuring AI tools, web apps, and modern full stack projects.">
-<meta name="twitter:image" content="https://yourdomain.com/preview.png">
-```
+Restructure the panel into clear content sections that are easier to scan.
 
----
+Sections should include:
 
-# 4 Add Canonical Tag
+Credential title
+Issuer information
+Issue date
+Description
+Skills or tags
+Action buttons
 
-Prevent duplicate SEO indexing.
-
-```
-<link rel="canonical" href="https://yourdomain.com">
-```
+Each section should feel visually separated from the next so that the panel reads like a structured information column instead of a continuous block of text.
 
 ---
 
-# 5 Add Structured Data (Schema.org)
+## Improve Title and Content Flow
 
-Add structured JSON-LD data for a **Person Portfolio**.
+The credential title currently dominates the metadata panel in a way that creates visual imbalance.
 
-```
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "Person",
- "name": "Aditya Shah",
- "url": "https://yourdomain.com",
- "jobTitle": "Software Developer",
- "sameAs": [
-   "https://github.com/yourgithub",
-   "https://linkedin.com/in/yourlinkedin"
- ]
-}
-</script>
-```
+Refactor the text hierarchy so the title remains prominent but does not overwhelm the panel layout.
+
+Issuer information and date should appear clearly grouped under the title to create a logical reading flow.
+
+Descriptions should feel comfortably readable and not squeezed into narrow vertical space.
 
 ---
 
-# 6 Improve Semantic HTML
+## Improve Tag Presentation
 
-Ensure sections use proper semantic tags.
+Skills and tags should not feel like loose UI fragments.
 
-```
-<header>
-  <nav></nav>
-</header>
+Refactor the tags into a consistent chip system that wraps naturally inside the panel.
 
-<main>
-
-  <section id="about"></section>
-
-  <section id="projects"></section>
-
-  <section id="skills"></section>
-
-  <section id="contact"></section>
-
-</main>
-
-<footer></footer>
-```
+Tags should visually relate to each other and feel like a small skill cluster rather than individual buttons.
 
 ---
 
-# 7 Image SEO Optimization
+## Improve Gallery Card Design
 
-Every image must include descriptive alt text.
+The masonry gallery cards currently work but still feel slightly unbalanced vertically.
 
-Example:
+Improve the card structure so the certificate preview feels framed and visually connected to the card metadata.
 
-```
-<img src="ai-workflow-builder.png" alt="AI workflow builder project created by Aditya Shah">
-```
+The preview area should maintain the correct document aspect ratio while preventing extremely tall cards that break the masonry layout.
 
-Enable lazy loading.
-
-```
-<img src="project.png" loading="lazy" alt="Full stack ecommerce project preview">
-```
+Card metadata should feel attached to the preview rather than appearing as a separate block below it.
 
 ---
 
-# 8 Add robots.txt
+## Improve Archive Page Balance
 
-Create a **robots.txt** file at the root of the website.
+The archive page currently has a lot of empty horizontal space when only a few certificates exist.
 
-```
-User-agent: *
-Allow: /
+Adjust the masonry container so the gallery visually centers itself instead of hugging the left side of the content area.
 
-Sitemap: https://yourdomain.com/sitemap.xml
-```
+This makes the page feel more intentional when the archive is still small.
 
 ---
 
-# 9 Add sitemap.xml
+## Improve Visual Depth
 
-Create a sitemap for search engines.
+Introduce subtle depth layers across the archive UI.
 
-```
-<?xml version="1.0" encoding="UTF-8"?>
+The viewer container, metadata panel, and gallery cards should each have slightly different visual surfaces so the interface does not feel flat.
 
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <url>
-    <loc>https://yourdomain.com</loc>
-  </url>
-
-  <url>
-    <loc>https://yourdomain.com/projects</loc>
-  </url>
-
-  <url>
-    <loc>https://yourdomain.com/contact</loc>
-  </url>
-
-</urlset>
-```
+Depth should be subtle and consistent with the rest of the portfolio design language.
 
 ---
 
-# 10 Performance SEO
+## Improve Motion and Interaction
 
-Optimize loading performance.
+Add small interaction feedback to make the archive feel alive.
 
-Preload fonts.
+Gallery cards should respond to hover with subtle elevation.
 
-```
-<link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
-```
+The modal viewer should animate smoothly when opening and closing.
 
-Ensure:
-
-* images optimized
-* lazy loading enabled
-* unused scripts removed
+Transitions between gallery and modal should feel intentional and fluid.
 
 ---
 
-# 11 SEO Friendly URLs
+## Maintain Compatibility with Current Stack
 
-Good URLs:
+All improvements must work with the current technology stack:
 
-```
-/projects/ai-workflow-builder
-/projects/ecommerce-platform
-```
+react-masonry-css for the archive grid
+react-pdf with pdfjs-dist for document rendering
 
-Bad URLs:
-
-```
-/project?id=123
-/page?id=45
-```
+The goal is not to replace these libraries but to **improve layout composition and interaction design around them**.
 
 ---
 
-# 12 Mobile SEO
+## Final UX Goal
 
-Ensure responsive meta tag exists.
+The archive should feel like a **professional proof-of-work dashboard** where certificates are presented as visual artifacts rather than downloadable files.
 
-```
-<meta name="viewport" content="width=device-width, initial-scale=1">
-```
-
----
-
-# 13 High Value SEO Keywords
-
-Use these keywords in metadata and content.
-
-```
-software developer portfolio
-full stack developer portfolio
-web developer portfolio
-AI developer portfolio
-React developer portfolio
-JavaScript developer portfolio
-backend developer portfolio
-software engineer portfolio
-modern web developer
-full stack projects
-```
-
----
-
-# OUTPUT REQUIREMENTS
-
-The final implementation should include:
-
-1. Updated `<head>` metadata
-2. robots.txt file
-3. sitemap.xml file
-4. structured data implementation
-5. summary of SEO improvements
+Visitors should immediately recognize the certificates as the focal point of the page while metadata provides helpful context without overwhelming the interface.

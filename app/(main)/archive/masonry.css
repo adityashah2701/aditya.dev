@@ -1,0 +1,22 @@
+/* ── Pinterest-style Masonry ───────────────────── */
+.my-masonry-grid {
+  display: flex;
+  margin-left: -12px;
+  width: auto;
+}
+
+.my-masonry-grid_column {
+  padding-left: 12px;
+  background-clip: padding-box;
+}
+
+/* Each card has a bottom gap */
+.my-masonry-grid_column > div {
+  margin-bottom: 12px;
+}
+
+/* Clamp PDF canvas so it never overflows a narrow column */
+.my-masonry-grid_column .react-pdf__Page__canvas {
+  max-width: 100% !important;
+  height: auto !important;
+}

@@ -33,8 +33,8 @@ export default function MainClientLayout({
     pagePath = PAGE_PATHS.skills;
   } else if (pathname === "/projects") {
     pagePath = PAGE_PATHS.projects;
-  } else if (pathname === "/experience") {
-    pagePath = PAGE_PATHS.experience;
+  } else if (pathname === "/archive") {
+    pagePath = PAGE_PATHS.archive;
   } else if (pathname === "/contact") {
     pagePath = PAGE_PATHS.contact;
   } else if (pathname.startsWith("/projects/")) {

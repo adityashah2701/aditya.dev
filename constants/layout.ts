@@ -17,7 +17,7 @@ export const TERMINAL_LOGS: Record<string, string[]> = {
     "> sys_integrity_check_projects",
     "> evaluating_repositories... OK",
   ],
-  experience: ["> sys_integrity_check_history", "> loading_archives... OK"],
+  archive: ["> sys_integrity_check_archive", "> loading_proof_of_work... OK"],
   contact: [
     "> checking_availability... OPEN",
     "> load_average: 0.14, 0.05, 0.01",
@@ -34,7 +34,7 @@ export const PAGE_PATHS: Record<string, string> = {
   home: "HOME",
   skills: "TECH_STACK",
   projects: "REPOSITORIES",
-  experience: "EXPERIENCE_LOGS",
+  archive: "ARCHIVE",
   contact: "CONTACT",
   projectDetail: "PORTFOLIO",
 };

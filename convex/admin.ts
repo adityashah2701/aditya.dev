@@ -57,25 +57,6 @@ export const addTechStackCategory = mutation({
   },
 });
 
-export const addHistory = mutation({
-  args: {
-    secret: v.string(),
-    role: v.string(),
-    company: v.string(),
-    location: v.optional(v.string()),
-    companyUrl: v.optional(v.string()),
-    startDate: v.string(),
-    endDate: v.optional(v.string()),
-    current: v.boolean(),
-    description: v.array(v.string()),
-    order: v.number(),
-  },
-  handler: async (ctx, args) => {
-    const { secret, ...historyData } = args;
-    checkSecret(secret);
-    return await ctx.db.insert("history", historyData);
-  },
-});
 
 export const addContactMessage = mutation({
   args: {

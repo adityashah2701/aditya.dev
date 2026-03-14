@@ -10,6 +10,14 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
     // Cache optimised images for 60 seconds minimum
     minimumCacheTTL: 60,
+    // Allow images served from Convex storage (hostname varies per deployment)
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*.convex.cloud",
+        pathname: "/api/storage/**",
+      },
+    ],
   },
 
   experimental: {

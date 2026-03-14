@@ -30,17 +30,19 @@ export default defineSchema({
     order: v.number(), // For custom sorting of categories globally
   }).index("by_order", ["order"]),
 
-  history: defineTable({
-    role: v.string(),
-    company: v.string(),
-    location: v.optional(v.string()),
-    companyUrl: v.optional(v.string()),
-    startDate: v.string(), // e.g. "2023-01-01" or "Jan 2023"
-    endDate: v.optional(v.string()), // Omit or null if it's the current job
-    current: v.boolean(),
-    description: v.array(v.string()), // Bullet points of achievements/responsibilities
-    order: v.number(), // For custom chronological or specific sorting
-  }).index("by_order", ["order"]),
+  certificates: defineTable({
+    title: v.string(),
+    organization: v.string(),
+    issuedDate: v.string(), // e.g. "2024-03-01"
+    fileId: v.string(), // Convex Storage ID or fallback URL
+    fileType: v.string(), // mime type (e.g. "image/png", "application/pdf")
+    tags: v.array(v.string()),
+    description: v.optional(v.string()),
+    verificationUrl: v.optional(v.string()),
+    createdAt: v.number(),
+  })
+    .index("by_createdAt", ["createdAt"])
+    .index("by_issuedDate", ["issuedDate"]),
 
   contact: defineTable({
     name: v.string(),
