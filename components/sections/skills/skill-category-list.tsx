@@ -2,7 +2,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import React, { useMemo } from "react";
-import { useQuery } from "convex/react";
+import { type Preloaded, usePreloadedQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { SkillSection } from "@/constants/skills";
 import {
@@ -72,12 +72,16 @@ const getIcon = (iconName: string) => {
   return <Icon className="w-6 h-6 text-primary" strokeWidth={1.5} />;
 };
 
-export default function SkillCategoryList() {
-  const techStackData = useQuery(api.techstack.getTechStack);
+interface SkillCategoryListProps {
+  preloadedTechStack: Preloaded<typeof api.techstack.getTechStack>;
+}
+
+export default function SkillCategoryList({
+  preloadedTechStack,
+}: SkillCategoryListProps) {
+  const techStackData = usePreloadedQuery(preloadedTechStack);
 
   const sections = useMemo(() => {
-    if (!techStackData) return [];
-
     const grouped = techStackData.reduce<Record<string, SkillSection>>(
       (acc, item) => {
         if (!acc[item.sectionTitle]) {
@@ -99,23 +103,6 @@ export default function SkillCategoryList() {
 
     return Object.values(grouped);
   }, [techStackData]);
-
-  if (techStackData === undefined) {
-    return (
-      <div className="flex flex-col gap-12 md:gap-20">
-        {[1, 2, 3].map((sectionIndex) => (
-          <section key={sectionIndex} className="animate-pulse">
-            <div className="h-8 bg-surface-dark/50 w-64 mb-8"></div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-              {[1, 2, 3].map((cardIndex) => (
-                <div key={cardIndex} className="h-48 bg-surface-dark/50"></div>
-              ))}
-            </div>
-          </section>
-        ))}
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col gap-12 md:gap-20">

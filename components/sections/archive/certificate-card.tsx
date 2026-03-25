@@ -34,6 +34,7 @@ interface CertificateCardProps {
   organization: string;
   issuedDate: string;
   fileId: string;
+  fileUrl?: string | null;
   fileType: string;
   tags: string[];
   description?: string;
@@ -45,12 +46,17 @@ export function CertificateCard({
   organization,
   issuedDate,
   fileId,
+  fileUrl: preloadedFileUrl,
   fileType,
   tags,
   description,
   verificationUrl,
 }: CertificateCardProps) {
-  const fileUrl = useQuery(api.certificates.getFileUrl, { storageId: fileId });
+  const queriedFileUrl = useQuery(
+    api.certificates.getFileUrl,
+    preloadedFileUrl ? "skip" : { storageId: fileId }
+  );
+  const fileUrl = preloadedFileUrl ?? queriedFileUrl;
   const isPdf = fileType === "application/pdf" || fileId.endsWith(".pdf");
   const [isOpen, setIsOpen] = useState(false);
   const [zoom, setZoom] = useState(1);

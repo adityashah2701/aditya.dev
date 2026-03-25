@@ -48,6 +48,7 @@ export default function Sidebar({ title, links }: SidebarProps) {
           {links.map((link, idx) => (
             <Link
               key={idx}
+              prefetch
               href={link.href}
               onClick={() => setOpenMobile(false)}
               className={[

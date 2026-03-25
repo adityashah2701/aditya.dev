@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useQuery } from "convex/react";
+import { type Preloaded, usePreloadedQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Separator } from "@/components/ui/separator";
 import { Doc } from "@/convex/_generated/dataModel";
@@ -11,27 +11,15 @@ import { FolderX } from "lucide-react";
 
 type Project = Doc<"projects">;
 
-function SkeletonRow() {
-  return (
-    <div className="bg-background-dark border border-border-dark px-5 py-4 flex items-center gap-4 animate-pulse">
-      <div className="w-5 h-5 bg-surface-dark rounded-none shrink-0" />
-      <div className="w-6 h-3 bg-surface-dark rounded-none shrink-0" />
-      <div className="h-3 bg-surface-dark rounded-none flex-1" />
-      <div className="hidden sm:flex gap-2">
-        <div className="w-14 h-4 bg-surface-dark rounded-none" />
-        <div className="w-14 h-4 bg-surface-dark rounded-none" />
-      </div>
-      <div className="w-4 h-4 bg-surface-dark rounded-none shrink-0" />
-    </div>
-  );
+interface ProjectListProps {
+  preloadedProjects: Preloaded<typeof api.projects.getAllProjects>;
 }
 
-export default function ProjectList() {
-  const projects = useQuery(api.projects.getAllProjects);
+export default function ProjectList({ preloadedProjects }: ProjectListProps) {
+  const projects = usePreloadedQuery(preloadedProjects);
   const [selected, setSelected] = useState<Project | null>(null);
 
-  const isLoading = projects === undefined;
-  const isEmpty = !isLoading && projects.length === 0;
+  const isEmpty = projects.length === 0;
 
   return (
     <section className="mb-12 md:mb-20">
@@ -41,21 +29,12 @@ export default function ProjectList() {
           SELECTED PROJECTS
         </h2>
         <Separator className="flex-1 ml-4 bg-border-dark" />
-        {!isLoading && !isEmpty && (
+        {!isEmpty && (
           <span className="font-mono text-xs text-slate-600 shrink-0">
             {projects.length}_REPOSITORIES
           </span>
         )}
       </div>
-
-      {/* Loading */}
-      {isLoading && (
-        <div className="flex flex-col gap-px">
-          <SkeletonRow />
-          <SkeletonRow />
-          <SkeletonRow />
-        </div>
-      )}
 
       {/* Empty */}
       {isEmpty && (
@@ -68,7 +47,7 @@ export default function ProjectList() {
       )}
 
       {/* Project list */}
-      {!isLoading && !isEmpty && (
+      {!isEmpty && (
         <div className="flex flex-col gap-px">
           {projects.map((project, index) => (
             <ProjectRow

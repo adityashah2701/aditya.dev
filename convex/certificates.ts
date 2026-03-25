@@ -1,26 +1,76 @@
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import { mutation, query, type QueryCtx } from "./_generated/server";
 import { paginationOptsValidator } from "convex/server";
+
+async function resolveCertificateFileUrl(ctx: QueryCtx, fileId: string) {
+  if (fileId.startsWith("http")) return fileId;
+  return await ctx.storage.getUrl(fileId);
+}
+
+async function withResolvedFileUrls<
+  T extends {
+    page: Array<{
+      fileId: string;
+    }>;
+  },
+>(
+  ctx: QueryCtx,
+  result: T
+) {
+  const page = await Promise.all(
+    result.page.map(async (certificate) => ({
+      ...certificate,
+      fileUrl: await resolveCertificateFileUrl(ctx, certificate.fileId),
+    }))
+  );
+
+  return {
+    ...result,
+    page,
+  };
+}
 
 export const getCertificates = query({
   args: { paginationOpts: paginationOptsValidator },
   handler: async (ctx, args) => {
-    return await ctx.db
+    const result = await ctx.db
       .query("certificates")
       .withIndex("by_issuedDate")
       .order("desc")
       .paginate(args.paginationOpts);
+
+    return await withResolvedFileUrls(ctx, result);
+  },
+});
+
+export const getArchivePage = query({
+  args: { paginationOpts: paginationOptsValidator },
+  handler: async (ctx, args) => {
+    const result = await ctx.db
+      .query("certificates")
+      .withIndex("by_issuedDate")
+      .order("desc")
+      .paginate(args.paginationOpts);
+
+    return await withResolvedFileUrls(ctx, result);
   },
 });
 
 export const getLatestCertificates = query({
   args: { limit: v.number() },
   handler: async (ctx, args) => {
-    return await ctx.db
+    const certificates = await ctx.db
       .query("certificates")
       .withIndex("by_issuedDate")
       .order("desc")
       .take(args.limit);
+
+    return await Promise.all(
+      certificates.map(async (certificate) => ({
+        ...certificate,
+        fileUrl: await resolveCertificateFileUrl(ctx, certificate.fileId),
+      }))
+    );
   },
 });
 

@@ -1,7 +1,9 @@
 import { Metadata } from "next";
+import { preloadQuery } from "convex/nextjs";
 import { Breadcrumb } from "@/components/sections/shared";
 import { SkillsHeader, SkillCategoryList } from "@/components/sections/skills";
 import { SITE_URL, OG_IMAGE_URL } from "@/constants/seo";
+import { api } from "@/convex/_generated/api";
 
 export const metadata: Metadata = {
   title: "Tech Stack",
@@ -19,7 +21,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Skills() {
+export default async function Skills() {
+  const preloadedTechStack = await preloadQuery(api.techstack.getTechStack);
   const breadcrumbItems = [
     { label: "root", href: "/" },
     { label: "sys" },
@@ -30,7 +33,7 @@ export default function Skills() {
     <>
       <Breadcrumb items={breadcrumbItems} />
       <SkillsHeader />
-      <SkillCategoryList />
+      <SkillCategoryList preloadedTechStack={preloadedTechStack} />
     </>
   );
 }

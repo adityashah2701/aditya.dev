@@ -1,7 +1,9 @@
 import { Metadata } from "next";
+import { preloadQuery } from "convex/nextjs";
 import { Breadcrumb } from "@/components/sections/shared";
 import { ProjectsHeader, ProjectList } from "@/components/sections/projects";
 import { SITE_URL, OG_IMAGE_URL } from "@/constants/seo";
+import { api } from "@/convex/_generated/api";
 
 export const metadata: Metadata = {
   title: "Repositories",
@@ -19,7 +21,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Projects() {
+export default async function Projects() {
+  const preloadedProjects = await preloadQuery(api.projects.getAllProjects);
   const breadcrumbItems = [
     { label: "root", href: "/" },
     { label: "sys" },
@@ -30,7 +33,7 @@ export default function Projects() {
     <>
       <Breadcrumb items={breadcrumbItems} />
       <ProjectsHeader />
-      <ProjectList />
+      <ProjectList preloadedProjects={preloadedProjects} />
     </>
   );
 }
