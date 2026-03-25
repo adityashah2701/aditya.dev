@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import type { SidebarLink } from "@/types/sidebar";
 import { MAIN_NAV_LINKS, PROJECT_DETAIL_NAV_LINKS } from "@/constants/nav";
 import { PAGE_PATHS, SIDEBAR_TITLES } from "@/constants/layout";
+import { cn } from "@/lib/utils";
 
 import { AnimatePresence, motion } from "motion/react";
 import Sidebar from "./sections/shared/sidebar";
@@ -43,6 +44,8 @@ export default function MainClientLayout({
     sidebarLinks = PROJECT_DETAIL_NAV_LINKS;
   }
 
+  const isArchivePage = pathname === "/archive";
+
   return (
     <SidebarProvider defaultOpen={true} className="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen selection:bg-primary selection:text-white">
       <Sidebar
@@ -52,13 +55,20 @@ export default function MainClientLayout({
       <SidebarInset className="relative flex flex-col flex-1 bg-transparent min-w-0 overflow-x-hidden">
         <Header pagePath={pagePath} />
         <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.07] bg-grid-pattern grid-bg"></div>
-        <main className="flex-1 min-w-0 z-10 px-4 py-6 sm:px-6 md:px-10 md:py-8 lg:px-14 xl:px-16 max-w-7xl mx-auto w-full">
+        <main
+          className={cn(
+            "flex-1 min-w-0 z-10 py-6 md:py-8 w-full",
+            isArchivePage
+              ? "px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 max-w-none"
+              : "px-4 sm:px-6 md:px-10 lg:px-14 xl:px-16 max-w-7xl mx-auto"
+          )}
+        >
           <AnimatePresence mode="wait">
             <motion.div
               key={pathname}
-              initial={{ opacity: 0, y: 15, filter: "blur(2px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              exit={{ opacity: 0, y: -15, filter: "blur(2px)" }}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
               transition={{
                 duration: 0.2,
                 ease: "easeInOut",

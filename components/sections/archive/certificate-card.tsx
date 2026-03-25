@@ -24,7 +24,8 @@ import {
 } from "@/components/ui/dialog";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { PdfPreview } from "./pdf-preview";
+import dynamic from "next/dynamic";
+const PdfPreview = dynamic(() => import("./pdf-preview").then(mod => mod.PdfPreview), { ssr: false });
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 

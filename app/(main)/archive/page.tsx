@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { usePaginatedQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { CertificateCard } from "@/components/sections/archive/certificate-card";
@@ -14,6 +14,14 @@ import "./masonry.css";
 
 const BATCH_SIZE = 12;
 
+function stableHash(value: string) {
+  let hash = 0;
+  for (let i = 0; i < value.length; i += 1) {
+    hash = (hash * 31 + value.charCodeAt(i)) >>> 0;
+  }
+  return hash;
+}
+
 export default function ArchivePage() {
   const { results, status, loadMore } = usePaginatedQuery(
     api.certificates.getCertificates,
@@ -22,14 +30,28 @@ export default function ArchivePage() {
   );
 
   const certificates = results || [];
+  const shuffledCertificates = useMemo(
+    () =>
+      [...certificates].sort((a, b) => {
+        const hashA = stableHash(String(a._id));
+        const hashB = stableHash(String(b._id));
 
-  // Pinterest-style: more columns, tighter cards
+        if (hashA !== hashB) return hashA - hashB;
+        return String(a._id).localeCompare(String(b._id));
+      }),
+    [certificates]
+  );
+
+  // Wider screens can support an extra column so the gallery fills out instead
+  // of leaving a heavy empty block toward the right/bottom edge.
   const breakpointColumnsObj = {
-    default: 5,
+    default: 6,
+    1700: 5,
     1400: 4,
-    1100: 3,
+    1080: 3,
     700: 2,
-    480: 2,
+    520: 2,
+    0: 1,
   };
 
   const isLoadingInitial = status === "LoadingFirstPage";
@@ -51,7 +73,7 @@ export default function ArchivePage() {
           Archive
         </h1>
         <p className="text-slate-400 font-mono text-xs uppercase tracking-widest">
-          {certificates.length} Proofs of Work
+          {shuffledCertificates.length} Proofs of Work
         </p>
       </div>
 
@@ -68,7 +90,7 @@ export default function ArchivePage() {
             </div>
           ))}
         </div>
-      ) : certificates.length === 0 ? (
+      ) : shuffledCertificates.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-24 text-center space-y-4 rounded-xl border border-border-dark bg-surface-dark">
           <div className="p-4 bg-background-dark rounded-full shadow-lg ring-1 ring-border-dark">
             <FolderArchive className="w-12 h-12 text-primary/60" />
@@ -89,9 +111,10 @@ export default function ArchivePage() {
             className="my-masonry-grid"
             columnClassName="my-masonry-grid_column"
           >
-            {certificates.map((cert, i) => (
+            {shuffledCertificates.map((cert, i) => (
               <motion.div
                 key={cert._id}
+                className="archive-masonry-item"
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.04, duration: 0.3, ease: "easeOut" }}
