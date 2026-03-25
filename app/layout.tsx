@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Space_Mono } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 import "./globals.css";
 import { ConvexClientProvider } from "@/components/providers/convex-client-provider";
 import {
@@ -126,7 +126,22 @@ export default function RootLayout({
       >
         <ConvexClientProvider>{children}</ConvexClientProvider>
       </body>
-      {gaMeasurementId ? <GoogleAnalytics gaId={gaMeasurementId} /> : null}
+      {gaMeasurementId ? (
+        <>
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
+            strategy="afterInteractive"
+          />
+          <Script id="google-analytics" strategy="afterInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${gaMeasurementId}');
+            `}
+          </Script>
+        </>
+      ) : null}
     </html>
   );
 }
