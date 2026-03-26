@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Space_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -33,6 +33,7 @@ const spaceMono = Space_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  applicationName: SITE_NAME,
 
   title: {
     default: SITE_TITLE,
@@ -40,16 +41,32 @@ export const metadata: Metadata = {
   },
 
   description: SITE_DESCRIPTION,
+  category: "technology",
+  classification: "Portfolio",
+  referrer: "origin-when-cross-origin",
 
   keywords: SITE_KEYWORDS,
 
   authors: [{ name: AUTHOR_NAME, url: SITE_URL }],
 
   creator: AUTHOR_NAME,
+  publisher: AUTHOR_NAME,
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    title: SITE_NAME,
+    statusBarStyle: "black-translucent",
+  },
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
 
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
@@ -61,6 +78,7 @@ export const metadata: Metadata = {
 
   openGraph: {
     type: "website",
+    locale: "en_US",
     url: SITE_URL,
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
@@ -81,6 +99,7 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     images: [OG_IMAGE_URL],
     creator: "@adityashah",
+    site: "@adityashah",
   },
 
   alternates: {
@@ -92,7 +111,15 @@ export const metadata: Metadata = {
   icons: {
     icon: "/icon.png",
     apple: "/apple-icon.png",
+    shortcut: "/favicon.ico",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#1349ec",
+  colorScheme: "dark",
 };
 
 const jsonLd = {
@@ -106,6 +133,8 @@ const jsonLd = {
 };
 
 const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+const bingSiteVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION;
 
 export default function RootLayout({
   children,
@@ -115,6 +144,22 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
+        <meta name="theme-color" content="#1349ec" />
+        <meta name="color-scheme" content="dark" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-title" content={SITE_NAME} />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="msapplication-TileColor" content="#0a0a0b" />
+        {googleSiteVerification ? (
+          <meta
+            name="google-site-verification"
+            content={googleSiteVerification}
+          />
+        ) : null}
+        {bingSiteVerification ? (
+          <meta name="msvalidate.01" content={bingSiteVerification} />
+        ) : null}
         {/* JSON-LD Structured Data — Person schema */}
         <script
           type="application/ld+json"

@@ -27,6 +27,18 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        source: "/api/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      },
+      {
+        source: "/admin/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      },
+      {
         source: "/(.*)",
         headers: [
           // Prevent MIME-type sniffing
@@ -38,7 +50,7 @@ const nextConfig: NextConfig = {
             key: "Referrer-Policy",
             value: "strict-origin-when-cross-origin",
           },
-          // Tell search engine bots to index and follow all pages
+          // Tell search engine bots to index and follow public pages
           { key: "X-Robots-Tag", value: "index, follow" },
           // Enable HSTS for HTTPS-only enforcement (1 year)
           {

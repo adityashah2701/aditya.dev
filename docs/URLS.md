@@ -8,7 +8,7 @@ Update `SITE_URL` in `constants/seo.ts` when the production domain is confirmed.
 ## Base URL
 
 ```
-https://adityashah.dev  ← configurable via constants/seo.ts → SITE_URL
+https://adityashah27.dev  ← configurable via constants/seo.ts → SITE_URL
 ```
 
 ---
@@ -62,13 +62,13 @@ These are internal API routes exposed via Convex. They are **not** indexed by se
 
 | Action | Notes |
 |--------|-------|
-| **Set real domain** | Replace `https://adityashah.dev` in `constants/seo.ts → SITE_URL` |
+| **Set real domain** | Replace `https://adityashah27.dev` in `constants/seo.ts → SITE_URL` |
 | **Confirm social links** | Update `GITHUB_URL` and `LINKEDIN_URL` in `constants/seo.ts` |
 | **Create OG image** | Add `/public/og-image.png` (1200×630px) for social previews |
 | **Add favicon assets** | Add `/app/icon.png` (32×32) and `/app/apple-icon.png` (180×180) — Next.js auto-detects these |
 | **Extend sitemap** | Uncomment the Convex fetch block in `app/sitemap.ts` to include dynamic `/projects/[slug]` routes |
 | **Twitter handle** | Update `twitter.creator` in `app/layout.tsx` if handle differs from `@adityashah` |
-| **Submit sitemap** | Submit `https://adityashah.dev/sitemap.xml` to Google Search Console |
+| **Submit sitemap** | Submit `https://adityashah27.dev/sitemap.xml` to Google Search Console |
 
 ### SEO-Friendly URL Structure
 

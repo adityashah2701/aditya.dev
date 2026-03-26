@@ -3,9 +3,9 @@
  * Update SITE_URL, GITHUB_URL, and LINKEDIN_URL when deploying to production.
  */
 
-export const SITE_URL = "https://adityashahdev.vercel.app";
+export const SITE_URL = "https://adityashah27.dev";
 
-export const SITE_NAME = "adityashahdev.vercel.app";
+export const SITE_NAME = "adityashah27.dev";
 
 export const SITE_TITLE = "Aditya Shah | Software Developer Portfolio";
 
