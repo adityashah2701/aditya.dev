@@ -1,3 +1,4 @@
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 # Aditya Shah
 
 Software developer focused on full stack web applications, AI-powered tools, and systems-driven product building.
