@@ -48,7 +48,7 @@ export default function Home() {
         </a>
         <span className="text-border-dark font-mono text-xs">|</span>
         <a
-          href="https://linkedin.com/in/aditya-shah-078b7a2a5"
+          href="https://linkedin.com/in/adityashah2701"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors group"

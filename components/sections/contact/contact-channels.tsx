@@ -56,7 +56,7 @@ export default function ContactChannels() {
           </a>
 
           <a
-            href="https://linkedin.com/in/aditya-shah-078b7a2a5"
+            href="https://linkedin.com/in/adityashah2701"
             target="_blank"
             rel="noreferrer"
             className="group flex items-center justify-between p-4 bg-background-dark border border-border-dark hover:border-primary/50 rounded-none transition-all"
@@ -70,7 +70,7 @@ export default function ContactChannels() {
                   LinkedIn Network
                 </h3>
                 <p className="text-xs font-mono text-slate-500 mt-1">
-                  linkedin.com/in/aditya-shah/
+                  linkedin.com/in/adityashah2701
                 </p>
               </div>
             </div>

@@ -35,6 +35,6 @@ export const AUTHOR_JOB_TITLE = "Software Developer";
 
 export const GITHUB_URL = "https://github.com/adityashah2701";
 
-export const LINKEDIN_URL = "https://www.linkedin.com/in/aditya-shah-078b7a2a5/";
+export const LINKEDIN_URL = "https://www.linkedin.com/in/adityashah2701";
 
 export const OG_IMAGE_URL = `${SITE_URL}/og-image.png`;

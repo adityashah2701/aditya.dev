@@ -38,7 +38,7 @@ I care about:
 
 - Portfolio: [adityashah27.dev](https://adityashah27.dev)
 - GitHub: [github.com/adityashah2701](https://github.com/adityashah2701)
-- LinkedIn: [linkedin.com/in/aditya-shah-078b7a2a5](https://www.linkedin.com/in/aditya-shah-078b7a2a5/)
+- LinkedIn: [linkedin.com/in/adityashah2701](https://www.linkedin.com/in/adityashah2701)
 - Email: [adityashah2701.work@gmail.com](mailto:adityashah2701.work@gmail.com)
 
 ## Running Locally
