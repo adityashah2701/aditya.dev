@@ -4,32 +4,17 @@ import {
   ContactForm,
   ContactChannels,
 } from "@/components/sections/contact";
-import { Metadata } from "next";
-import { SITE_URL, OG_IMAGE_URL } from "@/constants/seo";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Initiate Contact",
   description:
     "Get in touch with Aditya Shah — open to freelance projects, full-time roles, collaborations, and interesting technical conversations.",
-  alternates: {
-    canonical: `${SITE_URL}/contact`,
-  },
-  openGraph: {
-    type: "website",
-    title: "Initiate Contact | aditya.dev",
-    description:
-      "Reach out to Aditya Shah for collaborations, job opportunities, or technical discussions.",
-    url: `${SITE_URL}/contact`,
-    images: [{ url: OG_IMAGE_URL, width: 1200, height: 630 }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Initiate Contact | aditya.dev",
-    description:
-      "Reach out to Aditya Shah for collaborations, job opportunities, or technical discussions.",
-    images: [OG_IMAGE_URL],
-  },
-};
+  path: "/contact",
+  ogTitle: "Initiate Contact | aditya.dev",
+  ogDescription:
+    "Reach out to Aditya Shah for collaborations, job opportunities, or technical discussions.",
+});
 
 export default function Contact() {
   const breadcrumbItems = [
