@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     canonical: `${SITE_URL}/skills`,
   },
   openGraph: {
+    type: "website",
     title: "Tech Stack | aditya.dev",
     description:
       "The tools, languages, and frameworks Aditya Shah uses to build software — React, Next.js, TypeScript, Python, and more.",

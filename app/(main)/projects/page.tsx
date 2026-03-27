@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     canonical: `${SITE_URL}/projects`,
   },
   openGraph: {
+    type: "website",
     title: "Repositories | aditya.dev",
     description:
       "Full stack apps, AI tools, and open source projects by Aditya Shah.",

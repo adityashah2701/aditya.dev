@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   openGraph: {
+    type: "website",
     title: SITE_TITLE,
     description:
       "Aditya Shah — Systems Engineer & Full Stack Architect. Explore projects, skills, and experience.",

@@ -151,6 +151,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content={SITE_NAME} />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="msapplication-TileColor" content="#0a0a0b" />
+        <meta property="og:type" content="website" />
         {googleSiteVerification ? (
           <meta
             name="google-site-verification"

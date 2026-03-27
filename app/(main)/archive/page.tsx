@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     canonical: `${SITE_URL}/archive`,
   },
   openGraph: {
+    type: "website",
     title: "Archive | aditya.dev",
     description:
       "Certificates, achievements, publications, and proof of work by Aditya Shah.",

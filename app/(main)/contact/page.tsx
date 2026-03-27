@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     canonical: `${SITE_URL}/contact`,
   },
   openGraph: {
+    type: "website",
     title: "Initiate Contact | aditya.dev",
     description:
       "Reach out to Aditya Shah for collaborations, job opportunities, or technical discussions.",
