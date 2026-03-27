@@ -19,6 +19,13 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/skills`,
     images: [{ url: OG_IMAGE_URL, width: 1200, height: 630 }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tech Stack | aditya.dev",
+    description:
+      "The tools, languages, and frameworks Aditya Shah uses to build software — React, Next.js, TypeScript, Python, and more.",
+    images: [OG_IMAGE_URL],
+  },
 };
 
 export default async function Skills() {

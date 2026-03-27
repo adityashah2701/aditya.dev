@@ -19,6 +19,13 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/projects`,
     images: [{ url: OG_IMAGE_URL, width: 1200, height: 630 }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Repositories | aditya.dev",
+    description:
+      "Full stack apps, AI tools, and open source projects by Aditya Shah.",
+    images: [OG_IMAGE_URL],
+  },
 };
 
 export default async function Projects() {

@@ -21,6 +21,13 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/contact`,
     images: [{ url: OG_IMAGE_URL, width: 1200, height: 630 }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Initiate Contact | aditya.dev",
+    description:
+      "Reach out to Aditya Shah for collaborations, job opportunities, or technical discussions.",
+    images: [OG_IMAGE_URL],
+  },
 };
 
 export default function Contact() {
