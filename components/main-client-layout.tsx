@@ -59,7 +59,7 @@ export default function MainClientLayout({
           className={cn(
             "flex-1 min-w-0 z-10 py-6 md:py-8 w-full",
             isArchivePage
-              ? "px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 max-w-none"
+              ? "px-4 sm:px-6 md:px-10 lg:px-14 xl:px-16 max-w-none"
               : "px-4 sm:px-6 md:px-10 lg:px-14 xl:px-16 max-w-7xl mx-auto"
           )}
         >

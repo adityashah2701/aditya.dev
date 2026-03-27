@@ -1,5 +1,6 @@
 import { preloadQuery } from "convex/nextjs";
 import { Breadcrumb } from "@/components/sections/shared";
+import { ArchiveHeader } from "@/components/sections/archive/archive-header";
 import { ArchivePageClient } from "@/components/sections/archive/archive-page-client";
 import { api } from "@/convex/_generated/api";
 import { createPageMetadata } from "@/lib/metadata";
@@ -32,19 +33,10 @@ export default async function ArchivePage() {
   ];
 
   return (
-    <div className="animate-in fade-in space-y-6 duration-500">
+    <>
       <Breadcrumb items={breadcrumbItems} />
-
-      <div className="mb-8 flex flex-col gap-2">
-        <h1 className="text-3xl font-black uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
-          Archive
-        </h1>
-        <p className="font-mono text-xs uppercase tracking-widest text-slate-400">
-          Proofs of Work
-        </p>
-      </div>
-
+      <ArchiveHeader />
       <ArchivePageClient preloadedArchivePage={preloadedArchivePage} />
-    </div>
+    </>
   );
 }
