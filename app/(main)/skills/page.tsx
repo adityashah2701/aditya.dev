@@ -1,7 +1,6 @@
 import { preloadQuery } from "convex/nextjs";
 import { Breadcrumb } from "@/components/sections/shared";
 import { SkillsHeader, SkillCategoryList } from "@/components/sections/skills";
-import { ConvexClientProvider } from "@/components/providers/convex-client-provider";
 import { api } from "@/convex/_generated/api";
 import { createPageMetadata } from "@/lib/metadata";
 
@@ -27,9 +26,7 @@ export default async function Skills() {
     <>
       <Breadcrumb items={breadcrumbItems} />
       <SkillsHeader />
-      <ConvexClientProvider>
-        <SkillCategoryList preloadedTechStack={preloadedTechStack} />
-      </ConvexClientProvider>
+      <SkillCategoryList preloadedTechStack={preloadedTechStack} />
     </>
   );
 }

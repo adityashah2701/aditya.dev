@@ -10,7 +10,7 @@ export default function Header({ pagePath = "HOME" }: { pagePath?: string }) {
   const { toggleSidebar } = useSidebar();
 
   return (
-    <header className="sticky top-0 z-50 md:hidden flex items-center justify-between border-b border-border-dark bg-background-dark/95 px-2 sm:px-4 md:px-5 py-3 gap-2 min-w-0">
+    <header className="sticky top-0 z-50 md:hidden flex items-center justify-between border-b border-border-dark bg-background-dark/95 backdrop-blur-md px-2 sm:px-4 md:px-5 py-3 gap-2 min-w-0">
       {/* Left: logo + page path */}
       <div className="flex items-center justify-between gap-2 sm:gap-3 min-w-0 flex-1">
         <Link

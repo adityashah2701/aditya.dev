@@ -1,7 +1,6 @@
 import { preloadQuery } from "convex/nextjs";
 import { Breadcrumb } from "@/components/sections/shared";
 import { ProjectsHeader, ProjectList } from "@/components/sections/projects";
-import { ConvexClientProvider } from "@/components/providers/convex-client-provider";
 import { api } from "@/convex/_generated/api";
 import { createPageMetadata } from "@/lib/metadata";
 
@@ -27,9 +26,7 @@ export default async function Projects() {
     <>
       <Breadcrumb items={breadcrumbItems} />
       <ProjectsHeader />
-      <ConvexClientProvider>
-        <ProjectList preloadedProjects={preloadedProjects} />
-      </ConvexClientProvider>
+      <ProjectList preloadedProjects={preloadedProjects} />
     </>
   );
 }
