@@ -72,8 +72,8 @@ export default function ProjectList({ preloadedProjects }: ProjectListProps) {
     (project) => project.category === "hackathon",
   );
   const sections = [
-    { title: "SELECTED PROJECTS", projects: primaryProjects },
-    { title: "INTERNSHIP EXPERIENCE", projects: internshipProjects },
+    { title: "PERSONAL PROJECTS", projects: primaryProjects },
+    { title: "INTERNSHIP PROJECTS", projects: internshipProjects },
     { title: "HACKATHON PROJECTS", projects: hackathonProjects },
   ].filter((section) => section.projects.length > 0);
 
