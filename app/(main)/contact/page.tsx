@@ -20,7 +20,6 @@ export default function Contact() {
   const breadcrumbItems = [
     { label: "root", href: "/" },
     { label: "sys" },
-    { label: "user_profile" },
     { label: "contact", isLast: true },
   ];
 

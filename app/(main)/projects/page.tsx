@@ -5,11 +5,11 @@ import { api } from "@/convex/_generated/api";
 import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata = createPageMetadata({
-  title: "Projects",
+  title: "Repositories",
   description:
     "Browse Aditya Shah's software projects, internship work, AI tools, and engineering contributions across product, systems, and developer tooling.",
   path: "/projects",
-  ogTitle: "Projects | aditya.dev",
+  ogTitle: "Repositories | aditya.dev",
   ogDescription:
     "Full stack apps, internship work, AI tools, and engineering projects by Aditya Shah.",
 });
@@ -19,7 +19,7 @@ export default async function Projects() {
   const breadcrumbItems = [
     { label: "root", href: "/" },
     { label: "sys" },
-    { label: "projects", isLast: true },
+    { label: "repositories", isLast: true },
   ];
 
   return (
