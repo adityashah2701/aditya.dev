@@ -29,8 +29,8 @@ function ProjectSection({
   }
 
   return (
-    <div className="space-y-4 md:space-y-6">
-      <div className="flex items-center gap-3">
+    <section className="space-y-4 md:space-y-6">
+      <header className="flex items-center gap-3">
         <span className="text-primary font-mono text-sm">{indexLabel}</span>
         <h2 className="text-lg md:text-2xl font-bold text-white tracking-tight uppercase">
           {title}
@@ -39,19 +39,20 @@ function ProjectSection({
         <span className="font-mono text-xs text-slate-600 shrink-0">
           {projects.length}_PROJECTS
         </span>
-      </div>
+      </header>
 
-      <div className="flex flex-col gap-px">
+      <ol className="m-0 flex list-none flex-col gap-px p-0">
         {projects.map((project, index) => (
-          <ProjectRow
-            key={project._id}
-            project={project}
-            index={index}
-            onOpen={onOpen}
-          />
+          <li key={project._id}>
+            <ProjectRow
+              project={project}
+              index={index}
+              onOpen={onOpen}
+            />
+          </li>
         ))}
-      </div>
-    </div>
+      </ol>
+    </section>
   );
 }
 

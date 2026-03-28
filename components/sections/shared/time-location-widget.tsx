@@ -16,10 +16,10 @@ export default function TimeLocationWidget() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-3 font-mono">
+    <dl className="flex flex-col gap-3 font-mono">
       <div className="flex items-center justify-between text-xs">
-        <span className="text-slate-500">LOCAL_TIME</span>
-        <span className="text-primary font-bold tracking-wider">
+        <dt className="text-slate-500">LOCAL_TIME</dt>
+        <dd className="text-primary font-bold tracking-wider">
           {time
             ? time.toLocaleTimeString("en-US", {
                 hour12: false,
@@ -29,13 +29,13 @@ export default function TimeLocationWidget() {
                 timeZone: "Asia/Kolkata",
               })
             : "00:00:00"}
-        </span>
+        </dd>
       </div>
-      
+
       <div className="flex items-center justify-between text-xs">
-        <span className="text-slate-500">LOCATION</span>
-        <span className="text-slate-300 uppercase">Navi_Mumbai</span>
+        <dt className="text-slate-500">LOCATION</dt>
+        <dd className="text-slate-300 uppercase">Navi_Mumbai</dd>
       </div>
-    </div>
+    </dl>
   );
 }

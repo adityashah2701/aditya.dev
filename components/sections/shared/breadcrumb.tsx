@@ -12,11 +12,18 @@ interface BreadcrumbProps {
 
 export default function Breadcrumb({ items }: BreadcrumbProps) {
   return (
-    <div className="flex flex-wrap items-center gap-2 mb-8 font-mono text-sm text-slate-500">
+    <nav
+      aria-label="Breadcrumb"
+      className="mb-8 font-mono text-sm text-slate-500"
+    >
+      <ol className="flex flex-wrap items-center gap-2">
       {items.map((item, index) => (
-        <span key={index} className="flex items-center gap-2">
+        <li key={index} className="flex items-center gap-2">
           {item.isLast ? (
-            <span className="text-primary font-bold bg-primary/10 px-1 rounded-none">
+            <span
+              aria-current="page"
+              className="text-primary font-bold bg-primary/10 px-1 rounded-none"
+            >
               {item.label}
             </span>
           ) : (
@@ -36,8 +43,9 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
               <span>/</span>
             </>
           )}
-        </span>
+        </li>
       ))}
-    </div>
+      </ol>
+    </nav>
   );
 }

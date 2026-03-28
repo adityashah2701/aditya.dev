@@ -37,8 +37,8 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="bg-background-dark border border-border-dark overflow-hidden shadow-2xl flex flex-col h-full">
-      <div className="flex items-center justify-between px-4 py-2 bg-surface-dark border-b border-border-dark">
+    <section className="bg-background-dark border border-border-dark overflow-hidden shadow-2xl flex flex-col h-full">
+      <header className="flex items-center justify-between px-4 py-2 bg-surface-dark border-b border-border-dark">
         <div className="flex gap-2">
           <div className="size-3 bg-red-500/20 border border-red-500/50"></div>
           <div className="size-3 bg-yellow-500/20 border border-yellow-500/50"></div>
@@ -47,7 +47,7 @@ export default function ContactForm() {
         <span className="text-xs font-mono text-slate-500">
           contact_protocol.sh
         </span>
-      </div>
+      </header>
       <div className="p-6 flex-1 flex flex-col gap-6">
         <div className="font-mono text-sm text-slate-400 mb-2">
           <p className="mb-1">
@@ -125,6 +125,6 @@ export default function ContactForm() {
           </Button>
         </form>
       </div>
-    </div>
+    </section>
   );
 }

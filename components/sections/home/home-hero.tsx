@@ -6,8 +6,8 @@ import { Download, Mail } from "lucide-react";
 
 export default function HomeHero() {
   return (
-    <div className="flex flex-col gap-4 mb-6 md:mb-10">
-      <div className="flex flex-col gap-2">
+    <section className="flex flex-col gap-4 mb-6 md:mb-10">
+      <header className="flex flex-col gap-2">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-white">
           ADITYA SHAH
         </h1>
@@ -26,7 +26,7 @@ export default function HomeHero() {
             LOC: <span className="text-slate-200">NAVI_MUMBAI, MH</span>
           </span>
         </div>
-      </div>
+      </header>
       <div className="max-w-3xl mt-2 md:mt-4">
         <p className="text-slate-300 leading-relaxed text-sm md:text-base font-light">
           Designing scalable digital architecture. I specialize in building
@@ -51,6 +51,6 @@ export default function HomeHero() {
         </Link>
       </div>
       <Separator className="mt-4 md:mt-6 bg-border-dark" />
-    </div>
+    </section>
   );
 }

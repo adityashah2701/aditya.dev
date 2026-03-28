@@ -22,9 +22,9 @@ export default function Sidebar({ title, links }: SidebarProps) {
     >
       {/* ── Header ── */}
       <SidebarHeader className="h-11 border-b border-border-dark/50 flex py-7 flex-row items-center shrink-0 px-3 justify-between">
-        <span className="text-[20px] font-bold text-slate-200 tracking-normal truncate">
+        <p className="text-[20px] font-bold text-slate-200 tracking-normal truncate">
           {title}
-        </span>
+        </p>
 
         {/* Toggle button — mobile only */}
         {isMobile && (
@@ -82,9 +82,9 @@ export default function Sidebar({ title, links }: SidebarProps) {
 
       {/* ── Footer ── */}
       <SidebarFooter className="p-3 border-t border-border-dark">
-        <p className="text-[9px] font-bold text-slate-600 mb-1.5 tracking-widest uppercase">
+        <h2 className="text-[9px] font-bold text-slate-600 mb-1.5 tracking-widest uppercase">
           SYSTEM_STATUS
-        </p>
+        </h2>
         <TimeLocationWidget />
       </SidebarFooter>
     </ShadcnSidebar>

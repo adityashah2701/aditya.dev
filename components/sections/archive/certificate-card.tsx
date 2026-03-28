@@ -100,7 +100,7 @@ export function CertificateCard({
         open={isOpen}
         onOpenChange={handleOpenChange}
       >
-        <motion.div
+        <motion.article
           id={`certificate-${certificateId}`}
           ref={cardRef}
           layout
@@ -158,7 +158,7 @@ export function CertificateCard({
               {title}
             </h3>
           </div>
-        </motion.div>
+        </motion.article>
       </ArchiveProofDialog>
     </>
   );

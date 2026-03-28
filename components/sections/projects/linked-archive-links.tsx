@@ -20,14 +20,14 @@ export default function LinkedArchiveLinks({
   }
 
   return (
-    <div>
-      <div className="flex items-center gap-3 mb-3">
+    <section>
+      <header className="flex items-center gap-3 mb-3">
         <span className="text-primary font-mono text-xs">{sectionIndex}</span>
         <h3 className="text-xs font-bold text-white uppercase tracking-wider">
           Documents & Proof
         </h3>
         <Separator className="flex-1 ml-1 bg-border-dark" />
-      </div>
+      </header>
       <div className="flex flex-col gap-2">
         {items.map((item) => {
           const isPdf =
@@ -35,7 +35,7 @@ export default function LinkedArchiveLinks({
           const isClickable = Boolean(item.fileUrl);
 
           return (
-            <div
+            <article
               key={item._id ?? `${item.fileId}-${item.title}`}
               role={isClickable ? "button" : undefined}
               tabIndex={isClickable ? 0 : undefined}
@@ -92,10 +92,10 @@ export default function LinkedArchiveLinks({
                   ) : null}
                 </div>
               ) : null}
-            </div>
+            </article>
           );
         })}
       </div>
-    </div>
+    </section>
   );
 }

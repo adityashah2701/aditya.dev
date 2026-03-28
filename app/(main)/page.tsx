@@ -27,7 +27,10 @@ export default function Home() {
       <PersonalIdentity />
 
       {/* ── Social Links ── */}
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-3 mb-6 md:mb-10">
+      <nav
+        aria-label="Social links"
+        className="flex flex-wrap items-center gap-x-5 gap-y-3 mb-6 md:mb-10"
+      >
         <a
           href="https://github.com/adityashah2701"
           target="_blank"
@@ -61,7 +64,7 @@ export default function Home() {
             EMAIL
           </span>
         </a>
-      </div>
+      </nav>
     </>
   );
 }

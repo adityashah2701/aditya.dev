@@ -31,8 +31,7 @@ app/
 │   ├── page.tsx            ← / → Home / About
 │   ├── skills/page.tsx     ← /skills → Tech Stack
 │   ├── projects/page.tsx   ← /projects → Repositories
-│   ├── projects/[id]/      ← /projects/:id → Project Detail
-│   ├── experience/page.tsx ← /experience → Deployment History
+│   ├── archive/page.tsx    ← /archive → Archive Proof Of Work
 │   └── contact/            ← /contact → Initiate Connection
 │       ├── layout.tsx      ← Metadata boundary (contact is 'use client')
 │       └── page.tsx        ← Contact form + direct channels

@@ -108,7 +108,7 @@ export default function SkillCategoryList({
     <div className="flex flex-col gap-12 md:gap-20">
       {sections.map((section, index) => (
         <section key={index}>
-          <div className="flex items-center gap-3 mb-6 md:mb-8">
+          <header className="flex items-center gap-3 mb-6 md:mb-8">
             <span className="text-primary font-mono text-sm">
               0{index + 1}.
             </span>
@@ -116,33 +116,32 @@ export default function SkillCategoryList({
               {section.title}
             </h2>
             <Separator className="flex-1 ml-4 bg-border-dark" />
-          </div>
+          </header>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {section.categories.map((category) => (
-              <Card
-                key={category.id}
-                className="h-fit bg-surface-dark border border-border-dark rounded-none relative overflow-hidden group hover:border-primary/50 transition-colors shadow-none py-0 gap-0"
-              >
-                <CardContent className="p-6">
-                  <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-100 transition-opacity">
-                    {getIcon(category.icon)}
-                  </div>
-                  <h3 className="text-xs font-bold text-slate-500 tracking-widest mb-4">
-                    {category.title}
-                  </h3>
-                  <ul className="space-y-3">
-                    {category.skills.map((skill, skillIndex) => (
-                      <li
-                        key={skillIndex}
-                        className="flex items-center justify-between text-sm text-slate-300"
-                      >
-                        <span>{skill.name}</span>
-                        <span className="h-1.5 w-1.5 bg-primary rounded-none"></span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
+              <article key={category.id}>
+                <Card className="h-fit bg-surface-dark border border-border-dark rounded-none relative overflow-hidden group hover:border-primary/50 transition-colors shadow-none py-0 gap-0">
+                  <CardContent className="p-6">
+                    <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-100 transition-opacity">
+                      {getIcon(category.icon)}
+                    </div>
+                    <h3 className="text-xs font-bold text-slate-500 tracking-widest mb-4">
+                      {category.title}
+                    </h3>
+                    <ul className="space-y-3">
+                      {category.skills.map((skill, skillIndex) => (
+                        <li
+                          key={skillIndex}
+                          className="flex items-center justify-between text-sm text-slate-300"
+                        >
+                          <span>{skill.name}</span>
+                          <span className="h-1.5 w-1.5 bg-primary rounded-none"></span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </article>
             ))}
           </div>
         </section>

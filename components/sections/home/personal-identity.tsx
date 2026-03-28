@@ -3,14 +3,14 @@ import { Separator } from "@/components/ui/separator";
 export default function PersonalIdentity() {
   return (
     <section className="mb-6 md:mb-10">
-      <div className="flex items-center gap-3 mb-6 md:mb-8">
+      <header className="flex items-center gap-3 mb-6 md:mb-8">
         <span className="text-primary font-mono text-sm">01.</span>
         <h2 className="text-base md:text-xl font-bold text-white tracking-tight uppercase">
           Personal_Identity_Node
         </h2>
         <Separator className="flex-1 ml-4 bg-border-dark" />
-      </div>
-      <div className="bg-surface-dark border-l-2 border-primary/50 p-4 md:p-6 lg:p-8 rounded-none">
+      </header>
+      <article className="bg-surface-dark border-l-2 border-primary/50 p-4 md:p-6 lg:p-8 rounded-none">
         <p className="text-slate-300 leading-relaxed text-sm md:text-base mb-3 md:mb-5">
           I am a forward-thinking technologist and system architect obsessed
           with reducing complexity and building things that matter. At my core,
@@ -26,7 +26,7 @@ export default function PersonalIdentity() {
           bring a methodical, calculated engineering ethos to everything I
           touch.
         </p>
-      </div>
+      </article>
     </section>
   );
 }
