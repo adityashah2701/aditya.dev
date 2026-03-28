@@ -14,7 +14,7 @@ import { SITE_URL } from "@/constants/seo";
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     {
-      url: SITE_URL,
+      url: `${SITE_URL}/`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1.0,
