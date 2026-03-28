@@ -1,21 +1,13 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import type { ArchiveProofItem } from "@/components/sections/archive/archive-proof-dialog";
 import { Brain, LayoutGrid, Terminal, Network, Cpu, Rocket, Code, Cloud } from "lucide-react";
-
-type Project = {
-  _id: string;
-  title: string;
-  category?: "repository" | "hackathon";
-  techStack: string[];
-  linkedArchiveItems: ArchiveProofItem[];
-};
+import type { ProjectRecord } from "./types";
 
 interface ProjectRowProps {
-  project: Project;
+  project: ProjectRecord;
   index: number;
-  onOpen: (project: Project) => void;
+  onOpen: (project: ProjectRecord) => void;
 }
 
 const ICONS = [

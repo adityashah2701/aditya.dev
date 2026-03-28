@@ -4,23 +4,10 @@ import { useState } from "react";
 import { type Preloaded, usePreloadedQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Separator } from "@/components/ui/separator";
-import type { ArchiveProofItem } from "@/components/sections/archive/archive-proof-dialog";
 import ProjectRow from "./project-card";
 import ProjectDrawer from "./project-drawer";
 import { FolderX } from "lucide-react";
-
-type Project = {
-  _id: string;
-  title: string;
-  category?: "repository" | "hackathon";
-  description: string;
-  content?: string;
-  image?: string;
-  githubUrl?: string;
-  liveUrl?: string;
-  techStack: string[];
-  linkedArchiveItems: ArchiveProofItem[];
-};
+import type { ProjectRecord } from "./types";
 
 interface ProjectListProps {
   preloadedProjects: Preloaded<typeof api.projects.getAllProjects>;
@@ -34,8 +21,8 @@ function ProjectSection({
 }: {
   title: string;
   indexLabel: string;
-  projects: Project[];
-  onOpen: (project: Project) => void;
+  projects: ProjectRecord[];
+  onOpen: (project: ProjectRecord) => void;
 }) {
   if (projects.length === 0) {
     return null;
@@ -70,7 +57,7 @@ function ProjectSection({
 
 export default function ProjectList({ preloadedProjects }: ProjectListProps) {
   const projects = usePreloadedQuery(preloadedProjects);
-  const [selected, setSelected] = useState<Project | null>(null);
+  const [selected, setSelected] = useState<ProjectRecord | null>(null);
 
   const isEmpty = projects.length === 0;
   const primaryProjects = projects.filter(

@@ -35,7 +35,7 @@ export default function LinkedArchiveLinks({
 
           return (
             <div
-              key={item._id}
+              key={item._id ?? `${item.fileId}-${item.title}`}
               className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-mono"
             >
               <span className="inline-flex items-center gap-2 text-primary uppercase tracking-widest">

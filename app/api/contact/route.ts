@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     return NextResponse.json(
-      { success: false, message: "Transmission failed." },
+      { success: false, message: "Transmission failed." ,error},
       { status: 500 },
     );
   }

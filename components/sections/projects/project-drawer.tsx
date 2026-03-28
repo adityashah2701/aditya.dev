@@ -13,26 +13,14 @@ import {
   DrawerFooter,
   DrawerClose,
 } from "@/components/ui/drawer";
-import type { ArchiveProofItem } from "@/components/sections/archive/archive-proof-dialog";
 import { FolderOpen, Code, ExternalLink } from "lucide-react";
 import LinkedArchiveLinks from "./linked-archive-links";
 import ArchiveProofDialog from "@/components/sections/archive/archive-proof-dialog";
-
-type Project = {
-  _id: string;
-  title: string;
-  category?: "repository" | "hackathon";
-  description: string;
-  content?: string;
-  image?: string;
-  githubUrl?: string;
-  liveUrl?: string;
-  techStack: string[];
-  linkedArchiveItems: ArchiveProofItem[];
-};
+import type { ArchiveProofItem } from "@/components/sections/archive/archive-proof-dialog";
+import type { ProjectRecord } from "./types";
 
 interface ProjectDrawerProps {
-  project: Project | null;
+  project: ProjectRecord | null;
   open: boolean;
   onClose: () => void;
 }

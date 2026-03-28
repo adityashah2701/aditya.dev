@@ -28,6 +28,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { PdfPreview } from "./pdf-preview";
 
 export interface ArchiveProofItem {
+  _id?: string;
   title: string;
   organization: string;
   issuedDate: string;
