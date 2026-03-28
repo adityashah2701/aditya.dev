@@ -167,13 +167,12 @@ export default function ProjectDrawer({
                   </h3>
                   <Separator className="flex-1 ml-1 bg-border-dark" />
                 </div>
-                <ul className="space-y-3">
+                <ul className="space-y-3 pl-5 text-slate-300 marker:text-primary [list-style-type:square]">
                   {project.contributions?.map((contribution) => (
                     <li
                       key={contribution}
-                      className="flex items-start gap-3 text-sm leading-relaxed text-slate-300"
+                      className="pl-1 text-sm leading-relaxed"
                     >
-                      <span className="mt-1 h-1.5 w-1.5 shrink-0 bg-primary" />
                       <span>{contribution}</span>
                     </li>
                   ))}
