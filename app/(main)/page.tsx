@@ -7,7 +7,7 @@ import { Github, Network, Mail } from "lucide-react";
 export const metadata = createPageMetadata({
   title: "Home",
   description:
-    "Welcome to Aditya Shah's portfolio — Systems Engineer & Full Stack Architect building AI tools, web apps, and modern software with React, Next.js, and TypeScript.",
+    "I'm Aditya Shah — a full stack developer building modern applications and AI-powered tools.",
   ogTitle: SITE_TITLE,
   ogDescription:
     "Aditya Shah — Systems Engineer & Full Stack Architect. Explore projects, skills, and experience.",
