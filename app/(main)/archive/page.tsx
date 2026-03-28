@@ -2,6 +2,7 @@ import { preloadQuery } from "convex/nextjs";
 import { Breadcrumb } from "@/components/sections/shared";
 import { ArchiveHeader } from "@/components/sections/archive/archive-header";
 import { ArchivePageClient } from "@/components/sections/archive/archive-page-client";
+import { ConvexClientProvider } from "@/components/providers/convex-client-provider";
 import { api } from "@/convex/_generated/api";
 import { createPageMetadata } from "@/lib/metadata";
 import "./masonry.css";
@@ -36,7 +37,9 @@ export default async function ArchivePage() {
     <>
       <Breadcrumb items={breadcrumbItems} />
       <ArchiveHeader />
-      <ArchivePageClient preloadedArchivePage={preloadedArchivePage} />
+      <ConvexClientProvider>
+        <ArchivePageClient preloadedArchivePage={preloadedArchivePage} />
+      </ConvexClientProvider>
     </>
   );
 }

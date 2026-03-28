@@ -1,19 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSidebar } from "@/components/ui/sidebar";
 
 export default function TimeLocationWidget() {
   const [time, setTime] = useState<Date | null>(null);
+  const { isMobile, openMobile } = useSidebar();
+  const shouldRunClock = !isMobile || openMobile;
 
   useEffect(() => {
-    // To prevent hydration mismatch, set initial time in a microtask, or wait for next tick.
-    const timer = setInterval(() => {
+    if (!shouldRunClock) {
+      return;
+    }
+
+    const timer = window.setInterval(() => {
       setTime(new Date());
     }, 1000);
-    // Initial paint tick
-    setTimeout(() => setTime(new Date()), 0);
-    return () => clearInterval(timer);
-  }, []);
+    return () => window.clearInterval(timer);
+  }, [shouldRunClock]);
 
   return (
     <div className="flex flex-col gap-3 font-mono">
