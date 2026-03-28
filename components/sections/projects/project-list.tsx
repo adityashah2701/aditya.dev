@@ -37,7 +37,7 @@ function ProjectSection({
         </h2>
         <Separator className="flex-1 ml-4 bg-border-dark" />
         <span className="font-mono text-xs text-slate-600 shrink-0">
-          {projects.length}_REPOSITORIES
+          {projects.length}_PROJECTS
         </span>
       </div>
 
@@ -61,11 +61,20 @@ export default function ProjectList({ preloadedProjects }: ProjectListProps) {
 
   const isEmpty = projects.length === 0;
   const primaryProjects = projects.filter(
-    (project) => project.category !== "hackathon",
+    (project) =>
+      project.category !== "hackathon" && project.category !== "internship",
+  );
+  const internshipProjects = projects.filter(
+    (project) => project.category === "internship",
   );
   const hackathonProjects = projects.filter(
     (project) => project.category === "hackathon",
   );
+  const sections = [
+    { title: "SELECTED PROJECTS", projects: primaryProjects },
+    { title: "INTERNSHIP EXPERIENCE", projects: internshipProjects },
+    { title: "HACKATHON PROJECTS", projects: hackathonProjects },
+  ].filter((section) => section.projects.length > 0);
 
   return (
     <section className="mb-12 md:mb-20 space-y-10 md:space-y-12">
@@ -74,25 +83,22 @@ export default function ProjectList({ preloadedProjects }: ProjectListProps) {
         <div className="border border-border-dark bg-background-dark p-12 flex flex-col items-center gap-3 text-center">
           <FolderX className="w-9 h-9 text-slate-600" />
           <p className="font-mono text-sm text-slate-500">
-            NO_REPOSITORIES_FOUND
+            NO_PROJECTS_FOUND
           </p>
         </div>
       )}
 
       {!isEmpty && (
         <>
-          <ProjectSection
-            title="SELECTED PROJECTS"
-            indexLabel="01."
-            projects={primaryProjects}
-            onOpen={setSelected}
-          />
-          <ProjectSection
-            title="HACKATHON PROJECTS"
-            indexLabel="02."
-            projects={hackathonProjects}
-            onOpen={setSelected}
-          />
+          {sections.map((section, index) => (
+            <ProjectSection
+              key={section.title}
+              title={section.title}
+              indexLabel={`${String(index + 1).padStart(2, "0")}.`}
+              projects={section.projects}
+              onOpen={setSelected}
+            />
+          ))}
         </>
       )}
 

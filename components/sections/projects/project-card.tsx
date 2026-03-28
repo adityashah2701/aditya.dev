@@ -1,7 +1,16 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { Brain, LayoutGrid, Terminal, Network, Cpu, Rocket, Code, Cloud } from "lucide-react";
+import {
+  Brain,
+  LayoutGrid,
+  Terminal,
+  Network,
+  Cpu,
+  Rocket,
+  Code,
+  Cloud,
+} from "lucide-react";
 import type { ProjectRecord } from "./types";
 
 interface ProjectRowProps {
@@ -18,6 +27,7 @@ const ICONS = [
 export default function ProjectRow({ project, index, onOpen }: ProjectRowProps) {
   const Icon = ICONS[index % ICONS.length];
   const isHackathonProject = project.category === "hackathon";
+  const isInternshipProject = project.category === "internship";
 
   return (
     <button
@@ -37,14 +47,32 @@ export default function ProjectRow({ project, index, onOpen }: ProjectRowProps) 
         {project.title}
       </span>
 
-      {isHackathonProject ? (
-        <Badge
-          variant="outline"
-          className="hidden md:inline-flex px-2 py-0.5 text-[10px] font-mono text-primary bg-primary/10 border-primary/30 rounded-none shrink-0"
-        >
-          HACKATHON
-        </Badge>
-      ) : null}
+      <div className="hidden md:flex items-center gap-2 shrink-0">
+        {isInternshipProject ? (
+          <Badge
+            variant="outline"
+            className="px-2 py-0.5 text-[10px] font-mono text-primary bg-primary/10 border-primary/30 rounded-none shrink-0"
+          >
+            INTERNSHIP
+          </Badge>
+        ) : null}
+        {isHackathonProject ? (
+          <Badge
+            variant="outline"
+            className="px-2 py-0.5 text-[10px] font-mono text-primary bg-primary/10 border-primary/30 rounded-none shrink-0"
+          >
+            HACKATHON
+          </Badge>
+        ) : null}
+        {project.confidential ? (
+          <Badge
+            variant="outline"
+            className="px-2 py-0.5 text-[10px] font-mono text-amber-300 bg-amber-500/10 border-amber-500/30 rounded-none shrink-0"
+          >
+            CONFIDENTIAL
+          </Badge>
+        ) : null}
+      </div>
 
       {/* Tech stack — first 3 tags only */}
       <div className="hidden sm:flex items-center gap-2 shrink-0">

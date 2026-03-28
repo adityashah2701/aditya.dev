@@ -13,7 +13,7 @@ import {
   DrawerFooter,
   DrawerClose,
 } from "@/components/ui/drawer";
-import { FolderOpen, Code, ExternalLink } from "lucide-react";
+import { FolderOpen, Code, ExternalLink, LockKeyhole } from "lucide-react";
 import LinkedArchiveLinks from "./linked-archive-links";
 import ArchiveProofDialog from "@/components/sections/archive/archive-proof-dialog";
 import type { ArchiveProofItem } from "@/components/sections/archive/archive-proof-dialog";
@@ -35,18 +35,30 @@ export default function ProjectDrawer({
 
   if (!project) return null;
 
-  const projectLabel =
-    project.category === "hackathon" ? "HACKATHON_PROJECT" : "PROJECT_DETAIL";
+  const isHackathonProject = project.category === "hackathon";
+  const isInternshipProject = project.category === "internship";
+  const isConfidentialProject = Boolean(project.confidential);
+  const projectLabel = isInternshipProject
+    ? isConfidentialProject
+      ? "CONFIDENTIAL_INTERNSHIP"
+      : "INTERNSHIP_PROJECT"
+    : isHackathonProject
+      ? "HACKATHON_PROJECT"
+      : "PROJECT_DETAIL";
   const linkedArchiveItems = project.linkedArchiveItems ?? [];
-  const hasLinkedArchiveItems =
-    linkedArchiveItems !== undefined && linkedArchiveItems.length > 0;
-  const techStackIndex = project.content
-    ? hasLinkedArchiveItems
-      ? "04."
-      : "03."
-    : hasLinkedArchiveItems
-      ? "03."
-      : "02.";
+  const hasLinkedArchiveItems = linkedArchiveItems.length > 0;
+  const hasContributions =
+    project.contributions !== undefined && project.contributions.length > 0;
+  const formatSectionIndex = (value: number) => `${String(value).padStart(2, "0")}.`;
+  let nextSectionNumber = 2;
+  const overviewIndex = project.content ? formatSectionIndex(nextSectionNumber++) : null;
+  const contributionsIndex = hasContributions
+    ? formatSectionIndex(nextSectionNumber++)
+    : null;
+  const documentsIndex = hasLinkedArchiveItems
+    ? formatSectionIndex(nextSectionNumber++)
+    : null;
+  const techStackIndex = formatSectionIndex(nextSectionNumber);
 
   return (
     <>
@@ -77,11 +89,33 @@ export default function ProjectDrawer({
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-primary font-mono text-xs">01.</span>
                 <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-                  Preview
+                  {isConfidentialProject ? "Confidential Preview" : "Preview"}
                 </h3>
                 <Separator className="flex-1 ml-1 bg-border-dark" />
               </div>
-              {project.image ? (
+              {isConfidentialProject ? (
+                <div className="relative w-full aspect-video border border-border-dark bg-surface-dark overflow-hidden flex items-center justify-center">
+                  <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none" />
+                  <div className="relative z-10 flex max-w-md flex-col items-center gap-3 px-6 text-center">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300">
+                      <LockKeyhole className="h-6 w-6" />
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-sm font-bold uppercase tracking-[0.2em] text-white">
+                        Preview Restricted
+                      </p>
+                      <p className="text-xs font-mono text-slate-500">
+                        CONFIDENTIAL_WORK_PRODUCT
+                      </p>
+                    </div>
+                    <p className="text-sm leading-relaxed text-slate-400">
+                      Screens, source access, and public demos are intentionally
+                      withheld, but the contribution summary and supporting
+                      documents below remain available.
+                    </p>
+                  </div>
+                </div>
+              ) : project.image ? (
                 <div className="relative w-full aspect-video border border-border-dark overflow-hidden">
                   <Image
                     src={project.image}
@@ -107,12 +141,12 @@ export default function ProjectDrawer({
             </div>
 
           {/* Overview */}
-            {project.content && (
+            {project.content && overviewIndex ? (
               <div>
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="text-primary font-mono text-xs">02.</span>
+                  <span className="text-primary font-mono text-xs">{overviewIndex}</span>
                   <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-                    Overview
+                    {isInternshipProject ? "Role Summary" : "Overview"}
                   </h3>
                   <Separator className="flex-1 ml-1 bg-border-dark" />
                 </div>
@@ -120,12 +154,37 @@ export default function ProjectDrawer({
                   {project.content}
                 </p>
               </div>
-            )}
+            ) : null}
 
-            {hasLinkedArchiveItems ? (
+            {hasContributions && contributionsIndex ? (
+              <div>
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="text-primary font-mono text-xs">
+                    {contributionsIndex}
+                  </span>
+                  <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+                    Key Contributions
+                  </h3>
+                  <Separator className="flex-1 ml-1 bg-border-dark" />
+                </div>
+                <ul className="space-y-3">
+                  {project.contributions?.map((contribution) => (
+                    <li
+                      key={contribution}
+                      className="flex items-start gap-3 text-sm leading-relaxed text-slate-300"
+                    >
+                      <span className="mt-1 h-1.5 w-1.5 shrink-0 bg-primary" />
+                      <span>{contribution}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+
+            {hasLinkedArchiveItems && documentsIndex ? (
               <LinkedArchiveLinks
                 items={linkedArchiveItems}
-                sectionIndex={project.content ? "03." : "02."}
+                sectionIndex={documentsIndex}
                 onOpenProof={setActiveArchiveItem}
               />
             ) : null}

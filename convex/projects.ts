@@ -58,12 +58,20 @@ export const addProject = mutation({
   args: {
     title: v.string(),
     slug: v.string(),
-    category: v.optional(v.union(v.literal("repository"), v.literal("hackathon"))),
+    category: v.optional(
+      v.union(
+        v.literal("repository"),
+        v.literal("hackathon"),
+        v.literal("internship"),
+      ),
+    ),
     description: v.string(),
     content: v.optional(v.string()),
     liveUrl: v.optional(v.string()),
     githubUrl: v.optional(v.string()),
     image: v.optional(v.string()),
+    confidential: v.optional(v.boolean()),
+    contributions: v.optional(v.array(v.string())),
     linkedArchiveIds: v.optional(v.array(v.id("certificates"))),
     order: v.number(),
     featured: v.boolean(),
@@ -79,12 +87,20 @@ export const updateProject = mutation({
     id: v.id("projects"),
     title: v.string(),
     slug: v.string(),
-    category: v.optional(v.union(v.literal("repository"), v.literal("hackathon"))),
+    category: v.optional(
+      v.union(
+        v.literal("repository"),
+        v.literal("hackathon"),
+        v.literal("internship"),
+      ),
+    ),
     description: v.string(),
     content: v.optional(v.string()),
     liveUrl: v.optional(v.string()),
     githubUrl: v.optional(v.string()),
     image: v.optional(v.string()),
+    confidential: v.optional(v.boolean()),
+    contributions: v.optional(v.array(v.string())),
     linkedArchiveIds: v.optional(v.array(v.id("certificates"))),
     order: v.number(),
     featured: v.boolean(),
@@ -103,7 +119,7 @@ export const deleteProject = mutation({
   handler: async (ctx, args) => {
     const project = await ctx.db.get(args.id);
     if (!project) return;
-    
+
     if (project.image && !project.image.startsWith("http")) {
       try {
         await ctx.storage.delete(project.image as Id<"_storage">);

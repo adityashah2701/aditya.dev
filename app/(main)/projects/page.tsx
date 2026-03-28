@@ -5,13 +5,13 @@ import { api } from "@/convex/_generated/api";
 import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata = createPageMetadata({
-  title: "Repositories",
+  title: "Projects",
   description:
-    "Browse Aditya Shah's software projects — full stack applications, AI tools, developer utilities, and open source contributions built with modern web technologies.",
+    "Browse Aditya Shah's software projects, internship work, AI tools, and engineering contributions across product, systems, and developer tooling.",
   path: "/projects",
-  ogTitle: "Repositories | aditya.dev",
+  ogTitle: "Projects | aditya.dev",
   ogDescription:
-    "Full stack apps, AI tools, and open source projects by Aditya Shah.",
+    "Full stack apps, internship work, AI tools, and engineering projects by Aditya Shah.",
 });
 
 export default async function Projects() {

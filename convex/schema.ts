@@ -5,12 +5,20 @@ export default defineSchema({
   projects: defineTable({
     title: v.string(),
     slug: v.string(),
-    category: v.optional(v.union(v.literal("repository"), v.literal("hackathon"))),
+    category: v.optional(
+      v.union(
+        v.literal("repository"),
+        v.literal("hackathon"),
+        v.literal("internship"),
+      ),
+    ),
     description: v.string(),
     content: v.optional(v.string()), // Markdown or HTML content for the project detail page
     liveUrl: v.optional(v.string()),
     githubUrl: v.optional(v.string()),
     image: v.optional(v.string()),
+    confidential: v.optional(v.boolean()),
+    contributions: v.optional(v.array(v.string())),
     linkedArchiveIds: v.optional(v.array(v.id("certificates"))),
     order: v.number(), // For custom sorting
     featured: v.boolean(),
