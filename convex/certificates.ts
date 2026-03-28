@@ -74,6 +74,40 @@ export const getLatestCertificates = query({
   },
 });
 
+export const getCertificateById = query({
+  args: { id: v.id("certificates") },
+  handler: async (ctx, args) => {
+    const certificate = await ctx.db.get(args.id);
+
+    if (!certificate) {
+      return null;
+    }
+
+    return {
+      ...certificate,
+      fileUrl: await resolveCertificateFileUrl(ctx, certificate.fileId),
+    };
+  },
+});
+
+export const getCertificatesByIds = query({
+  args: { ids: v.array(v.id("certificates")) },
+  handler: async (ctx, args) => {
+    const certificates = await Promise.all(
+      args.ids.map((id) => ctx.db.get(id)),
+    );
+
+    const linkedCertificates = certificates.filter((certificate) => certificate !== null);
+
+    return await Promise.all(
+      linkedCertificates.map(async (certificate) => ({
+        ...certificate,
+        fileUrl: await resolveCertificateFileUrl(ctx, certificate.fileId),
+      })),
+    );
+  },
+});
+
 export const generateUploadUrl = mutation({
   args: {},
   handler: async (ctx) => {

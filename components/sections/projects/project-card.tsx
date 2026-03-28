@@ -1,10 +1,16 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { Doc } from "@/convex/_generated/dataModel";
+import type { ArchiveProofItem } from "@/components/sections/archive/archive-proof-dialog";
 import { Brain, LayoutGrid, Terminal, Network, Cpu, Rocket, Code, Cloud } from "lucide-react";
 
-type Project = Doc<"projects">;
+type Project = {
+  _id: string;
+  title: string;
+  category?: "repository" | "hackathon";
+  techStack: string[];
+  linkedArchiveItems: ArchiveProofItem[];
+};
 
 interface ProjectRowProps {
   project: Project;
@@ -19,6 +25,7 @@ const ICONS = [
 
 export default function ProjectRow({ project, index, onOpen }: ProjectRowProps) {
   const Icon = ICONS[index % ICONS.length];
+  const isHackathonProject = project.category === "hackathon";
 
   return (
     <button
@@ -37,6 +44,15 @@ export default function ProjectRow({ project, index, onOpen }: ProjectRowProps) 
       <span className="font-bold text-sm uppercase tracking-tight text-white group-hover:text-primary transition-colors flex-1 truncate">
         {project.title}
       </span>
+
+      {isHackathonProject ? (
+        <Badge
+          variant="outline"
+          className="hidden md:inline-flex px-2 py-0.5 text-[10px] font-mono text-primary bg-primary/10 border-primary/30 rounded-none shrink-0"
+        >
+          HACKATHON
+        </Badge>
+      ) : null}
 
       {/* Tech stack — first 3 tags only */}
       <div className="hidden sm:flex items-center gap-2 shrink-0">

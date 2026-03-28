@@ -143,6 +143,41 @@ export const seedAutomateFlow = mutation({
   },
 });
 
+export const seedMeetingBot = mutation({
+  handler: async (ctx) => {
+    const existing = await ctx.db
+      .query("projects")
+      .withIndex("by_slug", (q) => q.eq("slug", "meeting-bot"))
+      .unique();
+
+    if (existing) return "meeting-bot already seeded.";
+
+    await ctx.db.insert("projects", {
+      title: "Meeting Bot",
+      slug: "meeting-bot",
+      category: "hackathon",
+      description:
+        "A hackathon project focused on automating meeting workflows with a bot that captures key discussion context and streamlines follow-up actions.",
+      content:
+        "Meeting Bot was built as a hackathon prototype to reduce the overhead around joining meetings, tracking important discussion points, and turning conversations into actionable summaries. The product direction centered on fast setup, low-friction meeting orchestration, and a practical operator experience for demo-speed development.",
+      githubUrl: undefined,
+      liveUrl: undefined,
+      image: undefined,
+      order: 4,
+      featured: true,
+      techStack: [
+        "Next.js",
+        "TypeScript",
+        "React",
+        "Node.js",
+        "Hackathon",
+      ],
+    });
+
+    return "meeting-bot seeded successfully.";
+  },
+});
+
 export const seedTechStack = mutation({
   handler: async (ctx) => {
     const existing = await ctx.db.query("techstack").collect();

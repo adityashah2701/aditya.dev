@@ -18,7 +18,13 @@ export const metadata = createPageMetadata({
     "Certificates, achievements, publications, and proof of work by Aditya Shah.",
 });
 
-export default async function ArchivePage() {
+export default async function ArchivePage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ certificate?: string }>;
+}) {
+  const resolvedSearchParams = await searchParams;
+  const highlightedCertificateId = resolvedSearchParams?.certificate;
   const preloadedArchivePage = await preloadQuery(api.certificates.getArchivePage, {
     paginationOpts: {
       numItems: BATCH_SIZE,
@@ -36,7 +42,10 @@ export default async function ArchivePage() {
     <>
       <Breadcrumb items={breadcrumbItems} />
       <ArchiveHeader />
-      <ArchivePageClient preloadedArchivePage={preloadedArchivePage} />
+      <ArchivePageClient
+        preloadedArchivePage={preloadedArchivePage}
+        highlightedCertificateId={highlightedCertificateId}
+      />
     </>
   );
 }

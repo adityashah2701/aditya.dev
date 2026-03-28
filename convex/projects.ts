@@ -1,6 +1,35 @@
-import { mutation, query } from "./_generated/server";
+import { mutation, query, type QueryCtx } from "./_generated/server";
 import { v } from "convex/values";
 import { Id } from "./_generated/dataModel";
+
+async function resolveCertificateFileUrl(ctx: QueryCtx, fileId: string) {
+  if (fileId.startsWith("http")) return fileId;
+  return await ctx.storage.getUrl(fileId);
+}
+
+async function resolveLinkedArchiveItems(
+  ctx: QueryCtx,
+  linkedArchiveIds?: Id<"certificates">[],
+) {
+  if (!linkedArchiveIds || linkedArchiveIds.length === 0) {
+    return [];
+  }
+
+  const certificates = await Promise.all(
+    linkedArchiveIds.map((id) => ctx.db.get(id)),
+  );
+
+  const linkedCertificates = certificates.filter(
+    (certificate) => certificate !== null,
+  );
+
+  return await Promise.all(
+    linkedCertificates.map(async (certificate) => ({
+      ...certificate,
+      fileUrl: await resolveCertificateFileUrl(ctx, certificate.fileId),
+    })),
+  );
+}
 
 /**
  * Public query — fetch all projects ordered by the `order` field.
@@ -8,10 +37,20 @@ import { Id } from "./_generated/dataModel";
  */
 export const getAllProjects = query({
   handler: async (ctx) => {
-    return await ctx.db
+    const projects = await ctx.db
       .query("projects")
       .withIndex("by_order")
       .collect();
+
+    return await Promise.all(
+      projects.map(async (project) => ({
+        ...project,
+        linkedArchiveItems: await resolveLinkedArchiveItems(
+          ctx,
+          project.linkedArchiveIds,
+        ),
+      })),
+    );
   },
 });
 
@@ -19,11 +58,13 @@ export const addProject = mutation({
   args: {
     title: v.string(),
     slug: v.string(),
+    category: v.optional(v.union(v.literal("repository"), v.literal("hackathon"))),
     description: v.string(),
     content: v.optional(v.string()),
     liveUrl: v.optional(v.string()),
     githubUrl: v.optional(v.string()),
     image: v.optional(v.string()),
+    linkedArchiveIds: v.optional(v.array(v.id("certificates"))),
     order: v.number(),
     featured: v.boolean(),
     techStack: v.array(v.string()),
@@ -38,11 +79,13 @@ export const updateProject = mutation({
     id: v.id("projects"),
     title: v.string(),
     slug: v.string(),
+    category: v.optional(v.union(v.literal("repository"), v.literal("hackathon"))),
     description: v.string(),
     content: v.optional(v.string()),
     liveUrl: v.optional(v.string()),
     githubUrl: v.optional(v.string()),
     image: v.optional(v.string()),
+    linkedArchiveIds: v.optional(v.array(v.id("certificates"))),
     order: v.number(),
     featured: v.boolean(),
     techStack: v.array(v.string()),

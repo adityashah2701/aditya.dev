@@ -4,9 +4,11 @@ import React, { useEffect, useMemo, useState } from "react";
 import {
   type Preloaded,
   useConvex,
+  useQuery,
   usePreloadedQuery,
 } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import type { Id } from "@/convex/_generated/dataModel";
 import { CertificateCard } from "./certificate-card";
 import { Button } from "@/components/ui/button";
 import { FolderArchive, Loader2 } from "lucide-react";
@@ -25,19 +27,48 @@ function stableHash(value: string) {
 
 interface ArchivePageClientProps {
   preloadedArchivePage: Preloaded<typeof api.certificates.getArchivePage>;
+  highlightedCertificateId?: string;
 }
 
 export function ArchivePageClient({
   preloadedArchivePage,
+  highlightedCertificateId,
 }: ArchivePageClientProps) {
   const convex = useConvex();
   const initialArchivePage = usePreloadedQuery(preloadedArchivePage);
   const [archivePage, setArchivePage] = useState(initialArchivePage);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const highlightedCertificate = useQuery(
+    api.certificates.getCertificateById,
+    highlightedCertificateId
+      ? { id: highlightedCertificateId as Id<"certificates"> }
+      : "skip",
+  );
 
   useEffect(() => {
     setArchivePage(initialArchivePage);
   }, [initialArchivePage]);
+
+  useEffect(() => {
+    if (!highlightedCertificate) {
+      return;
+    }
+
+    setArchivePage((current) => {
+      const alreadyPresent = current.page.some(
+        (certificate) => certificate._id === highlightedCertificate._id,
+      );
+
+      if (alreadyPresent) {
+        return current;
+      }
+
+      return {
+        ...current,
+        page: [highlightedCertificate, ...current.page],
+      };
+    });
+  }, [highlightedCertificate]);
 
   const shuffledCertificates = useMemo(
     () =>
@@ -119,6 +150,7 @@ export function ArchivePageClient({
             transition={{ delay: i * 0.04, duration: 0.3, ease: "easeOut" }}
           >
             <CertificateCard
+              certificateId={String(cert._id)}
               title={cert.title}
               organization={cert.organization}
               issuedDate={cert.issuedDate}
@@ -128,6 +160,7 @@ export function ArchivePageClient({
               tags={cert.tags}
               description={cert.description}
               verificationUrl={cert.verificationUrl}
+              autoOpen={highlightedCertificateId === String(cert._id)}
             />
           </motion.div>
         ))}
