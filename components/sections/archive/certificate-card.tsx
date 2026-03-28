@@ -91,7 +91,7 @@ export function CertificateCard({
           organization,
           issuedDate,
           fileId,
-          fileUrl,
+          fileUrl: fileUrl ?? null,
           fileType,
           tags,
           description,
