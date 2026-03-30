@@ -11,11 +11,11 @@ const BATCH_SIZE = 12;
 export const metadata = createPageMetadata({
   title: "Archive",
   description:
-    "Archive of certificates, achievements, publications, and proof of work by Aditya Shah.",
+    "I'm Aditya Shah, and this archive brings together my certificates, achievements, publications, and proof of work behind the products I build.",
   path: "/archive",
   ogTitle: "Archive | aditya.dev",
   ogDescription:
-    "Certificates, achievements, publications, and proof of work by Aditya Shah.",
+    "I'm Aditya Shah. Explore my certificates, achievements, publications, and proof of work.",
 });
 
 export default async function ArchivePage({

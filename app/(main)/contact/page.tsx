@@ -9,11 +9,11 @@ import { createPageMetadata } from "@/lib/metadata";
 export const metadata = createPageMetadata({
   title: "Initiate Contact",
   description:
-    "Get in touch with Aditya Shah — open to freelance projects, full-time roles, collaborations, and interesting technical conversations.",
+    "I'm Aditya Shah. Get in touch with me for freelance projects, full-time roles, collaborations, and product ideas across modern web apps, agentic AI, and mobile apps.",
   path: "/contact",
   ogTitle: "Initiate Contact | aditya.dev",
   ogDescription:
-    "Reach out to Aditya Shah for collaborations, job opportunities, or technical discussions.",
+    "I'm Aditya Shah. Reach out to me for collaborations, job opportunities, or product discussions across modern web apps, agentic AI, and mobile apps.",
 });
 
 export default function Contact() {

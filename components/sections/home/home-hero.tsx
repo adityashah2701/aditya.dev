@@ -27,7 +27,7 @@ export default function HomeHero() {
           </span>
         </div>
       </header>
-      <div className="max-w-3xl mt-2 md:mt-4">
+      <div className="max-w-3xl mt-2 md:mt-4" data-nosnippet>
         <p className="text-slate-300 leading-relaxed text-sm md:text-base font-light">
           Designing scalable digital architecture. I specialize in building
           high-performance systems and intuitive interfaces. Currently

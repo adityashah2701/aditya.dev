@@ -10,7 +10,7 @@ export const SITE_NAME = "adityashah27.dev";
 export const SITE_TITLE = "Aditya Shah | Software Developer";
 
 export const SITE_DESCRIPTION =
-  "Aditya Shah — Systems Engineer & Full Stack Architect. Building AI tools, web apps, and modern full stack software with React, Next.js, and TypeScript.";
+  "I'm Aditya Shah, a full stack developer building modern web apps, agentic AI products, mobile apps, and scalable digital experiences.";
 
 export const SITE_KEYWORDS = [
   "Aditya Shah",

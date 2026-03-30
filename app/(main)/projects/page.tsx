@@ -7,11 +7,11 @@ import { createPageMetadata } from "@/lib/metadata";
 export const metadata = createPageMetadata({
   title: "Repositories",
   description:
-    "Browse Aditya Shah's software projects, internship work, AI tools, and engineering contributions across product, systems, and developer tooling.",
+    "I'm Aditya Shah, and these are my projects across modern web apps, agentic AI products, mobile apps, and scalable digital experiences.",
   path: "/projects",
   ogTitle: "Repositories | aditya.dev",
   ogDescription:
-    "Full stack apps, internship work, AI tools, and engineering projects by Aditya Shah.",
+    "I'm Aditya Shah. Explore my work across modern web apps, agentic AI products, mobile apps, and scalable digital experiences.",
 });
 
 export default async function Projects() {

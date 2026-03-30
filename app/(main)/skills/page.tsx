@@ -7,11 +7,11 @@ import { createPageMetadata } from "@/lib/metadata";
 export const metadata = createPageMetadata({
   title: "Tech Stack",
   description:
-    "Aditya Shah's technology stack — React, Next.js, TypeScript, Node.js, Python, cloud infrastructure, databases, and the full ecosystem of tools used to build modern software.",
+    "I'm Aditya Shah, and this is the toolkit I use as a full stack developer to build modern web apps, agentic AI products, mobile apps, and scalable digital experiences.",
   path: "/skills",
   ogTitle: "Tech Stack | aditya.dev",
   ogDescription:
-    "The tools, languages, and frameworks Aditya Shah uses to build software — React, Next.js, TypeScript, Python, and more.",
+    "I'm Aditya Shah. See the tools and technologies I use to build modern web apps, agentic AI products, mobile apps, and scalable digital experiences.",
 });
 
 export default async function Skills() {

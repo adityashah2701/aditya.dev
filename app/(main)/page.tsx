@@ -5,12 +5,12 @@ import { createPageMetadata } from "@/lib/metadata";
 import { Github, Network, Mail } from "lucide-react";
 
 export const metadata = createPageMetadata({
-  title: "Home",
+  title: "Aditya Shah",
   description:
-    "I'm Aditya Shah — a full stack developer building modern applications and AI-powered tools.",
+    "I'm Aditya Shah, a full stack developer building modern web apps, agentic AI products, mobile apps, and scalable digital experiences.",
   ogTitle: SITE_TITLE,
   ogDescription:
-    "Aditya Shah — Systems Engineer & Full Stack Architect. Explore projects, skills, and experience.",
+    "I'm Aditya Shah, a full stack developer building modern web apps, agentic AI products, mobile apps, and scalable digital experiences. Explore my projects, skills, and experience.",
 });
 
 export default function Home() {
