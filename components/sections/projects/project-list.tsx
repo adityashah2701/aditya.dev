@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { type Preloaded, usePreloadedQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Separator } from "@/components/ui/separator";
@@ -58,7 +58,40 @@ function ProjectSection({
 
 export default function ProjectList({ preloadedProjects }: ProjectListProps) {
   const projects = usePreloadedQuery(preloadedProjects);
-  const [selected, setSelected] = useState<ProjectRecord | null>(null);
+  const [selectedProject, setSelectedProject] = useState<ProjectRecord | null>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const closeTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (closeTimeoutRef.current !== null) {
+        window.clearTimeout(closeTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const openProject = (project: ProjectRecord) => {
+    if (closeTimeoutRef.current !== null) {
+      window.clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+
+    setSelectedProject(project);
+    setIsDrawerOpen(true);
+  };
+
+  const closeProject = () => {
+    setIsDrawerOpen(false);
+
+    if (closeTimeoutRef.current !== null) {
+      window.clearTimeout(closeTimeoutRef.current);
+    }
+
+    closeTimeoutRef.current = window.setTimeout(() => {
+      setSelectedProject(null);
+      closeTimeoutRef.current = null;
+    }, 300);
+  };
 
   const isEmpty = projects.length === 0;
   const primaryProjects = projects.filter(
@@ -97,7 +130,7 @@ export default function ProjectList({ preloadedProjects }: ProjectListProps) {
               title={section.title}
               indexLabel={`${String(index + 1).padStart(2, "0")}.`}
               projects={section.projects}
-              onOpen={setSelected}
+              onOpen={openProject}
             />
           ))}
         </>
@@ -105,9 +138,9 @@ export default function ProjectList({ preloadedProjects }: ProjectListProps) {
 
       {/* Drawer — detail view */}
       <ProjectDrawer
-        project={selected}
-        open={selected !== null}
-        onClose={() => setSelected(null)}
+        project={selectedProject}
+        open={isDrawerOpen}
+        onClose={closeProject}
       />
     </section>
   );
