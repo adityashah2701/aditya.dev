@@ -54,11 +54,17 @@ export default defineSchema({
     .index("by_createdAt", ["createdAt"])
     .index("by_issuedDate", ["issuedDate"]),
 
-  contact: defineTable({
+  contacts: defineTable({
     name: v.string(),
     email: v.string(),
     message: v.string(),
-    read: v.boolean(), // To mark messages as read/unread in an admin dashboard
-    createdAt: v.number(), // Unix timestamp
-  }).index("by_createdAt", ["createdAt"]),
+    createdAt: v.number(),
+    ip: v.string(),
+    userAgent: v.string(),
+  })
+    .index("by_createdAt", ["createdAt"])
+    .index("by_email", ["email"])
+    .index("by_ip", ["ip"])
+    .index("by_email_createdAt", ["email", "createdAt"])
+    .index("by_ip_createdAt", ["ip", "createdAt"]),
 });
