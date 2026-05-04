@@ -36,10 +36,12 @@ export default function HomeHero() {
         </p>
       </div>
       <div className="flex flex-wrap gap-3 mt-4 md:mt-6">
-        <Button className="flex items-center gap-2 h-auto px-4 md:px-6 py-2.5 md:py-3 bg-primary hover:bg-primary/90 text-white text-xs md:text-sm font-bold tracking-wide rounded-none transition-all shadow-[0_0_20px_rgba(19,73,236,0.3)] group">
-          <Download className="w-4 h-4 md:w-[18px] md:h-[18px] group-hover:translate-y-[2px] transition-transform duration-200" />
-          DOWNLOAD_CV
-        </Button>
+        <a href="/resume.pdf" download="resume.pdf">
+          <Button className="flex items-center gap-2 h-auto px-4 md:px-6 py-2.5 md:py-3 bg-primary hover:bg-primary/90 text-white text-xs md:text-sm font-bold tracking-wide rounded-none transition-all shadow-[0_0_20px_rgba(19,73,236,0.3)] group">
+            <Download className="w-4 h-4 md:w-[18px] md:h-[18px] group-hover:translate-y-[2px] transition-transform duration-200" />
+            DOWNLOAD_RESUME
+          </Button>
+        </a>
         <Link href="/contact" passHref>
           <Button
             variant="outline"
