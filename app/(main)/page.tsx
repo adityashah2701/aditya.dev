@@ -2,7 +2,7 @@ import { Breadcrumb } from "@/components/sections/shared";
 import { HomeHero, PersonalIdentity } from "@/components/sections/home";
 import { SITE_TITLE } from "@/constants/seo";
 import { createPageMetadata } from "@/lib/metadata";
-import { Github, Network, Mail } from "lucide-react";
+import { Github, Network, Mail, Code2 } from "lucide-react";
 
 export const metadata = createPageMetadata({
   title: "Aditya Shah",
@@ -52,6 +52,18 @@ export default function Home() {
           <Network className="w-3.5 h-3.5" />
           <span className="font-mono text-[11px] tracking-wide group-hover:text-primary">
             LINKEDIN
+          </span>
+        </a>
+        <span className="text-border-dark font-mono text-xs">|</span>
+        <a
+          href="https://leetcode.com/u/adityashah27/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors group"
+        >
+          <Code2 className="w-3.5 h-3.5" />
+          <span className="font-mono text-[11px] tracking-wide group-hover:text-primary">
+            LEETCODE
           </span>
         </a>
         <span className="text-border-dark font-mono text-xs">|</span>

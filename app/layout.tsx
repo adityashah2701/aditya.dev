@@ -13,6 +13,7 @@ import {
   AUTHOR_JOB_TITLE,
   GITHUB_URL,
   LINKEDIN_URL,
+  LEETCODE_URL,
   OG_IMAGE_URL,
 } from "@/constants/seo";
 
@@ -129,7 +130,7 @@ const jsonLd = {
   url: SITE_URL,
   jobTitle: AUTHOR_JOB_TITLE,
   description: SITE_DESCRIPTION,
-  sameAs: [GITHUB_URL, LINKEDIN_URL],
+  sameAs: [GITHUB_URL, LINKEDIN_URL, LEETCODE_URL],
 };
 
 const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;

@@ -63,7 +63,7 @@ These are internal API routes exposed via Convex. They are **not** indexed by se
 | Action | Notes |
 |--------|-------|
 | **Set real domain** | Replace `https://adityashah27.dev` in `constants/seo.ts → SITE_URL` |
-| **Confirm social links** | Update `GITHUB_URL` and `LINKEDIN_URL` in `constants/seo.ts` |
+| **Confirm social links** | Update `GITHUB_URL`, `LINKEDIN_URL` and `LEETCODE_URL` in `constants/seo.ts` |
 | **Create OG image** | Add `/public/og-image.png` (1200×630px) for social previews |
 | **Add favicon assets** | Add `/app/icon.png` (32×32) and `/app/apple-icon.png` (180×180) — Next.js auto-detects these |
 | **Extend sitemap** | Uncomment the Convex fetch block in `app/sitemap.ts` to include dynamic `/projects/[slug]` routes |

@@ -37,4 +37,6 @@ export const GITHUB_URL = "https://github.com/adityashah2701";
 
 export const LINKEDIN_URL = "https://www.linkedin.com/in/adityashah2701";
 
+export const LEETCODE_URL = "https://leetcode.com/u/adityashah27/";
+
 export const OG_IMAGE_URL = `${SITE_URL}/opengraph-image.png`;

@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Mail, ArrowRight, Code, Network } from "lucide-react";
+import { Mail, ArrowRight, Code, Network, Code2 } from "lucide-react";
 
 export default function ContactChannels() {
   return (
@@ -76,6 +76,30 @@ export default function ContactChannels() {
                   </h3>
                   <p className="text-xs font-mono text-slate-500 mt-1">
                     linkedin.com/in/adityashah2701
+                  </p>
+                </div>
+              </div>
+              <ArrowRight className="w-5 h-5 text-slate-600 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+            </a>
+          </article>
+
+          <article>
+            <a
+            href="https://leetcode.com/u/adityashah27/"
+            target="_blank"
+            rel="noreferrer"
+            className="group flex items-center justify-between p-4 bg-background-dark border border-border-dark hover:border-primary/50 rounded-none transition-all"
+            >
+              <div className="flex items-center gap-4">
+                <div className="bg-surface-dark p-2 rounded-none border border-border-dark group-hover:border-primary/30 transition-colors text-slate-400 group-hover:text-primary flex items-center justify-center">
+                  <Code2 className="w-5 h-5 block " />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-slate-200">
+                    LeetCode Profile
+                  </h3>
+                  <p className="text-xs font-mono text-slate-500 mt-1">
+                    leetcode.com/u/adityashah27
                   </p>
                 </div>
               </div>
