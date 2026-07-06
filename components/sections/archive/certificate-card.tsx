@@ -126,7 +126,7 @@ export function CertificateCard({
                       alt={title}
                       width={400}
                       height={300}
-                      className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-auto object-cover object-top transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
                   )}

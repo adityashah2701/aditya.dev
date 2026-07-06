@@ -49,9 +49,12 @@ export default function ProjectDrawer({
   const hasLinkedArchiveItems = linkedArchiveItems.length > 0;
   const hasContributions =
     project.contributions !== undefined && project.contributions.length > 0;
-  const formatSectionIndex = (value: number) => `${String(value).padStart(2, "0")}.`;
+  const formatSectionIndex = (value: number) =>
+    `${String(value).padStart(2, "0")}.`;
   let nextSectionNumber = 2;
-  const overviewIndex = project.content ? formatSectionIndex(nextSectionNumber++) : null;
+  const overviewIndex = project.content
+    ? formatSectionIndex(nextSectionNumber++)
+    : null;
   const contributionsIndex = hasContributions
     ? formatSectionIndex(nextSectionNumber++)
     : null;
@@ -62,12 +65,16 @@ export default function ProjectDrawer({
 
   return (
     <>
-      <Drawer open={open} onOpenChange={(v) => !v && onClose()} direction="right">
+      <Drawer
+        open={open}
+        onOpenChange={(v) => !v && onClose()}
+        direction="right"
+      >
         <DrawerContent
           style={{ width: "650px", maxWidth: "95vw" }}
           className="bg-background-dark border-l border-border-dark text-slate-100 h-full ml-auto rounded-none flex flex-col"
         >
-        {/* Header */}
+          {/* Header */}
           <DrawerHeader className="border-b border-border-dark px-6 py-5 shrink-0">
             <div className="flex items-center gap-2 text-primary font-mono text-xs mb-1">
               <FolderOpen className="w-4 h-4" />
@@ -81,10 +88,9 @@ export default function ProjectDrawer({
             </DrawerDescription>
           </DrawerHeader>
 
-        {/* Scrollable body */}
+          {/* Scrollable body */}
           <div className="flex-1 overflow-y-auto px-6 py-6 space-y-8">
-
-          {/* Preview image */}
+            {/* Preview image */}
             <div>
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-primary font-mono text-xs">01.</span>
@@ -121,7 +127,7 @@ export default function ProjectDrawer({
                     src={project.image}
                     alt={`${project.title} preview`}
                     fill
-                    className="object-cover"
+                    className="object-cover object-top"
                     loading="lazy"
                   />
                 </div>
@@ -140,11 +146,13 @@ export default function ProjectDrawer({
               )}
             </div>
 
-          {/* Overview */}
+            {/* Overview */}
             {project.content && overviewIndex ? (
               <div>
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="text-primary font-mono text-xs">{overviewIndex}</span>
+                  <span className="text-primary font-mono text-xs">
+                    {overviewIndex}
+                  </span>
                   <h3 className="text-xs font-bold text-white uppercase tracking-wider">
                     {isInternshipProject ? "Role Summary" : "Overview"}
                   </h3>
@@ -188,10 +196,12 @@ export default function ProjectDrawer({
               />
             ) : null}
 
-          {/* Tech Stack */}
+            {/* Tech Stack */}
             <div>
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-primary font-mono text-xs">{techStackIndex}</span>
+                <span className="text-primary font-mono text-xs">
+                  {techStackIndex}
+                </span>
                 <h3 className="text-xs font-bold text-white uppercase tracking-wider">
                   Tech Stack
                 </h3>
@@ -210,7 +220,7 @@ export default function ProjectDrawer({
             </div>
           </div>
 
-        {/* Footer — links */}
+          {/* Footer — links */}
           <DrawerFooter className="border-t border-border-dark px-6 py-4 shrink-0 flex-row gap-3">
             {project.githubUrl && (
               <Button
@@ -219,7 +229,12 @@ export default function ProjectDrawer({
                 size="sm"
                 className="flex-1 rounded-none border-border-dark text-slate-300 hover:border-primary hover:text-primary bg-transparent text-xs font-mono gap-2"
               >
-                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
                   <Code className="w-4 h-4" />
                   REPOSITORY
                 </a>
@@ -231,7 +246,12 @@ export default function ProjectDrawer({
                 size="sm"
                 className="flex-1 rounded-none bg-primary hover:bg-primary/90 text-white text-xs font-mono gap-2"
               >
-                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
                   <ExternalLink className="w-4 h-4" />
                   LIVE_DEMO
                 </a>
