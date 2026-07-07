@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Space_Mono } from "next/font/google";
 import Script from "next/script";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { ConvexClientProvider } from "@/components/providers/convex-client-provider";
 import {
@@ -172,6 +173,7 @@ export default function RootLayout({
         className={`${spaceGrotesk.variable} ${spaceMono.variable} antialiased`}
       >
         <ConvexClientProvider>{children}</ConvexClientProvider>
+        <SpeedInsights />
       </body>
       {gaMeasurementId ? (
         <>
