@@ -7,7 +7,7 @@ This portfolio is a reflection of how I like to build: clean interfaces, structu
 
 ## About Me
 
-I am Aditya Shah, a developer based in Navi Mumbai.
+I am Aditya Shah, a developer based in Navi Mumbai , Koparkhairane.
 
 I enjoy building modern software across the stack, from polished frontend experiences to backend systems and developer-focused tooling. My work is centered around React, Next.js, TypeScript, and practical full stack architecture, with a strong interest in AI integration and product-oriented engineering.
 
