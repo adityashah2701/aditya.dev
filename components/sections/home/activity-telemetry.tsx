@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import { ActivityCalendar } from "react-activity-calendar";
+import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import {
   Github,
   Code2,
@@ -13,6 +12,7 @@ import {
   Trophy,
 } from "lucide-react";
 import type {
+  ContributionDay,
   GitHubActivityResponse,
   LeetCodeActivityResponse,
 } from "@/lib/activity";
@@ -32,11 +32,247 @@ interface HoveredCellState {
   label: "contribution" | "submission";
 }
 
-const GITHUB_THEME = {
-  dark: ["#161512", "#0e4429", "#006d32", "#26a641", "#39d353"],
-};
+const MONTH_NAMES = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+];
 
-const LEETCODE_THEME = GITHUB_THEME;
+const THEME_COLORS = ["#221f19", "#0e4429", "#006d32", "#26a641", "#39d353"];
+
+interface HeatmapTimelineProps {
+  data: ContributionDay[];
+  type: "contribution" | "submission";
+  onCellEnter: (
+    e: React.MouseEvent<SVGRectElement>,
+    activity: { count: number; date: string },
+    label: "contribution" | "submission"
+  ) => void;
+  onCellLeave: () => void;
+}
+
+function HeatmapTimeline({
+  data,
+  type,
+  onCellEnter,
+  onCellLeave,
+}: HeatmapTimelineProps) {
+  const { weeks, monthLabels, dividers, totalWidth } = useMemo(() => {
+    if (!data || data.length === 0) {
+      return { weeks: [], monthLabels: [], dividers: [], totalWidth: 700 };
+    }
+
+    const CELL = 11;
+    const GAP = 3;
+    const MONTH_GAP = 14;
+    const LEFT_PAD = 28; // Space for Mon, Wed, Fri labels
+
+    // 1. Group data strictly by calendar month (YYYY-MM)
+    const monthsMap = new Map<string, ContributionDay[]>();
+    for (const day of data) {
+      const monthKey = day.date.substring(0, 7);
+      if (!monthsMap.has(monthKey)) {
+        monthsMap.set(monthKey, []);
+      }
+      monthsMap.get(monthKey)!.push(day);
+    }
+
+    const computedWeeks: {
+      days: (ContributionDay | null)[];
+      x: number;
+    }[] = [];
+    const computedLabels: { name: string; x: number }[] = [];
+    const computedDividers: number[] = [];
+
+    let currentX = LEFT_PAD;
+    const monthEntries = Array.from(monthsMap.entries());
+
+    for (let mIdx = 0; mIdx < monthEntries.length; mIdx++) {
+      const [monthKey, mDays] = monthEntries[mIdx];
+      const [, monthNum] = monthKey.split("-");
+      const monthName = MONTH_NAMES[parseInt(monthNum, 10) - 1];
+      const startX = currentX;
+
+      // Build weeks for this specific month
+      const monthWeeks: (ContributionDay | null)[][] = [];
+      let currentWeek: (ContributionDay | null)[] = new Array(7).fill(null);
+
+      for (let i = 0; i < mDays.length; i++) {
+        const day = mDays[i];
+        const [y, m, d] = day.date.split("-").map(Number);
+        const dateObj = new Date(Date.UTC(y, m - 1, d));
+        const dayOfWeek = dateObj.getUTCDay();
+
+        currentWeek[dayOfWeek] = day;
+
+        if (dayOfWeek === 6 || i === mDays.length - 1) {
+          monthWeeks.push([...currentWeek]);
+          currentWeek = new Array(7).fill(null);
+        }
+      }
+
+      const monthWidth =
+        monthWeeks.length * CELL + (monthWeeks.length - 1) * GAP;
+
+      // Center the month label over the month columns
+      computedLabels.push({
+        name: monthName,
+        x: startX + Math.max(0, (monthWidth - 24) / 2),
+      });
+
+      // Place each week's column
+      for (let w = 0; w < monthWeeks.length; w++) {
+        computedWeeks.push({
+          days: monthWeeks[w],
+          x: startX + w * (CELL + GAP),
+        });
+      }
+
+      currentX += monthWidth;
+
+      // Add a divider between months (not after the final month)
+      if (mIdx < monthEntries.length - 1) {
+        currentX += MONTH_GAP;
+        computedDividers.push(currentX - MONTH_GAP / 2);
+      }
+    }
+
+    return {
+      weeks: computedWeeks,
+      monthLabels: computedLabels,
+      dividers: computedDividers,
+      totalWidth: currentX + 16,
+    };
+  }, [data]);
+
+  if (!data || data.length === 0) {
+    return (
+      <div className="h-32 flex items-center justify-center text-slate-500 font-mono text-xs">
+        No activity recorded
+      </div>
+    );
+  }
+
+  const CELL_SIZE = 11;
+  const CELL_GAP = 3;
+  const TOP_OFFSET = 22;
+
+  return (
+    <div>
+      <svg
+        width={totalWidth}
+        height={125}
+        className="overflow-visible select-none"
+      >
+        {/* Weekday labels */}
+        <text
+          x={20}
+          y={TOP_OFFSET + 1 * (CELL_SIZE + CELL_GAP) + 9}
+          textAnchor="end"
+          fill="#64748b"
+          fontSize="9"
+          fontFamily="var(--font-mono)"
+        >
+          Mon
+        </text>
+        <text
+          x={20}
+          y={TOP_OFFSET + 3 * (CELL_SIZE + CELL_GAP) + 9}
+          textAnchor="end"
+          fill="#64748b"
+          fontSize="9"
+          fontFamily="var(--font-mono)"
+        >
+          Wed
+        </text>
+        <text
+          x={20}
+          y={TOP_OFFSET + 5 * (CELL_SIZE + CELL_GAP) + 9}
+          textAnchor="end"
+          fill="#64748b"
+          fontSize="9"
+          fontFamily="var(--font-mono)"
+        >
+          Fri
+        </text>
+
+        {/* Month labels */}
+        {monthLabels.map((m, idx) => (
+          <text
+            key={`${m.name}-${idx}`}
+            x={m.x}
+            y={12}
+            fill="#64748b"
+            fontSize="10"
+            fontFamily="var(--font-mono)"
+            letterSpacing="0.05em"
+          >
+            {m.name.toUpperCase()}
+          </text>
+        ))}
+
+        {/* Vertical month dividers with dashed lines */}
+        {dividers.map((divX, idx) => (
+          <line
+            key={idx}
+            x1={divX}
+            y1={TOP_OFFSET - 2}
+            x2={divX}
+            y2={TOP_OFFSET + 7 * (CELL_SIZE + CELL_GAP) - CELL_GAP + 2}
+            stroke="#35322c"
+            strokeDasharray="2 2"
+            strokeWidth="1"
+            opacity={0.8}
+          />
+        ))}
+
+        {/* Weeks & Days */}
+        {weeks.map((week, wIdx) => (
+          <g key={wIdx} transform={`translate(${week.x}, ${TOP_OFFSET})`}>
+            {week.days.map((day, dIdx) => {
+              if (!day) return null;
+              const color = THEME_COLORS[day.level] || THEME_COLORS[0];
+              const isZero = day.level === 0;
+
+              return (
+                <rect
+                  key={day.date}
+                  x={0}
+                  y={dIdx * (CELL_SIZE + CELL_GAP)}
+                  width={CELL_SIZE}
+                  height={CELL_SIZE}
+                  fill={color}
+                  stroke={isZero ? "#2b2820" : "transparent"}
+                  strokeWidth="1"
+                  className="cursor-pointer transition-all hover:stroke-primary hover:stroke-[1.5px] focus:outline-none"
+                  onMouseEnter={(e) => onCellEnter(e, day, type)}
+                  onMouseLeave={onCellLeave}
+                />
+              );
+            })}
+          </g>
+        ))}
+      </svg>
+
+      {/* Legend below */}
+      <div className="flex items-center justify-between mt-3 text-[10px] font-mono text-slate-500">
+        <span className="text-slate-600 hidden sm:inline">
+          Dashed dividers visually partition the 12 calendar months
+        </span>
+        <div className="flex items-center gap-1.5 ml-auto">
+          <span>Less</span>
+          {THEME_COLORS.map((c, i) => (
+            <div
+              key={i}
+              style={{ backgroundColor: c }}
+              className="w-2.5 h-2.5 rounded-none border border-border-dark/60"
+            />
+          ))}
+          <span>More</span>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function ActivityTelemetry({
   initialGithub = null,
@@ -269,25 +505,12 @@ export default function ActivityTelemetry({
                   onMouseLeave={handleImmediateDismiss}
                   onScroll={handleImmediateDismiss}
                 >
-                  <div className="min-w-[700px] flex justify-center py-2">
-                    <ActivityCalendar
+                  <div className="min-w-[720px] flex justify-center py-2">
+                    <HeatmapTimeline
                       data={githubData?.contributions || []}
-                      theme={GITHUB_THEME}
-                      colorScheme="dark"
-                      blockSize={12}
-                      blockMargin={3}
-                      blockRadius={0}
-                      fontSize={11}
-                      showWeekdayLabels={["mon", "wed", "fri"]}
-                      renderBlock={(block, activity) =>
-                        React.cloneElement(block, {
-                          className:
-                            "cursor-pointer transition-all hover:stroke-primary hover:stroke-[1.5px] focus:outline-none",
-                          onMouseEnter: (e: React.MouseEvent<SVGRectElement>) =>
-                            handleCellEnter(e, activity, "contribution"),
-                          onMouseLeave: handleCellLeave,
-                        })
-                      }
+                      type="contribution"
+                      onCellEnter={handleCellEnter}
+                      onCellLeave={handleCellLeave}
                     />
                   </div>
                 </div>
@@ -370,25 +593,12 @@ export default function ActivityTelemetry({
                   onMouseLeave={handleImmediateDismiss}
                   onScroll={handleImmediateDismiss}
                 >
-                  <div className="min-w-[700px] flex justify-center py-2">
-                    <ActivityCalendar
+                  <div className="min-w-[720px] flex justify-center py-2">
+                    <HeatmapTimeline
                       data={leetcodeData?.contributions || []}
-                      theme={LEETCODE_THEME}
-                      colorScheme="dark"
-                      blockSize={12}
-                      blockMargin={3}
-                      blockRadius={0}
-                      fontSize={11}
-                      showWeekdayLabels={["mon", "wed", "fri"]}
-                      renderBlock={(block, activity) =>
-                        React.cloneElement(block, {
-                          className:
-                            "cursor-pointer transition-all hover:stroke-primary hover:stroke-[1.5px] focus:outline-none",
-                          onMouseEnter: (e: React.MouseEvent<SVGRectElement>) =>
-                            handleCellEnter(e, activity, "submission"),
-                          onMouseLeave: handleCellLeave,
-                        })
-                      }
+                      type="submission"
+                      onCellEnter={handleCellEnter}
+                      onCellLeave={handleCellLeave}
                     />
                   </div>
                 </div>
