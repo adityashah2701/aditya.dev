@@ -116,7 +116,7 @@ function HeatmapTimeline({
       // Center the month label over the month columns
       computedLabels.push({
         name: monthName,
-        x: startX + Math.max(0, (monthWidth - 24) / 2),
+        x: startX + monthWidth / 2,
       });
 
       // Place each week's column
@@ -201,6 +201,7 @@ function HeatmapTimeline({
             key={`${m.name}-${idx}`}
             x={m.x}
             y={12}
+            textAnchor="middle"
             fill="#64748b"
             fontSize="10"
             fontFamily="var(--font-mono)"
