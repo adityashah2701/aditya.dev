@@ -27,6 +27,7 @@
     "pdfjs-dist": "^5.5.207",
     "radix-ui": "^1.4.3",
     "react": "19.2.3",
+    "react-activity-calendar": "^3.2.1",
     "react-day-picker": "^9.13.2",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.71.2",
