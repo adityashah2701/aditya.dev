@@ -18,6 +18,7 @@ export const TERMINAL_LOGS: Record<string, string[]> = {
     "> evaluating_repositories... OK",
   ],
   archive: ["> sys_integrity_check_archive", "> loading_proof_of_work... OK"],
+  activity: ["> sys_integrity_check_activity", "> fetching_telemetry_data... OK", "> rendering_heatmaps... DONE"],
   contact: [
     "> checking_availability... OPEN",
     "> load_average: 0.14, 0.05, 0.01",
@@ -35,6 +36,7 @@ export const PAGE_PATHS: Record<string, string> = {
   skills: "TECH_STACK",
   projects: "REPOSITORIES",
   archive: "ARCHIVE",
+  activity: "ACTIVITY_TELEMETRY",
   contact: "CONTACT",
   projectDetail: "PORTFOLIO",
 };

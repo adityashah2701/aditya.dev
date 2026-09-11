@@ -2,11 +2,9 @@ import { Breadcrumb } from "@/components/sections/shared";
 import {
   HomeHero,
   PersonalIdentity,
-  ActivityTelemetry,
 } from "@/components/sections/home";
 import { SITE_TITLE } from "@/constants/seo";
 import { createPageMetadata } from "@/lib/metadata";
-import { getGitHubActivity, getLeetCodeActivity } from "@/lib/activity";
 import { Github, Network, Mail, Code2 } from "lucide-react";
 
 export const revalidate = 3600; // Revalidate at most every hour (ISR for SEO & performance)
@@ -21,11 +19,6 @@ export const metadata = createPageMetadata({
 });
 
 export default async function Home() {
-  const [githubData, leetcodeData] = await Promise.all([
-    getGitHubActivity("adityashah2701"),
-    getLeetCodeActivity("adityashah27"),
-  ]);
-
   const breadcrumbItems = [
     { label: "root", href: "/" },
     { label: "sys" },
@@ -37,10 +30,6 @@ export default async function Home() {
       <Breadcrumb items={breadcrumbItems} />
       <HomeHero />
       <PersonalIdentity />
-      <ActivityTelemetry
-        initialGithub={githubData}
-        initialLeetcode={leetcodeData}
-      />
 
       {/* ── Social Links ── */}
       <nav
