@@ -506,7 +506,7 @@ export default function ActivityTelemetry({
                   onMouseLeave={handleImmediateDismiss}
                   onScroll={handleImmediateDismiss}
                 >
-                  <div className="min-w-[720px] flex justify-start py-2">
+                  <div className="min-w-225 flex justify-start py-2">
                     <HeatmapTimeline
                       data={githubData?.contributions || []}
                       type="contribution"
@@ -594,7 +594,7 @@ export default function ActivityTelemetry({
                   onMouseLeave={handleImmediateDismiss}
                   onScroll={handleImmediateDismiss}
                 >
-                  <div className="min-w-[720px] flex justify-start py-2">
+                  <div className="min-w-225 flex justify-start py-2">
                     <HeatmapTimeline
                       data={leetcodeData?.contributions || []}
                       type="submission"
