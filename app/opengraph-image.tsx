@@ -5,7 +5,7 @@ import {
   createOgImageResponse,
 } from "@/lib/og-image";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export const alt = `${AUTHOR_NAME} Open Graph Image`;
 export const size = OG_IMAGE_SIZE;

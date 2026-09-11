@@ -3,7 +3,7 @@ import {
   createOgImageResponse,
 } from "@/lib/og-image";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export function GET() {
   const response = createOgImageResponse();
