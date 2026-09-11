@@ -2,19 +2,19 @@ import type { SidebarLink } from "@/types/sidebar";
 import { Home, Terminal, FolderOpen, Award, Mail, ArrowLeft, AlertTriangle, Box, Database, Code, Activity } from "lucide-react";
 import React from "react";
 export const MAIN_NAV_LINKS: SidebarLink[] = [
-  { href: "/", label: "HOME", icon: <Home className="w-[16px] h-[16px]" /> },
-  { href: "/skills", label: "TECH_STACK", icon: <Terminal className="w-[16px] h-[16px]" /> },
-  { href: "/projects", label: "REPOSITORIES", icon: <FolderOpen className="w-[16px] h-[16px]" /> },
-  { href: "/archive", label: "ARCHIVE", icon: <Award className="w-[16px] h-[16px]" /> },
-  { href: "/activity", label: "ACTIVITY_TELEMETRY", icon: <Activity className="w-[16px] h-[16px]" /> },
-  { href: "/contact", label: "INITIATE_CONTACT", icon: <Mail className="w-[16px] h-[16px]" /> },
+  { href: "/", label: "HOME", icon: <Home className="w-5 h-5" /> },
+  { href: "/skills", label: "TECH_STACK", icon: <Terminal className="w-5 h-5" /> },
+  { href: "/projects", label: "REPOSITORIES", icon: <FolderOpen className="w-5 h-5" /> },
+  { href: "/archive", label: "ARCHIVE", icon: <Award className="w-5 h-5" /> },
+  { href: "/activity", label: "ACTIVITY_TELEMETRY", icon: <Activity className="w-5 h-5" /> },
+  { href: "/contact", label: "INITIATE_CONTACT", icon: <Mail className="w-5 h-5" /> },
 ];
 
 // Sidebar navigation links for the individual project detail view
 export const PROJECT_DETAIL_NAV_LINKS: SidebarLink[] = [
-  { href: "/projects", label: "BACK_TO_PORTFOLIO", icon: <ArrowLeft className="w-[16px] h-[16px]" /> },
-  { href: "#problem", label: "Problem", icon: <AlertTriangle className="w-[16px] h-[16px]" />, active: true },
-  { href: "#architecture", label: "Architecture", icon: <Box className="w-[16px] h-[16px]" /> },
-  { href: "#stack", label: "Tech_Stack", icon: <Database className="w-[16px] h-[16px]" /> },
-  { href: "#implementation", label: "Implementation", icon: <Code className="w-[16px] h-[16px]" /> },
+  { href: "/projects", label: "BACK_TO_PORTFOLIO", icon: <ArrowLeft className="w-5 h-5" /> },
+  { href: "#problem", label: "Problem", icon: <AlertTriangle className="w-5 h-5" />, active: true },
+  { href: "#architecture", label: "Architecture", icon: <Box className="w-5 h-5" /> },
+  { href: "#stack", label: "Tech_Stack", icon: <Database className="w-5 h-5" /> },
+  { href: "#implementation", label: "Implementation", icon: <Code className="w-5 h-5" /> },
 ];

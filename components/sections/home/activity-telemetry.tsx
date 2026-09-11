@@ -377,7 +377,7 @@ export default function ActivityTelemetry({
               onClick={() => handleTabChange("github")}
               className={`flex items-center gap-2 px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-wider transition-colors rounded-none border ${
                 activeTab === "github"
-                  ? "bg-primary/10 border-primary/40 text-primary shadow-[0_0_8px_rgba(198,166,93,0.3)]"
+                  ? "bg-primary/10 border-primary/40 text-primary "
                   : "text-slate-500 hover:text-slate-300 border-transparent hover:border-border-dark"
               }`}
             >
@@ -389,7 +389,7 @@ export default function ActivityTelemetry({
               onClick={() => handleTabChange("leetcode")}
               className={`flex items-center gap-2 px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-wider transition-colors rounded-none border ${
                 activeTab === "leetcode"
-                  ? "bg-primary/10 border-primary/40 text-primary shadow-[0_0_8px_rgba(198,166,93,0.3)]"
+                  ? "bg-primary/10 border-primary/40 text-primary "
                   : "text-slate-500 hover:text-slate-300 border-transparent hover:border-border-dark"
               }`}
             >
@@ -506,7 +506,7 @@ export default function ActivityTelemetry({
                   onMouseLeave={handleImmediateDismiss}
                   onScroll={handleImmediateDismiss}
                 >
-                  <div className="min-w-[720px] flex justify-center py-2">
+                  <div className="min-w-[720px] flex justify-start py-2">
                     <HeatmapTimeline
                       data={githubData?.contributions || []}
                       type="contribution"
@@ -594,7 +594,7 @@ export default function ActivityTelemetry({
                   onMouseLeave={handleImmediateDismiss}
                   onScroll={handleImmediateDismiss}
                 >
-                  <div className="min-w-[720px] flex justify-center py-2">
+                  <div className="min-w-[720px] flex justify-start py-2">
                     <HeatmapTimeline
                       data={leetcodeData?.contributions || []}
                       type="submission"
@@ -618,7 +618,7 @@ export default function ActivityTelemetry({
             top: hoveredCell.y - 8,
             transform: "translate(-50%, -100%)",
           }}
-          className="pointer-events-none z-50 rounded-none bg-surface-dark border border-border-dark px-3 py-1.5 text-xs text-slate-200 font-mono shadow-[0_4px_20px_rgba(0,0,0,0.6)] animate-in fade-in-0 zoom-in-95 duration-75"
+          className="pointer-events-none z-50 rounded-none bg-surface-dark border border-border-dark px-3 py-1.5 text-xs text-slate-200 font-mono animate-in fade-in-0 zoom-in-95 duration-75"
         >
           <div className="flex flex-col gap-0.5 text-center whitespace-nowrap">
             <span className="text-white font-semibold">
