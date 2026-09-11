@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   type Preloaded,
   useConvex,
@@ -30,13 +30,28 @@ interface ArchivePageClientProps {
   highlightedCertificateId?: string;
 }
 
+function sortCertificates<T extends { _id: Id<"certificates"> }>(certificates: T[]): T[] {
+  return [...certificates].sort((a, b) => {
+    const hashA = stableHash(String(a._id));
+    const hashB = stableHash(String(b._id));
+
+    if (hashA !== hashB) return hashA - hashB;
+    return String(a._id).localeCompare(String(b._id));
+  });
+}
+
 export function ArchivePageClient({
   preloadedArchivePage,
   highlightedCertificateId,
 }: ArchivePageClientProps) {
   const convex = useConvex();
   const initialArchivePage = usePreloadedQuery(preloadedArchivePage);
-  const [archivePage, setArchivePage] = useState(initialArchivePage);
+  
+  const [archivePage, setArchivePage] = useState(() => ({
+    ...initialArchivePage,
+    page: sortCertificates(initialArchivePage.page),
+  }));
+  
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const highlightedCertificate = useQuery(
     api.certificates.getCertificateById,
@@ -46,7 +61,10 @@ export function ArchivePageClient({
   );
 
   useEffect(() => {
-    setArchivePage(initialArchivePage);
+    setArchivePage({
+      ...initialArchivePage,
+      page: sortCertificates(initialArchivePage.page),
+    });
   }, [initialArchivePage]);
 
   useEffect(() => {
@@ -69,18 +87,6 @@ export function ArchivePageClient({
       };
     });
   }, [highlightedCertificate]);
-
-  const shuffledCertificates = useMemo(
-    () =>
-      [...archivePage.page].sort((a, b) => {
-        const hashA = stableHash(String(a._id));
-        const hashB = stableHash(String(b._id));
-
-        if (hashA !== hashB) return hashA - hashB;
-        return String(a._id).localeCompare(String(b._id));
-      }),
-    [archivePage.page]
-  );
 
   const breakpointColumnsObj = {
     default: 6,
@@ -107,16 +113,18 @@ export function ArchivePageClient({
         },
       });
 
+      const sortedNextPage = sortCertificates(nextPage.page);
+
       setArchivePage((current) => ({
         ...nextPage,
-        page: [...current.page, ...nextPage.page],
+        page: [...current.page, ...sortedNextPage],
       }));
     } finally {
       setIsLoadingMore(false);
     }
   };
 
-  if (shuffledCertificates.length === 0) {
+  if (archivePage.page.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center space-y-4 rounded-xl border border-border-dark bg-surface-dark py-24 text-center">
         <div className="rounded-full bg-background-dark p-4 shadow-lg ring-1 ring-border-dark">
@@ -141,13 +149,13 @@ export function ArchivePageClient({
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
-        {shuffledCertificates.map((cert, i) => (
+        {archivePage.page.map((cert, i) => (
           <motion.div
             key={cert._id}
             className="archive-masonry-item"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.04, duration: 0.3, ease: "easeOut" }}
+            transition={{ delay: (i % BATCH_SIZE) * 0.04, duration: 0.3, ease: "easeOut" }}
           >
             <CertificateCard
               certificateId={String(cert._id)}

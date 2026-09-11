@@ -8,11 +8,7 @@ async function resolveCertificateFileUrl(ctx: QueryCtx, fileId: string) {
 }
 
 async function withResolvedFileUrls<
-  T extends {
-    page: Array<{
-      fileId: string;
-    }>;
-  },
+  T extends { page: Array<{ fileId: string }> },
 >(
   ctx: QueryCtx,
   result: T
@@ -27,7 +23,7 @@ async function withResolvedFileUrls<
   return {
     ...result,
     page,
-  };
+  } as Omit<T, "page"> & { page: (T["page"][number] & { fileUrl: string | null })[] };
 }
 
 export const getCertificates = query({
