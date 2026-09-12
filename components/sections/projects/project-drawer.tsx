@@ -127,6 +127,7 @@ export default function ProjectDrawer({
                     src={project.image}
                     alt={`${project.title} preview`}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover object-top"
                     loading="lazy"
                   />
@@ -175,7 +176,7 @@ export default function ProjectDrawer({
                   </h3>
                   <Separator className="flex-1 ml-1 bg-border-dark" />
                 </div>
-                <ul className="space-y-3 pl-5 text-slate-300 marker:text-primary [list-style-type:square]">
+                <ul className="space-y-3 pl-5 text-slate-300 marker:text-primary list-[square]">
                   {project.contributions?.map((contribution) => (
                     <li
                       key={contribution}
@@ -278,5 +279,5 @@ export default function ProjectDrawer({
         />
       ) : null}
     </>
-  );
+  );;
 }
