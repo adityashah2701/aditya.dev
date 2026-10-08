@@ -21,12 +21,11 @@ Titles use the template `%s | Aditya Shah` from the root layout.
 |-------|------|------------|
 | `/` | `app/(main)/page.tsx` | Aditya Shah – Full Stack Developer (React, Next.js, AI) |
 | `/projects` | `app/(main)/projects/page.tsx` | Projects |
-| `/projects/[slug]` | `app/(main)/projects/[slug]/page.tsx` | `{Project} – Project by Aditya Shah` via `generateMetadata()` |
 | `/skills` | `app/(main)/skills/page.tsx` | Skills & Tech Stack |
 | `/archive` | `app/(main)/archive/page.tsx` | Certificates & Achievements |
 | `/activity` | `app/(main)/activity/page.tsx` | Coding Activity – GitHub & LeetCode |
 | `/contact` | `app/(main)/contact/page.tsx` | Contact |
-| `/sitemap.xml` | `app/sitemap.ts` | Static routes + every project slug from Convex |
+| `/sitemap.xml` | `app/sitemap.ts` | All static routes |
 | `/robots.txt` | `app/robots.ts` | Allows `/`, disallows `/api/` and `/admin/` |
 | `/opengraph-image.png` | `app/opengraph-image.png/route.ts` | 1200×630 social preview (`OG_IMAGE_URL`) |
 | `/Aditya-Shah-Resume.pdf` | `public/` | `/resume.pdf` permanently redirects here |
@@ -62,9 +61,7 @@ npx convex run projects:addProject '{"title": "...", "slug": "...", ...}'
 - **Metadata** — `createPageMetadata()` in `lib/metadata.ts` sets title, description, canonical, and a
   complete Open Graph / Twitter object per page (page objects replace the root ones, so every field is repeated).
 - **JSON-LD** — `WebSite` + `Person` in the root layout, `ProfilePage` on `/`, `BreadcrumbList` on every page
-  (emitted by `Breadcrumb`), and `SoftwareSourceCode`/`CreativeWork` on project pages.
-- **Crawlable projects** — project rows are real `<Link>`s to `/projects/[slug]`; a plain click opens the
-  quick-view drawer instead.
+  (emitted by `Breadcrumb`).
 - **Rendering & caching** — pages preload Convex data with `preloadQueryCached` / `fetchQueryCached`
   (`lib/convex-server.ts`), which use Next's fetch cache instead of `convex/nextjs`'s forced `no-store`. Every page
   is prerendered and revalidated hourly (ISR); clients still get live data over WebSocket after hydration. The route

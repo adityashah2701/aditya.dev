@@ -2,7 +2,6 @@ import type { ArchiveProofItem } from "@/components/sections/archive/archive-pro
 
 export interface ProjectRecord {
   _id: string;
-  slug: string;
   title: string;
   category?: "repository" | "hackathon" | "internship";
   description: string;

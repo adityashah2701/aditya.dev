@@ -54,47 +54,6 @@ export const getAllProjects = query({
   },
 });
 
-/**
- * Public query — slugs for every project, used by the sitemap and
- * generateStaticParams for /projects/[slug].
- */
-export const getProjectSlugs = query({
-  handler: async (ctx) => {
-    const projects = await ctx.db
-      .query("projects")
-      .withIndex("by_order")
-      .collect();
-
-    return projects.map((project) => ({
-      slug: project.slug,
-      _creationTime: project._creationTime,
-    }));
-  },
-});
-
-/**
- * Public query — a single project by slug, used by /projects/[slug].
- */
-export const getProjectBySlug = query({
-  args: { slug: v.string() },
-  handler: async (ctx, args) => {
-    const project = await ctx.db
-      .query("projects")
-      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
-      .first();
-
-    if (!project) return null;
-
-    return {
-      ...project,
-      linkedArchiveItems: await resolveLinkedArchiveItems(
-        ctx,
-        project.linkedArchiveIds,
-      ),
-    };
-  },
-});
-
 export const addProject = internalMutation({
   args: {
     title: v.string(),
