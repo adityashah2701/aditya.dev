@@ -3,20 +3,38 @@ import {
   HomeHero,
   PersonalIdentity,
 } from "@/components/sections/home";
-import { SITE_TITLE } from "@/constants/seo";
-import { createPageMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/components/seo/json-ld";
+import {
+  GITHUB_URL,
+  LEETCODE_URL,
+  LINKEDIN_URL,
+  PROFILE_LINK_REL,
+  SITE_DESCRIPTION,
+  SITE_TITLE,
+  SITE_URL,
+} from "@/constants/seo";
+import { PERSON_ID, WEBSITE_ID, createBreadcrumbJsonLd, createPageMetadata } from "@/lib/metadata";
 import { Github, Network, Mail, Code2 } from "lucide-react";
 
 export const revalidate = 3600; // Revalidate at most every hour (ISR for SEO & performance)
 
 export const metadata = createPageMetadata({
-  title: "Aditya Shah",
-  description:
-    "I'm Aditya Shah, a full stack developer building modern web apps, agentic AI products, mobile apps, and scalable digital experiences.",
-  ogTitle: SITE_TITLE,
+  title: SITE_TITLE,
+  absoluteTitle: true,
+  description: SITE_DESCRIPTION,
   ogDescription:
-    "I'm Aditya Shah, a full stack developer building modern web apps, agentic AI products, mobile apps, and scalable digital experiences. Explore my projects, skills, and experience.",
+    "Portfolio of Aditya Shah, a Full Stack Developer in Navi Mumbai, India. Explore projects in React, Next.js, TypeScript and AI, plus skills and certificates.",
 });
+
+const profilePageJsonLd = {
+  "@type": "ProfilePage",
+  "@id": `${SITE_URL}/#profilepage`,
+  url: SITE_URL,
+  name: SITE_TITLE,
+  isPartOf: { "@id": WEBSITE_ID },
+  mainEntity: { "@id": PERSON_ID },
+  about: { "@id": PERSON_ID },
+};
 
 export default async function Home() {
   const breadcrumbItems = [
@@ -27,6 +45,7 @@ export default async function Home() {
 
   return (
     <>
+      <JsonLd data={[profilePageJsonLd, createBreadcrumbJsonLd([{ name: "Home", path: "" }])]} />
       <Breadcrumb items={breadcrumbItems} />
       <HomeHero />
       <PersonalIdentity />
@@ -37,9 +56,9 @@ export default async function Home() {
         className="flex flex-wrap items-center gap-x-5 gap-y-3 mb-6 md:mb-10"
       >
         <a
-          href="https://github.com/adityashah2701"
+          href={GITHUB_URL}
           target="_blank"
-          rel="noopener noreferrer"
+          rel={PROFILE_LINK_REL}
           className="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors group"
         >
           <Github className="w-3.5 h-3.5" />
@@ -49,9 +68,9 @@ export default async function Home() {
         </a>
         <span className="text-border-dark font-mono text-xs">|</span>
         <a
-          href="https://linkedin.com/in/adityashah2701"
+          href={LINKEDIN_URL}
           target="_blank"
-          rel="noopener noreferrer"
+          rel={PROFILE_LINK_REL}
           className="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors group"
         >
           <Network className="w-3.5 h-3.5" />
@@ -61,9 +80,9 @@ export default async function Home() {
         </a>
         <span className="text-border-dark font-mono text-xs">|</span>
         <a
-          href="https://leetcode.com/u/adityashah27/"
+          href={LEETCODE_URL}
           target="_blank"
-          rel="noopener noreferrer"
+          rel={PROFILE_LINK_REL}
           className="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors group"
         >
           <Code2 className="w-3.5 h-3.5" />

@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import { internalMutation, query } from "./_generated/server";
 
 export const getTechStack = query({
   handler: async (ctx) => {
@@ -11,7 +11,7 @@ export const getTechStack = query({
   },
 });
 
-export const addCategory = mutation({
+export const addCategory = internalMutation({
   args: {
     sectionTitle: v.string(),
     categoryId: v.string(),
@@ -25,7 +25,7 @@ export const addCategory = mutation({
   },
 });
 
-export const updateCategory = mutation({
+export const updateCategory = internalMutation({
   args: {
     id: v.id("techstack"),
     sectionTitle: v.string(),
@@ -41,7 +41,7 @@ export const updateCategory = mutation({
   },
 });
 
-export const deleteCategory = mutation({
+export const deleteCategory = internalMutation({
   args: {
     id: v.id("techstack"),
   },

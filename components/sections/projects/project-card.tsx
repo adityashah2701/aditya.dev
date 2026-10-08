@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import {
   Brain,
@@ -30,8 +31,23 @@ export default function ProjectRow({ project, index, onOpen }: ProjectRowProps) 
   const isInternshipProject = project.category === "internship";
 
   return (
-    <button
-      onClick={() => onOpen(project)}
+    <Link
+      href={`/projects/${project.slug}`}
+      onClick={(event) => {
+        // Plain left-clicks open the quick-view drawer; modified clicks
+        // (new tab, etc.) and crawlers follow the real project URL.
+        if (
+          event.button !== 0 ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey
+        ) {
+          return;
+        }
+        event.preventDefault();
+        onOpen(project);
+      }}
       className="group w-full text-left bg-background-dark border border-border-dark hover:border-primary transition-all duration-200 px-5 py-4 flex items-center gap-4"
     >
       {/* Icon */}
@@ -94,6 +110,6 @@ export default function ProjectRow({ project, index, onOpen }: ProjectRowProps) 
 
       {/* Open arrow */}
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-600 group-hover:text-primary transition-colors shrink-0"><path d="m9 18 6-6-6-6"/></svg>
-    </button>
+    </Link>
   );
 }

@@ -107,7 +107,7 @@ function ArchiveProofDialogBody({ item }: { item: ArchiveProofItem }) {
                 >
                   <Image
                     src={item.fileUrl}
-                    alt={item.title}
+                    alt={`${item.title} certificate issued by ${item.organization} to Aditya Shah`}
                     width={1000}
                     height={800}
                     className="max-w-full max-h-[72vh] w-auto h-auto object-contain"

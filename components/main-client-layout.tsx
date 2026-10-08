@@ -63,7 +63,9 @@ export default function MainClientLayout({
               : "px-4 sm:px-6 md:px-10 lg:px-14 xl:px-16 max-w-7xl mx-auto"
           )}
         >
-          <AnimatePresence mode="wait">
+          {/* initial={false}: server-rendered content is visible on first paint
+              (no opacity:0 in the SSR HTML); only client navigations animate. */}
+          <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={pathname}
               initial={{ opacity: 0, y: 15 }}

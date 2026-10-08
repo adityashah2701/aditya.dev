@@ -16,6 +16,13 @@ import type {
   GitHubActivityResponse,
   LeetCodeActivityResponse,
 } from "@/lib/activity";
+import {
+  GITHUB_URL,
+  GITHUB_USERNAME,
+  LEETCODE_URL,
+  LEETCODE_USERNAME,
+  PROFILE_LINK_REL,
+} from "@/constants/seo";
 
 interface ActivityTelemetryProps {
   initialGithub?: GitHubActivityResponse | null;
@@ -361,9 +368,9 @@ export default function ActivityTelemetry({
       {/* ── Section Header ── */}
       <div className="flex items-center gap-3 mb-6 md:mb-8">
         <span className="text-primary font-mono text-sm">02.</span>
-        <h2 className="text-lg md:text-2xl font-bold text-white tracking-tight uppercase font-display">
+        <h1 className="text-lg md:text-2xl font-bold text-white tracking-tight uppercase font-display">
           Activity_Telemetry_Log
-        </h2>
+        </h1>
         <div className="h-px bg-border-dark flex-1 ml-4" />
       </div>
 
@@ -409,22 +416,22 @@ export default function ActivityTelemetry({
 
             {activeTab === "github" ? (
               <a
-                href="https://github.com/adityashah2701"
+                href={GITHUB_URL}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel={PROFILE_LINK_REL}
                 className="flex items-center gap-1 text-slate-500 hover:text-primary font-mono text-[11px] transition-colors group"
               >
-                <span>@adityashah2701</span>
+                <span>@{GITHUB_USERNAME}</span>
                 <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
               </a>
             ) : (
               <a
-                href="https://leetcode.com/u/adityashah27/"
+                href={LEETCODE_URL}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel={PROFILE_LINK_REL}
                 className="flex items-center gap-1 text-slate-500 hover:text-primary font-mono text-[11px] transition-colors group"
               >
-                <span>@adityashah27</span>
+                <span>@{LEETCODE_USERNAME}</span>
                 <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
               </a>
             )}

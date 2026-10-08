@@ -21,6 +21,8 @@ interface CertificateCardProps {
   description?: string;
   verificationUrl?: string;
   autoOpen?: boolean;
+  /** Load the image eagerly — set for cards above the fold (LCP candidates). */
+  priority?: boolean;
 }
 
 export function CertificateCard({
@@ -35,6 +37,7 @@ export function CertificateCard({
   description,
   verificationUrl,
   autoOpen = false,
+  priority = false,
 }: CertificateCardProps) {
   const queriedFileUrl = useQuery(
     api.certificates.getFileUrl,
@@ -44,7 +47,16 @@ export function CertificateCard({
   const isPdf = fileType === "application/pdf" || fileId.endsWith(".pdf");
   const [isOpen, setIsOpen] = useState(autoOpen);
 
-  // Lazy load: only render PDF when card enters viewport
+  // autoOpen can flip to true after hydration (the ?certificate= deep link is
+  // read on the client), so open the dialog when it does.
+  const [prevAutoOpen, setPrevAutoOpen] = useState(autoOpen);
+  if (autoOpen !== prevAutoOpen) {
+    setPrevAutoOpen(autoOpen);
+    if (autoOpen) setIsOpen(true);
+  }
+
+  // Lazy load: only render PDFs when the card enters the viewport. Images are
+  // server-rendered and rely on next/image's native lazy loading instead.
   const [inView, setInView] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -104,17 +116,14 @@ export function CertificateCard({
           id={`certificate-${certificateId}`}
           ref={cardRef}
           layout
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
           className="group cursor-pointer break-inside-avoid w-full"
         >
           <div className="relative overflow-hidden rounded-xl bg-background-dark border border-border-dark hover:border-primary/40 transition-all duration-300 shadow-md hover:shadow-[0_12px_28px_rgba(0,0,0,0.35)] hover:-translate-y-0.5">
             <AnimatePresence mode="wait">
-              {fileUrl && inView ? (
+              {fileUrl && (!isPdf || inView) ? (
                 <motion.div
                   key="preview"
-                  initial={{ opacity: 0 }}
+                  initial={isPdf ? { opacity: 0 } : false}
                   animate={{ opacity: 1 }}
                   className="w-full"
                 >
@@ -123,11 +132,12 @@ export function CertificateCard({
                   ) : (
                     <Image
                       src={fileUrl}
-                      alt={title}
+                      alt={`${title} certificate issued by ${organization} to Aditya Shah`}
                       width={400}
                       height={300}
+                      sizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 20vw"
                       className="w-full h-auto object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
+                      priority={priority}
                     />
                   )}
                 </motion.div>

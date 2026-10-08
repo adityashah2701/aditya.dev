@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation, query, type QueryCtx } from "./_generated/server";
+import { internalMutation, query, type QueryCtx } from "./_generated/server";
 import { paginationOptsValidator } from "convex/server";
 
 async function resolveCertificateFileUrl(ctx: QueryCtx, fileId: string) {
@@ -104,14 +104,14 @@ export const getCertificatesByIds = query({
   },
 });
 
-export const generateUploadUrl = mutation({
+export const generateUploadUrl = internalMutation({
   args: {},
   handler: async (ctx) => {
     return await ctx.storage.generateUploadUrl();
   },
 });
 
-export const createCertificate = mutation({
+export const createCertificate = internalMutation({
   args: {
     title: v.string(),
     organization: v.string(),
@@ -130,7 +130,7 @@ export const createCertificate = mutation({
   },
 });
 
-export const deleteCertificate = mutation({
+export const deleteCertificate = internalMutation({
   args: { 
     id: v.id("certificates"),
   },

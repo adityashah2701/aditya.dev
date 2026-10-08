@@ -4,16 +4,16 @@ import {
   ContactForm,
   ContactChannels,
 } from "@/components/sections/contact";
-import { createPageMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/components/seo/json-ld";
+import { createBreadcrumbJsonLd, createPageMetadata } from "@/lib/metadata";
 
 export const metadata = createPageMetadata({
   title: "Initiate Contact",
   description:
-    "I'm Aditya Shah. Get in touch with me for freelance projects, full-time roles, collaborations, and product ideas across modern web apps, agentic AI, and mobile apps.",
+    "Contact Aditya Shah, Full Stack Developer in Navi Mumbai, India, about freelance projects, full-time roles or collaborations on web and AI products.",
   path: "/contact",
-  ogTitle: "Initiate Contact | aditya.dev",
   ogDescription:
-    "I'm Aditya Shah. Reach out to me for collaborations, job opportunities, or product discussions across modern web apps, agentic AI, and mobile apps.",
+    "Get in touch with Aditya Shah about freelance work, full-time roles or collaborations on web apps and AI products.",
 });
 
 export default function Contact() {
@@ -25,6 +25,12 @@ export default function Contact() {
 
   return (
     <>
+      <JsonLd
+        data={createBreadcrumbJsonLd([
+          { name: "Home", path: "" },
+          { name: "Contact", path: "/contact" },
+        ])}
+      />
       <Breadcrumb items={breadcrumbItems} />
       <ContactHeader />
       <section className="mb-12 md:mb-20" id="contact">

@@ -1,14 +1,13 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getLeetCodeActivity } from "@/lib/activity";
+import { LEETCODE_USERNAME } from "@/constants/seo";
 
 export const runtime = "nodejs";
 export const revalidate = 3600; // Cache for 1 hour
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const username = searchParams.get("username") || "adityashah27";
-
-  const data = await getLeetCodeActivity(username);
+// Username is fixed so this route cannot be used to proxy arbitrary lookups.
+export async function GET() {
+  const data = await getLeetCodeActivity(LEETCODE_USERNAME);
 
   return NextResponse.json(data, {
     headers: {

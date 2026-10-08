@@ -1,7 +1,7 @@
-import { mutation } from "./_generated/server";
+import { internalMutation } from "./_generated/server";
 import { SKILL_SECTIONS } from "../constants/skills";
 
-export const seedDrawAnything = mutation({
+export const seedDrawAnything = internalMutation({
   handler: async (ctx) => {
     // Idempotent: skip if already seeded
     const existing = await ctx.db
@@ -21,7 +21,7 @@ export const seedDrawAnything = mutation({
       content:
         "Draw Anything is a browser-based collaborative whiteboard built to be fast and frictionless. The core challenge was achieving sub-50ms latency for stroke broadcast across multiple clients while maintaining consistent state. The solution leverages WebSocket subscriptions via Convex for real-time sync, with optimistic local rendering so strokes feel instant.",
       githubUrl: "https://github.com/adityashah2701/draw-anything",
-      liveUrl: "https://draw-anything-two.vercel.app/",
+      liveUrl: "https://draw-anything.adityashah27.dev/",
       image: undefined,
       order: 1,
       featured: true,
@@ -39,7 +39,7 @@ export const seedDrawAnything = mutation({
   },
 });
 
-export const updateDrawAnythingImage = mutation({
+export const updateDrawAnythingImage = internalMutation({
   handler: async (ctx) => {
     const project = await ctx.db
       .query("projects")
@@ -54,7 +54,7 @@ export const updateDrawAnythingImage = mutation({
   },
 });
 
-export const fixDrawAnything = mutation({
+export const fixDrawAnything = internalMutation({
   handler: async (ctx) => {
     const all = await ctx.db
       .query("projects")
@@ -73,7 +73,7 @@ export const fixDrawAnything = mutation({
   },
 });
 
-export const seedAdizzCodeEditor = mutation({
+export const seedAdizzCodeEditor = internalMutation({
   handler: async (ctx) => {
     const existing = await ctx.db
       .query("projects")
@@ -108,7 +108,7 @@ export const seedAdizzCodeEditor = mutation({
   },
 });
 
-export const seedAutomateFlow = mutation({
+export const seedAutomateFlow = internalMutation({
   handler: async (ctx) => {
     const existing = await ctx.db
       .query("projects")
@@ -143,7 +143,7 @@ export const seedAutomateFlow = mutation({
   },
 });
 
-export const seedMeetingBot = mutation({
+export const seedMeetingBot = internalMutation({
   handler: async (ctx) => {
     const existing = await ctx.db
       .query("projects")
@@ -178,7 +178,7 @@ export const seedMeetingBot = mutation({
   },
 });
 
-export const seedTechStack = mutation({
+export const seedTechStack = internalMutation({
   handler: async (ctx) => {
     const existing = await ctx.db.query("techstack").collect();
     if (existing.length > 0) {

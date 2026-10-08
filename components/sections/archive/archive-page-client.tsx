@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState, useSyncExternalStore } from "react";
 import {
   type Preloaded,
   useConvex,
@@ -27,8 +27,14 @@ function stableHash(value: string) {
 
 interface ArchivePageClientProps {
   preloadedArchivePage: Preloaded<typeof api.certificates.getArchivePage>;
-  highlightedCertificateId?: string;
 }
+
+// The ?certificate= deep link is read on the client so the page itself stays
+// statically cacheable. The server snapshot is null, so hydration matches.
+const subscribeToNothing = () => () => {};
+const getHighlightedIdFromUrl = () =>
+  new URLSearchParams(window.location.search).get("certificate");
+const getServerHighlightedId = () => null;
 
 function sortCertificates<T extends { _id: Id<"certificates"> }>(certificates: T[]): T[] {
   return [...certificates].sort((a, b) => {
@@ -42,16 +48,26 @@ function sortCertificates<T extends { _id: Id<"certificates"> }>(certificates: T
 
 export function ArchivePageClient({
   preloadedArchivePage,
-  highlightedCertificateId,
 }: ArchivePageClientProps) {
+  const highlightedCertificateId = useSyncExternalStore(
+    subscribeToNothing,
+    getHighlightedIdFromUrl,
+    getServerHighlightedId,
+  );
   const convex = useConvex();
   const initialArchivePage = usePreloadedQuery(preloadedArchivePage);
   
-  const [archivePage, setArchivePage] = useState(() => ({
-    ...initialArchivePage,
-    page: sortCertificates(initialArchivePage.page),
-  }));
-  
+  // Pages fetched via "Load more". Tagged with the first page they were
+  // loaded after, so a live update of the first page starts the list fresh.
+  const [loadedMore, setLoadedMore] = useState<{
+    base: typeof initialArchivePage;
+    page: typeof initialArchivePage.page;
+    continueCursor: string;
+    isDone: boolean;
+  } | null>(null);
+  const currentLoadedMore =
+    loadedMore?.base === initialArchivePage ? loadedMore : null;
+
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const highlightedCertificate = useQuery(
     api.certificates.getCertificateById,
@@ -60,33 +76,25 @@ export function ArchivePageClient({
       : "skip",
   );
 
-  useEffect(() => {
-    setArchivePage({
-      ...initialArchivePage,
-      page: sortCertificates(initialArchivePage.page),
-    });
-  }, [initialArchivePage]);
+  const certificates = useMemo(() => {
+    const loaded = [
+      ...sortCertificates(initialArchivePage.page),
+      ...(currentLoadedMore?.page ?? []),
+    ];
 
-  useEffect(() => {
-    if (!highlightedCertificate) {
-      return;
+    // A deep-linked certificate may not be in the loaded pages yet.
+    if (
+      highlightedCertificate &&
+      !loaded.some((certificate) => certificate._id === highlightedCertificate._id)
+    ) {
+      return [highlightedCertificate, ...loaded];
     }
 
-    setArchivePage((current) => {
-      const alreadyPresent = current.page.some(
-        (certificate) => certificate._id === highlightedCertificate._id,
-      );
+    return loaded;
+  }, [initialArchivePage, currentLoadedMore, highlightedCertificate]);
 
-      if (alreadyPresent) {
-        return current;
-      }
-
-      return {
-        ...current,
-        page: [highlightedCertificate, ...current.page],
-      };
-    });
-  }, [highlightedCertificate]);
+  const continueCursor =
+    currentLoadedMore?.continueCursor ?? initialArchivePage.continueCursor;
 
   const breakpointColumnsObj = {
     default: 6,
@@ -98,10 +106,10 @@ export function ArchivePageClient({
     0: 1,
   };
 
-  const isExhausted = archivePage.isDone;
+  const isExhausted = currentLoadedMore?.isDone ?? initialArchivePage.isDone;
 
   const loadMore = async () => {
-    if (isLoadingMore || archivePage.continueCursor === null) return;
+    if (isLoadingMore || continueCursor === null) return;
 
     setIsLoadingMore(true);
 
@@ -109,22 +117,27 @@ export function ArchivePageClient({
       const nextPage = await convex.query(api.certificates.getArchivePage, {
         paginationOpts: {
           numItems: BATCH_SIZE,
-          cursor: archivePage.continueCursor,
+          cursor: continueCursor,
         },
       });
 
       const sortedNextPage = sortCertificates(nextPage.page);
 
-      setArchivePage((current) => ({
-        ...nextPage,
-        page: [...current.page, ...sortedNextPage],
+      setLoadedMore((current) => ({
+        base: initialArchivePage,
+        page: [
+          ...(current?.base === initialArchivePage ? current.page : []),
+          ...sortedNextPage,
+        ],
+        continueCursor: nextPage.continueCursor,
+        isDone: nextPage.isDone,
       }));
     } finally {
       setIsLoadingMore(false);
     }
   };
 
-  if (archivePage.page.length === 0) {
+  if (certificates.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center space-y-4 rounded-xl border border-border-dark bg-surface-dark py-24 text-center">
         <div className="rounded-full bg-background-dark p-4 shadow-lg ring-1 ring-border-dark">
@@ -149,11 +162,13 @@ export function ArchivePageClient({
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
-        {archivePage.page.map((cert, i) => (
+        {certificates.map((cert, i) => (
           <motion.div
             key={cert._id}
             className="archive-masonry-item"
-            initial={{ opacity: 0, y: 16 }}
+            // The first batch is server-rendered and must be visible on first
+            // paint; only batches loaded later fade in.
+            initial={i < BATCH_SIZE ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: (i % BATCH_SIZE) * 0.04, duration: 0.3, ease: "easeOut" }}
           >
@@ -169,6 +184,7 @@ export function ArchivePageClient({
               description={cert.description}
               verificationUrl={cert.verificationUrl}
               autoOpen={highlightedCertificateId === String(cert._id)}
+              priority={i < 4}
             />
           </motion.div>
         ))}

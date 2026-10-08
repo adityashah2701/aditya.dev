@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Mail, ArrowRight, Code, Network, Code2 } from "lucide-react";
+import { GITHUB_URL, LEETCODE_URL, LINKEDIN_URL, PROFILE_LINK_REL } from "@/constants/seo";
 
 export default function ContactChannels() {
   return (
@@ -37,9 +38,9 @@ export default function ContactChannels() {
 
           <article>
             <a
-            href="https://github.com/adityashah2701"
+            href={GITHUB_URL}
             target="_blank"
-            rel="noreferrer"
+            rel={PROFILE_LINK_REL}
             className="group flex items-center justify-between p-4 bg-background-dark border border-border-dark hover:border-primary/50 rounded-none transition-all"
             >
               <div className="flex items-center gap-4">
@@ -61,9 +62,9 @@ export default function ContactChannels() {
 
           <article>
             <a
-            href="https://linkedin.com/in/adityashah2701"
+            href={LINKEDIN_URL}
             target="_blank"
-            rel="noreferrer"
+            rel={PROFILE_LINK_REL}
             className="group flex items-center justify-between p-4 bg-background-dark border border-border-dark hover:border-primary/50 rounded-none transition-all"
             >
               <div className="flex items-center gap-4">
@@ -85,9 +86,9 @@ export default function ContactChannels() {
 
           <article>
             <a
-            href="https://leetcode.com/u/adityashah27/"
+            href={LEETCODE_URL}
             target="_blank"
-            rel="noreferrer"
+            rel={PROFILE_LINK_REL}
             className="group flex items-center justify-between p-4 bg-background-dark border border-border-dark hover:border-primary/50 rounded-none transition-all"
             >
               <div className="flex items-center gap-4">

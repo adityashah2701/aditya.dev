@@ -85,8 +85,24 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(SUCCESS_RESPONSE, { status: 200 });
   }
 
+  const serverSecret = process.env.CONTACT_SERVER_SECRET;
+  if (!serverSecret) {
+    console.error("CONTACT_SERVER_SECRET is not configured");
+    return NextResponse.json(
+      {
+        success: false,
+        error: {
+          code: "INVALID_INPUT",
+          message: "Unable to process contact message at this time.",
+        },
+      },
+      { status: 503 },
+    );
+  }
+
   try {
     const result = await fetchMutation(api.contact.sendContactMessage, {
+      serverSecret,
       name: readString(body.name),
       email: readString(body.email),
       message: readString(body.message),

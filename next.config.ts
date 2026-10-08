@@ -1,6 +1,18 @@
 import type { NextConfig } from "next";
 
+// Safe baseline CSP: no script-src restrictions (Next inline scripts would need
+// nonces), but blocks plugins, <base> hijacking, foreign form posts and framing.
+const CONTENT_SECURITY_POLICY = [
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  "upgrade-insecure-requests",
+].join("; ");
+
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
+
   typescript: {
     ignoreBuildErrors: false,
   },
@@ -8,8 +20,8 @@ const nextConfig: NextConfig = {
   images: {
     // Serve modern image formats for better performance and Lighthouse scores
     formats: ["image/avif", "image/webp"],
-    // Cache optimised images for 60 seconds minimum
-    minimumCacheTTL: 60,
+    // Image sources (Convex storage IDs, /public) are immutable — cache for 31 days
+    minimumCacheTTL: 2678400,
     // Allow images served from Convex storage (hostname varies per deployment)
     remotePatterns: [
       {
@@ -22,6 +34,16 @@ const nextConfig: NextConfig = {
 
   experimental: {
     optimizePackageImports: ["lucide-react", "@base-ui/react", "motion"],
+  },
+
+  async redirects() {
+    return [
+      {
+        source: "/resume.pdf",
+        destination: "/Aditya-Shah-Resume.pdf",
+        permanent: true,
+      },
+    ];
   },
 
   async headers() {
@@ -50,21 +72,17 @@ const nextConfig: NextConfig = {
             key: "Referrer-Policy",
             value: "strict-origin-when-cross-origin",
           },
-          // Tell search engine bots to index and follow public pages
-          { key: "X-Robots-Tag", value: "index, follow" },
+          { key: "Content-Security-Policy", value: CONTENT_SECURITY_POLICY },
           // Enable HSTS for HTTPS-only enforcement (1 year)
           {
             key: "Strict-Transport-Security",
             value: "max-age=31536000; includeSubDomains; preload",
           },
-          // Cross-Origin policies
+          // Isolate the browsing context from cross-origin popups. COEP is
+          // intentionally omitted: require-corp blocks GA and the pdf.js worker.
           {
             key: "Cross-Origin-Opener-Policy",
             value: "same-origin",
-          },
-          {
-            key: "Cross-Origin-Embedder-Policy",
-            value: "require-corp",
           },
           // Permissions Policy
           {

@@ -12,19 +12,18 @@ export default function PersonalIdentity() {
       </header>
       <article className="bg-surface-dark border-l-2 border-primary/50 p-4 md:p-6 lg:p-8 rounded-none">
         <p className="text-slate-300 leading-relaxed text-sm md:text-base mb-3 md:mb-5">
-          I am a forward-thinking technologist and system architect obsessed
-          with reducing complexity and building things that matter. At my core,
-          I am driven by a curiosity to dissect how robust, massive-scale
-          systems operate under the hood, seamlessly merging the bridge between
-          the backend infrastructure and cutting-edge interactive frontend
-          experiences.
+          I build modern software across the whole stack, from interfaces that
+          feel sharp and responsive to the backend systems, APIs and databases
+          behind them. Most of my work is in React, Next.js and TypeScript, with
+          Node.js, Python (FastAPI, Django, Flask) and Convex on the server, and
+          PostgreSQL, MongoDB and Redis for data.
         </p>
         <p className="text-slate-300 leading-relaxed text-sm md:text-base">
-          Beyond the IDE, I thrive in environments that challenge the status quo
-          and demand relentless optimization. Whether refining deployment
-          constraints or spinning up complex neural network data pipelines, I
-          bring a methodical, calculated engineering ethos to everything I
-          touch.
+          I&apos;m especially interested in AI integration and agentic AI
+          products: tools that do real work for people. I also enjoy developer
+          tooling, real-time collaboration and the infrastructure behind it,
+          including Docker, Kubernetes, AWS and Vercel. I care about solving
+          real problems with simple, scalable systems.
         </p>
       </article>
     </section>

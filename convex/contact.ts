@@ -2,8 +2,8 @@ import { v } from "convex/values";
 import { internal } from "./_generated/api";
 import {
   internalMutation,
+  internalQuery,
   mutation,
-  query,
 } from "./_generated/server";
 import { enforceContactGuards } from "./contactRateLimit";
 import { throwContactError } from "./contactErrors";
@@ -24,7 +24,7 @@ const contactArgs = {
   userAgent: v.string(),
 };
 
-export const getMessages = query({
+export const getMessages = internalQuery({
   handler: async (ctx) => {
     return await ctx.db
       .query("contacts")
@@ -34,9 +34,21 @@ export const getMessages = query({
   },
 });
 
+// Only the Next.js /api/contact route may call this. It is the only caller
+// that can supply a trustworthy client IP, so a shared secret stops direct
+// calls from bypassing the per-IP rate limit.
+function assertTrustedCaller(serverSecret: string) {
+  const expected = process.env.CONTACT_SERVER_SECRET;
+  if (!expected || serverSecret !== expected) {
+    throwContactError("INVALID_INPUT", "Unauthorized contact submission.");
+  }
+}
+
 export const sendContactMessage = mutation({
-  args: contactArgs,
-  handler: async (ctx, args) => {
+  args: { ...contactArgs, serverSecret: v.string() },
+  handler: async (ctx, { serverSecret, ...args }) => {
+    assertTrustedCaller(serverSecret);
+
     const submission = normalizeContactSubmission(args);
 
     validateContactSubmission(submission);
@@ -81,7 +93,7 @@ export const sendContactMessage = mutation({
   },
 });
 
-export const deleteMessage = mutation({
+export const deleteMessage = internalMutation({
   args: {
     id: v.id("contacts"),
   },

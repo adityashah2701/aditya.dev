@@ -125,7 +125,7 @@ export default function ProjectDrawer({
                 <div className="relative w-full aspect-video border border-border-dark overflow-hidden">
                   <Image
                     src={project.image}
-                    alt={`${project.title} preview`}
+                    alt={`Screenshot of ${project.title}, a project by Aditya Shah built with ${project.techStack.slice(0, 3).join(", ")}`}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover object-top"

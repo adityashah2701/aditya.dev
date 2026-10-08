@@ -1,29 +1,38 @@
-import { preloadQuery } from "convex/nextjs";
 import { Breadcrumb } from "@/components/sections/shared";
 import { SkillsHeader, SkillCategoryList } from "@/components/sections/skills";
 import { api } from "@/convex/_generated/api";
-import { createPageMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/components/seo/json-ld";
+import { createBreadcrumbJsonLd, createPageMetadata } from "@/lib/metadata";
+import { preloadQueryCached } from "@/lib/convex-server";
+
+export const revalidate = 3600;
 
 export const metadata = createPageMetadata({
   title: "Tech Stack",
   description:
-    "I'm Aditya Shah, and this is the toolkit I use as a full stack developer to build modern web apps, agentic AI products, mobile apps, and scalable digital experiences.",
+    "Aditya Shah's tech stack: TypeScript, Python, React, Next.js, Node.js, FastAPI, PostgreSQL, MongoDB, Docker, AWS and more used to ship full stack apps.",
   path: "/skills",
-  ogTitle: "Tech Stack | aditya.dev",
   ogDescription:
-    "I'm Aditya Shah. See the tools and technologies I use to build modern web apps, agentic AI products, mobile apps, and scalable digital experiences.",
+    "The languages, frameworks, databases and cloud tools Aditya Shah uses to build full stack web apps and AI products.",
 });
 
 export default async function Skills() {
-  const preloadedTechStack = await preloadQuery(api.techstack.getTechStack);
   const breadcrumbItems = [
     { label: "root", href: "/" },
     { label: "sys" },
     { label: "skills", isLast: true },
   ];
 
+  const preloadedTechStack = await preloadQueryCached(api.techstack.getTechStack);
+
   return (
     <>
+      <JsonLd
+        data={createBreadcrumbJsonLd([
+          { name: "Home", path: "" },
+          { name: "Tech Stack", path: "/skills" },
+        ])}
+      />
       <Breadcrumb items={breadcrumbItems} />
       <SkillsHeader />
       <SkillCategoryList preloadedTechStack={preloadedTechStack} />

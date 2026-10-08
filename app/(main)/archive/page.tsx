@@ -1,9 +1,10 @@
-import { preloadQuery } from "convex/nextjs";
 import { Breadcrumb } from "@/components/sections/shared";
 import { ArchiveHeader } from "@/components/sections/archive/archive-header";
 import { ArchivePageClient } from "@/components/sections/archive/archive-page-client";
 import { api } from "@/convex/_generated/api";
-import { createPageMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/components/seo/json-ld";
+import { createBreadcrumbJsonLd, createPageMetadata } from "@/lib/metadata";
+import { preloadQueryCached } from "@/lib/convex-server";
 import "./masonry.css";
 
 const BATCH_SIZE = 12;
@@ -11,40 +12,40 @@ const BATCH_SIZE = 12;
 export const metadata = createPageMetadata({
   title: "Archive",
   description:
-    "I'm Aditya Shah, and this archive brings together my certificates, achievements, publications, and proof of work behind the products I build.",
+    "Certificates, achievements and proof of work earned by Aditya Shah, Full Stack Developer, across web development, cloud, AI and hackathons.",
   path: "/archive",
-  ogTitle: "Archive | aditya.dev",
   ogDescription:
-    "I'm Aditya Shah. Explore my certificates, achievements, publications, and proof of work.",
+    "Browse Aditya Shah's certificates, achievements and proof of work across web development, cloud and AI.",
 });
 
-export default async function ArchivePage({
-  searchParams,
-}: {
-  searchParams?: Promise<{ certificate?: string }>;
-}) {
-  const resolvedSearchParams = await searchParams;
-  const highlightedCertificateId = resolvedSearchParams?.certificate;
-  const preloadedArchivePage = await preloadQuery(api.certificates.getArchivePage, {
-    paginationOpts: {
-      numItems: BATCH_SIZE,
-      cursor: null,
-    },
-  });
+export const revalidate = 3600;
 
+export default async function ArchivePage() {
   const breadcrumbItems = [
     { label: "root", href: "/" },
     { label: "sys" },
     { label: "archive", isLast: true },
   ];
 
+  const preloadedArchivePage = await preloadQueryCached(api.certificates.getArchivePage, {
+    paginationOpts: {
+      numItems: BATCH_SIZE,
+      cursor: null,
+    },
+  });
+
   return (
     <>
+      <JsonLd
+        data={createBreadcrumbJsonLd([
+          { name: "Home", path: "" },
+          { name: "Archive", path: "/archive" },
+        ])}
+      />
       <Breadcrumb items={breadcrumbItems} />
       <ArchiveHeader />
       <ArchivePageClient
         preloadedArchivePage={preloadedArchivePage}
-        highlightedCertificateId={highlightedCertificateId}
       />
     </>
   );

@@ -1,4 +1,4 @@
-import { mutation, query, type QueryCtx } from "./_generated/server";
+import { internalMutation, query, type QueryCtx } from "./_generated/server";
 import { v } from "convex/values";
 import { Id } from "./_generated/dataModel";
 
@@ -54,7 +54,48 @@ export const getAllProjects = query({
   },
 });
 
-export const addProject = mutation({
+/**
+ * Public query — slugs for every project, used by the sitemap and
+ * generateStaticParams for /projects/[slug].
+ */
+export const getProjectSlugs = query({
+  handler: async (ctx) => {
+    const projects = await ctx.db
+      .query("projects")
+      .withIndex("by_order")
+      .collect();
+
+    return projects.map((project) => ({
+      slug: project.slug,
+      _creationTime: project._creationTime,
+    }));
+  },
+});
+
+/**
+ * Public query — a single project by slug, used by /projects/[slug].
+ */
+export const getProjectBySlug = query({
+  args: { slug: v.string() },
+  handler: async (ctx, args) => {
+    const project = await ctx.db
+      .query("projects")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+
+    if (!project) return null;
+
+    return {
+      ...project,
+      linkedArchiveItems: await resolveLinkedArchiveItems(
+        ctx,
+        project.linkedArchiveIds,
+      ),
+    };
+  },
+});
+
+export const addProject = internalMutation({
   args: {
     title: v.string(),
     slug: v.string(),
@@ -82,7 +123,7 @@ export const addProject = mutation({
   },
 });
 
-export const updateProject = mutation({
+export const updateProject = internalMutation({
   args: {
     id: v.id("projects"),
     title: v.string(),
@@ -112,7 +153,7 @@ export const updateProject = mutation({
   },
 });
 
-export const deleteProject = mutation({
+export const deleteProject = internalMutation({
   args: {
     id: v.id("projects"),
   },

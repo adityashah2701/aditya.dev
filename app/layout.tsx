@@ -4,6 +4,7 @@ import Script from "next/script";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { ConvexClientProvider } from "@/components/providers/convex-client-provider";
+import { JsonLd } from "@/components/seo/json-ld";
 import {
   SITE_URL,
   SITE_NAME,
@@ -11,12 +12,14 @@ import {
   SITE_DESCRIPTION,
   SITE_KEYWORDS,
   AUTHOR_NAME,
-  AUTHOR_JOB_TITLE,
-  GITHUB_URL,
-  LINKEDIN_URL,
-  LEETCODE_URL,
+  OG_IMAGE_ALT,
   OG_IMAGE_URL,
 } from "@/constants/seo";
+import { personJsonLd, websiteJsonLd } from "@/lib/metadata";
+
+const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+const bingSiteVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION;
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -45,7 +48,6 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
   category: "technology",
   classification: "Portfolio",
-  referrer: "origin-when-cross-origin",
 
   keywords: SITE_KEYWORDS,
 
@@ -90,7 +92,7 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: `${AUTHOR_NAME} — Software Developer`,
+        alt: OG_IMAGE_ALT,
       },
     ],
   },
@@ -99,21 +101,22 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: [OG_IMAGE_URL],
-    creator: "@adityashah",
-    site: "@adityashah",
+    images: [{ url: OG_IMAGE_URL, alt: OG_IMAGE_ALT }],
   },
 
   alternates: {
     canonical: SITE_URL,
-    languages: {
-      "en-US": SITE_URL,
-    },
   },
-  icons: {
-    icon: "/icon.png",
-    apple: "/apple-icon.png",
-    shortcut: "/favicon.ico",
+
+  verification: {
+    google: googleSiteVerification,
+    other: bingSiteVerification
+      ? { "msvalidate.01": bingSiteVerification }
+      : undefined,
+  },
+
+  other: {
+    "msapplication-TileColor": "#0a0a0b",
   },
 };
 
@@ -124,20 +127,6 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: AUTHOR_NAME,
-  url: SITE_URL,
-  jobTitle: AUTHOR_JOB_TITLE,
-  description: SITE_DESCRIPTION,
-  sameAs: [GITHUB_URL, LINKEDIN_URL, LEETCODE_URL],
-};
-
-const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
-const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
-const bingSiteVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION;
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -145,52 +134,35 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <head>
-        <meta name="theme-color" content="#1349ec" />
-        <meta name="color-scheme" content="dark" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-title" content={SITE_NAME} />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="msapplication-TileColor" content="#0a0a0b" />
-        <meta property="og:type" content="website" />
-        {googleSiteVerification ? (
-          <meta
-            name="google-site-verification"
-            content={googleSiteVerification}
-          />
-        ) : null}
-        {bingSiteVerification ? (
-          <meta name="msvalidate.01" content={bingSiteVerification} />
-        ) : null}
-        {/* JSON-LD Structured Data — Person schema */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      </head>
       <body
         className={`${spaceGrotesk.variable} ${spaceMono.variable} antialiased`}
       >
+        <a
+          href="#content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-white"
+        >
+          Skip to content
+        </a>
+        <JsonLd data={[websiteJsonLd, personJsonLd]} />
         <ConvexClientProvider>{children}</ConvexClientProvider>
         <SpeedInsights />
+        {gaMeasurementId ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gaMeasurementId}');
+              `}
+            </Script>
+          </>
+        ) : null}
       </body>
-      {gaMeasurementId ? (
-        <>
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
-            strategy="afterInteractive"
-          />
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${gaMeasurementId}');
-            `}
-          </Script>
-        </>
-      ) : null}
     </html>
   );
 }

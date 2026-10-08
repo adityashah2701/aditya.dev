@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Download, Mail } from "lucide-react";
+import { RESUME_PATH } from "@/constants/seo";
 
 export default function HomeHero() {
   return (
@@ -10,6 +11,7 @@ export default function HomeHero() {
       <header className="flex flex-col gap-2">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-white">
           ADITYA SHAH
+          <span className="sr-only"> – Full Stack Developer</span>
         </h1>
         <div className="flex flex-wrap items-center gap-2 md:gap-4 font-mono text-slate-400 mt-2">
           <Badge
@@ -27,16 +29,16 @@ export default function HomeHero() {
           </span>
         </div>
       </header>
-      <div className="max-w-3xl mt-2 md:mt-4" data-nosnippet>
+      <div className="max-w-3xl mt-2 md:mt-4">
         <p className="text-slate-300 leading-relaxed text-sm md:text-base font-light">
-          Designing scalable digital architecture. I specialize in building
-          high-performance systems and intuitive interfaces. Currently
-          engineering the future of web applications with a focus on
-          optimization and user experience.
+          I&apos;m Aditya Shah, a Full Stack Developer based in Navi Mumbai,
+          India. I build fast, reliable web applications and AI-powered products
+          with React, Next.js, TypeScript, Node.js and Python, from polished
+          frontends to real-time backends.
         </p>
       </div>
       <div className="flex flex-wrap gap-3 mt-4 md:mt-6">
-        <a href="/resume.pdf" download="resume.pdf">
+        <a href={RESUME_PATH} download>
           <Button className="flex items-center gap-2 h-auto px-4 md:px-6 py-2.5 md:py-3 bg-primary hover:bg-primary/90 text-white text-xs md:text-sm font-bold tracking-wide rounded-none transition-all shadow-[0_0_20px_rgba(19,73,236,0.3)] group">
             <Download className="w-4 h-4 md:w-[18px] md:h-[18px] group-hover:translate-y-[2px] transition-transform duration-200" />
             DOWNLOAD_RESUME
