@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Space_Mono } from "next/font/google";
-import Script from "next/script";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { ConvexClientProvider } from "@/components/providers/convex-client-provider";
 import { JsonLd } from "@/components/seo/json-ld";
+import { DeferredGoogleAnalytics } from "@/components/analytics/deferred-google-analytics";
 import {
   SITE_URL,
   SITE_NAME,
@@ -147,20 +147,7 @@ export default function RootLayout({
         <ConvexClientProvider>{children}</ConvexClientProvider>
         <SpeedInsights />
         {gaMeasurementId ? (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
-              strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${gaMeasurementId}');
-              `}
-            </Script>
-          </>
+          <DeferredGoogleAnalytics measurementId={gaMeasurementId} />
         ) : null}
       </body>
     </html>

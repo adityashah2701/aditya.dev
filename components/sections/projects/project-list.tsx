@@ -1,13 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { type Preloaded, usePreloadedQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Separator } from "@/components/ui/separator";
 import ProjectRow from "./project-card";
-import ProjectDrawer from "./project-drawer";
 import { FolderX } from "lucide-react";
 import type { ProjectRecord } from "./types";
+
+// The drawer (vaul, Radix dialog, motion, archive proof dialog) is only needed
+// after a click, so it is split out of the initial bundle and prefetched when
+// the pointer or keyboard focus first reaches the project list.
+const loadProjectDrawer = () => import("./project-drawer");
+const ProjectDrawer = dynamic(loadProjectDrawer, { ssr: false });
 
 interface ProjectListProps {
   preloadedProjects: Preloaded<typeof api.projects.getAllProjects>;
@@ -111,7 +117,11 @@ export default function ProjectList({ preloadedProjects }: ProjectListProps) {
   ].filter((section) => section.projects.length > 0);
 
   return (
-    <section className="mb-12 md:mb-20 space-y-10 md:space-y-12">
+    <section
+      className="mb-12 md:mb-20 space-y-10 md:space-y-12"
+      onPointerEnter={() => void loadProjectDrawer()}
+      onFocus={() => void loadProjectDrawer()}
+    >
       {/* Empty */}
       {isEmpty && (
         <div className="border border-border-dark bg-background-dark p-12 flex flex-col items-center gap-3 text-center">
@@ -137,11 +147,13 @@ export default function ProjectList({ preloadedProjects }: ProjectListProps) {
       )}
 
       {/* Drawer — detail view */}
-      <ProjectDrawer
-        project={selectedProject}
-        open={isDrawerOpen}
-        onClose={closeProject}
-      />
+      {selectedProject ? (
+        <ProjectDrawer
+          project={selectedProject}
+          open={isDrawerOpen}
+          onClose={closeProject}
+        />
+      ) : null}
     </section>
   );
 }
